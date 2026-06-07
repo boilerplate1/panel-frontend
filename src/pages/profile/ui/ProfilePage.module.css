@@ -1,0 +1,335 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding-bottom: calc(92px + env(safe-area-inset-bottom));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  border: none;
+}
+
+.heroCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-3);
+  border: none;
+  background: var(--surface-card);
+  box-shadow: none;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--avatar-bg);
+  color: var(--avatar-foreground);
+  font-size: 1.45rem;
+  font-weight: var(--font-weight-bold);
+  border: none;
+}
+
+.username {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.profileMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  align-items: center;
+}
+
+.profileSubtitle {
+  color: var(--text-dimmed);
+  font-size: var(--font-size-sm);
+}
+
+.devicesBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+.header {
+  margin-bottom: var(--spacing-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-height: 34px;
+  padding: 0 var(--spacing-3);
+  border-radius: 999px;
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  border: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) 0;
+  border-bottom: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.itemName {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.itemStatus {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.itemChevron {
+  color: var(--text-placeholder);
+}
+
+.emptyState {
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.subscriptionCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.subscriptionTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.subscriptionPlan {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subscriptionPlan span,
+.subscriptionMetric span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.subscriptionPlan strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subscriptionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  flex: 0 0 auto;
+}
+
+.subscriptionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.subscriptionMetric {
+  min-width: 0;
+  min-height: 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-secondary);
+}
+
+.subscriptionMetric strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.deviceProgress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 2px 0;
+}
+
+.deviceBar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.deviceBarFull {
+  background: var(--status-error);
+}
+
+.row {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: 0 var(--spacing-1);
+}
+
+.row span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.row strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.devicesBtn {
+  width: 100%;
+  margin-top: var(--spacing-4);
+}
+
+.instruction {
+  margin-top: var(--spacing-6);
+  padding: var(--spacing-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-subtle);
+}
+
+.instructionTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.instructionList {
+  margin: 0;
+  padding: 0 0 0 var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.instructionList li {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+  .wrapper {
+    padding: 0;
+    gap: 8px;
+  }
+
+  .heroCard {
+    width: 100%;
+    margin: 0;
+    padding: 16px;
+    border-radius: 22px;
+    gap: 12px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .card {
+    width: 100%;
+    margin-top: 0;
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .subscriptionTop {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .subscriptionGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .subscriptionMetric {
+    min-height: 64px;
+    padding: 10px 12px;
+    gap: 4px;
+  }
+
+  .subscriptionMetric strong {
+    font-size: var(--font-size-sm);
+  }
+
+  .deviceProgress {
+    margin: 1px 0;
+  }
+
+  .devicesBtn {
+    min-height: 48px;
+  }
+}

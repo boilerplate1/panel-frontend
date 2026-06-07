@@ -1,0 +1,26 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+
+.text {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 1.25rem;
+  }
+}

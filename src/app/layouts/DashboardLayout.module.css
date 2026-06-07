@@ -1,0 +1,44 @@
+.root {
+  min-height: 100dvh;
+  position: relative;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 32px;
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding: 24px 24px 96px;
+}
+
+.fullWidth {
+  grid-template-columns: 1fr;
+  width: min(100%, 920px);
+}
+
+.content {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.contentFull {
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    padding: 12px 0 32px;
+  }
+
+  .fullWidth {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .content {
+    padding-bottom: 0;
+  }
+}

@@ -1,0 +1,13 @@
+.root {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.required {
+  color: var(--accent);
+  margin-left: 4px;
+}

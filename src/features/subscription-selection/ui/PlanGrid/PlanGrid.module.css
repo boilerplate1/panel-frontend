@@ -1,0 +1,107 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.06;
+  }
+  100% {
+    opacity: 0.03;
+  }
+}
+
+.pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonCard {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 40px 32px;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 440px;
+}
+
+.skeletonHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.skeletonName {
+  width: 80px;
+  height: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.skeletonPrice {
+  width: 140px;
+  height: 64px;
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.skeletonFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.skeletonFeature {
+  width: 100%;
+  height: 16px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.skeletonBtn {
+  width: 100%;
+  height: 56px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  margin-top: 40px;
+}
+
+@media (max-width: 1200px) {
+  .root {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding: 8px 16px 24px;
+    margin: 0 -16px;
+    grid-template-columns: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .root::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skeletonCard {
+    flex: 0 0 280px;
+    min-height: 400px;
+    padding: 32px;
+    scroll-snap-align: center;
+  }
+}

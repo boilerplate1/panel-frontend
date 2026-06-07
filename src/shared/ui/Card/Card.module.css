@@ -1,0 +1,60 @@
+.root {
+  border-radius: var(--radius-xl);
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  border: none;
+  box-shadow: none;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* Variants */
+.flat {
+  background-color: var(--surface-card);
+}
+.clickable.flat:hover {
+  border-color: var(--border-color);
+  transform: translateY(-2px);
+}
+
+.outline {
+  background-color: transparent;
+  border-color: transparent;
+}
+.clickable.outline:hover {
+  background-color: var(--surface-hover);
+}
+
+.glass {
+  background-color: var(--surface-card);
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.clickable.glass:hover {
+  border-color: var(--border-color);
+}
+
+/* Paddings */
+.padding-none {
+  padding: 0;
+}
+.padding-small {
+  padding: var(--spacing-4);
+}
+.padding-medium {
+  padding: var(--spacing-6);
+}
+.padding-large {
+  padding: var(--spacing-8);
+}
+
+@media (max-width: 992px) {
+  .root {
+    border-radius: 28px;
+  }
+}

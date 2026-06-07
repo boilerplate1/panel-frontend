@@ -1,0 +1,12 @@
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--status-error);
+  font-weight: 500;
+}

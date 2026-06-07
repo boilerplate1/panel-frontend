@@ -1,0 +1,280 @@
+.page {
+  /* Hypex Android Theme Colors */
+  --android-bg: #000000;
+  --android-card: #1C1C1E;
+  --android-secondary-bg: #2C2C2E;
+  --android-text-primary: #F5F5F5;
+  --android-text-secondary: rgba(235, 235, 245, 0.72);
+  --android-text-tertiary: rgba(235, 235, 245, 0.56);
+  --android-border: rgba(255, 255, 255, 0.05);
+  --android-primary: #F5F5F7;
+
+  min-height: 100vh;
+  background-color: var(--android-bg);
+  color: var(--android-text-primary);
+  font-family: var(--text-font-family);
+  position: relative;
+}
+
+.hero {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: transparent;
+  overflow: hidden;
+}
+
+.heroSpotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heroInner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  z-index: 2;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--spacing-6);
+  color: var(--android-text-primary);
+  max-width: 10ch;
+}
+
+.heroDescription {
+  font-size: var(--font-size-xl);
+  color: var(--android-text-secondary);
+  max-width: 640px;
+  margin-bottom: var(--spacing-10);
+  line-height: 1.5;
+}
+
+.heroActions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.heroActions > * {
+  width: auto;
+}
+
+.textLink {
+  background: none;
+  border: none;
+  color: var(--android-text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0.1);
+}
+
+.textLink:hover {
+  color: var(--android-text-primary);
+  text-decoration-color: var(--android-text-primary);
+}
+
+.heroGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: linear-gradient(to bottom, transparent, #000000);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section {
+  padding: 160px 0;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: var(--font-h2);
+  font-weight: 700;
+  margin-bottom: 64px;
+  text-align: left;
+  color: var(--android-text-primary);
+}
+
+.manifestoSection {
+  padding: 160px 0;
+  background: var(--android-bg);
+}
+
+.manifestoContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.manifestoHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: 80px;
+  margin-bottom: 100px;
+}
+
+.manifestoTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.manifestoImageWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.manifestoImage {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 16px;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.manifestoImage:hover {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.manifestoAccent {
+  color: var(--android-text-tertiary);
+}
+
+.manifestoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.manifestoItem {
+  padding: 48px;
+  background: var(--android-card);
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
+  border: none;
+}
+
+.manifestoItem:hover {
+  transform: translateY(-8px);
+  background: var(--android-secondary-bg);
+}
+
+.manifestoItemTitle {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  margin-bottom: 32px;
+  color: var(--android-text-tertiary);
+}
+
+.manifestoItemDesc {
+  font-size: 1.1rem;
+  color: var(--android-text-primary);
+  line-height: 1.4;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.pricingSection {
+  padding-top: 160px;
+  padding-bottom: 240px;
+}
+
+@media (max-width: 1024px) {
+  .manifestoGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .manifestoItem {
+    padding: 32px 16px;
+    border-radius: 24px;
+  }
+
+  .manifestoHeader {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 64px;
+    align-items: flex-start;
+  }
+
+  .manifestoImageWrapper {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .manifestoSection {
+    padding: 80px 0;
+  }
+
+  .manifestoImageWrapper {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+
+  .manifestoImage {
+    max-width: 160px;
+  }
+
+  .manifestoTitle {
+    font-size: 2.25rem;
+    margin-bottom: 40px;
+    text-align: left;
+  }
+
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .heroActions {
+    width: 100%;
+  }
+
+  .heroActions > * {
+    width: 100%;
+  }
+}

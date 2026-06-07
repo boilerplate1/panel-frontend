@@ -1,0 +1,21 @@
+.root {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--surface-input);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-subtle);
+  outline: none;
+}
+
+.root:focus {
+  background: var(--surface-input-hover);
+  border-color: var(--accent);
+}
+
+.root::placeholder {
+  color: var(--text-placeholder);
+  opacity: 0.5;
+}

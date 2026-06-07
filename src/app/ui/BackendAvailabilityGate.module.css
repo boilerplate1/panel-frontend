@@ -1,0 +1,48 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: var(--font-size-xl);
+}
+
+.description {
+  margin: 0 0 20px;
+  color: var(--text-secondary);
+}
+
+.meta {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.endpoint {
+  margin: 0 0 20px;
+  color: var(--text-dimmed);
+  font-size: var(--font-size-xs);
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .shell {
+    padding: 24px;
+  }
+}
