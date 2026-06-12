@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite --host --configLoader native",
-    "build": "tsc -b && vite build --configLoader native",
+    "build": "tsc -b && vite build --config vite.config.cjs",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
     "preview": "vite preview"
