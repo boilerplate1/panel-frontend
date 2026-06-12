@@ -1,2 +1,6 @@
-# Catch-all rule for SPA routing
-/* /index.html 200
+# Specific rules for SPA routing to avoid infinite loops
+/my/*       /index.html 200
+/pay/*      /index.html 200
+/login      /index.html 200
+/register   /index.html 200
+/dashboard/* /index.html 200
