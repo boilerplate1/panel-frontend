@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite --host --configLoader native",
     "build": "tsc -b && vite build --config vite.config.cjs",
+    "deploy": "npx wrangler pages deploy dist --project-name panel-frontend",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
     "preview": "vite preview"
