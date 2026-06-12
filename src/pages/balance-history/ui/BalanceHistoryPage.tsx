@@ -30,10 +30,9 @@ function BalanceHistoryPage() {
   const history = data?.pages.flatMap((page) => page.items) ?? [];
   const selectedItem = history.find((item) => item.id === selectedItemId) ?? null;
   const selectedItemStatus = selectedItem ? getPaymentStatusLabel(selectedItem.status, t) : '';
-  const selectedItemSubtitle =
-    selectedItem
-      ? `${formatDate(selectedItem.expiresAt ?? selectedItem.createdAt)} • ${selectedItemStatus}`
-      : '';
+  const selectedItemSubtitle = selectedItem
+    ? `${formatDate(selectedItem.expiresAt ?? selectedItem.createdAt)} • ${selectedItemStatus}`
+    : '';
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 992px)');
@@ -191,9 +190,7 @@ function BalanceHistoryPage() {
                   <div className={styles.modalTitle}>
                     {selectedItem.planName ?? t('dashboard.subscriptions')}
                   </div>
-                  <div className={styles.modalSubtitle}>
-                    {selectedItemSubtitle}
-                  </div>
+                  <div className={styles.modalSubtitle}>{selectedItemSubtitle}</div>
                 </div>
                 <button
                   type="button"

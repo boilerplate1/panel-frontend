@@ -1,10 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '@/shared/lib';
 
-/**
- * Enterprise Secure Clipboard Hook
- * Encapsulates sensitive data handling, adds audit logging, and manages UI feedback.
- */
 export const useSecureClipboard = () => {
   const { t } = useTranslation();
   const { showToast } = useUIStore();
@@ -14,10 +10,10 @@ export const useSecureClipboard = () => {
 
     try {
       await navigator.clipboard.writeText(data);
-      
+
       // Audit log (security best practice)
       console.info(`[Security Audit]: Sensitive information (${label}) copied to clipboard`);
-      
+
       showToast(t('auth.copied'), 'success');
       return true;
     } catch (err) {

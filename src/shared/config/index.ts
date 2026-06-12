@@ -1,4 +1,5 @@
 export const APP_CONFIG = {
+  BRAND_NAME: 'Hypex',
   API_BASE_URL: import.meta.env.VITE_API_URL || '/api',
   ANDROID_APK_URL: import.meta.env.VITE_ANDROID_APK_URL || '/downloads/hypexvpn.apk',
   TG_CHANNEL: 'https://t.me/hypex_vpn',

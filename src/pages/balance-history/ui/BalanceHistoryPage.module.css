@@ -404,19 +404,22 @@
   }
 
   .item {
-    align-items: stretch;
-    padding: 13px 14px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 10px;
   }
 
   .itemTop {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 8px;
   }
 
   .itemLeft {
-    gap: 6px;
-    flex-wrap: wrap;
+    gap: 4px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .itemName {
@@ -425,7 +428,8 @@
   }
 
   .itemStatusText {
-    font-size: var(--font-size-sm);
+    font-size: 11px;
+    line-height: 1.35;
   }
 
   .itemMain {
@@ -433,26 +437,28 @@
   }
 
   .itemAmount {
-    display: none;
+    display: inline-flex;
+    font-size: var(--font-size-sm);
   }
 
   .itemMeta {
-    gap: 6px;
+    gap: 4px;
     line-height: 1.35;
-    font-size: var(--font-size-xs);
+    font-size: 11px;
   }
 
   .providerAmountRow {
-    gap: 10px;
+    justify-content: flex-start;
+    gap: 6px;
   }
 
   .providerIcon {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .mobileAmount {
-    display: inline-flex;
+    display: none;
   }
 
   .modalOverlay {

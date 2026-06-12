@@ -11,7 +11,7 @@ export function PublicRoute({ children }: PublicRouteProps) {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <Loader fullPage />;
-  if (isAuthenticated) return <Navigate to="/dashboard/profile" replace />;
+  if (isAuthenticated) return <Navigate to="/my" replace />;
 
   return <>{children}</>;
 }

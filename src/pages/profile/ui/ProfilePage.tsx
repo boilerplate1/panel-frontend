@@ -48,7 +48,20 @@ function ProfilePage() {
             <Loader2 className={styles.spinner} />
           </div>
         ) : activeSubscription ? (
-          <SubscriptionCard subscription={activeSubscription} onCopyLink={handleCopySubscription} />
+          <>
+            <SubscriptionCard
+              subscription={activeSubscription}
+              onCopyLink={handleCopySubscription}
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              className={styles.devicesBtn}
+              onClick={() => navigate('/pay')}
+            >
+              {t('dashboard.renew_subscription', 'Продлить подписку')}
+            </Button>
+          </>
         ) : (
           <>
             <SectionHeader
@@ -58,11 +71,7 @@ function ProfilePage() {
             />
             <div className={styles.subscriptionEmpty}>
               <div className={styles.emptyState}>{t('dashboard.no_subscriptions')}</div>
-              <Button
-                type="button"
-                className={styles.devicesBtn}
-                onClick={() => navigate('/dashboard/subscription/buy')}
-              >
+              <Button type="button" className={styles.devicesBtn} onClick={() => navigate('/pay')}>
                 {t('dashboard.purchase_subscription')}
               </Button>
             </div>
@@ -71,7 +80,11 @@ function ProfilePage() {
       </Card>
 
       <Card padding="medium" className={styles.card}>
-        <SectionHeader title={t('devices.title')} subtitle={t('devices.subtitle')} className={styles.header} />
+        <SectionHeader
+          title={t('devices.title')}
+          subtitle={t('devices.subtitle')}
+          className={styles.header}
+        />
 
         <div className={styles.container}>
           {devicesLoading ? (
@@ -97,7 +110,7 @@ function ProfilePage() {
           type="button"
           variant="secondary"
           className={styles.devicesBtn}
-          onClick={() => navigate('/dashboard/devices')}
+          onClick={() => navigate('/my/devices')}
         >
           <MonitorSmartphone size={22} />
           {t('dashboard.sidebar_devices')}

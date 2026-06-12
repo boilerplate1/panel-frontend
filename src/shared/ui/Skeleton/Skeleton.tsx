@@ -18,14 +18,14 @@ export function Skeleton({
   const customStyles: React.CSSProperties = {
     width: typeof width === 'number' ? `${width}px` : width,
     height: typeof height === 'number' ? `${height}px` : height,
-    borderRadius: circle ? '50%' : (typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius),
+    borderRadius: circle
+      ? '50%'
+      : typeof borderRadius === 'number'
+        ? `${borderRadius}px`
+        : borderRadius,
   };
 
   return (
-    <div 
-      className={`${styles.skeleton} ${className}`} 
-      style={customStyles}
-      aria-hidden="true"
-    />
+    <div className={`${styles.skeleton} ${className}`} style={customStyles} aria-hidden="true" />
   );
 }

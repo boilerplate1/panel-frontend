@@ -65,4 +65,3 @@ export type ExternalPaymentStatus =
 
 export const YOOKASSA_PAYMENT_METHODS = ['bank_card', 'sbp', 'yoo_money'] as const;
 export type YookassaPaymentMethod = (typeof YOOKASSA_PAYMENT_METHODS)[number];
-

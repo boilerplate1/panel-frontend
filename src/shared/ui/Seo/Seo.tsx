@@ -8,14 +8,6 @@ type SeoEntry = {
 };
 
 const seoByPath: Record<string, (t: (key: string) => string) => SeoEntry> = {
-  '/': (t) => ({
-    title: t('seo.home_title'),
-    description: t('seo.home_description'),
-  }),
-  '/gift': (t) => ({
-    title: t('seo.gift_title'),
-    description: t('seo.gift_description'),
-  }),
   '/login': (t) => ({
     title: t('seo.login_title'),
     description: t('seo.login_description'),
@@ -24,23 +16,19 @@ const seoByPath: Record<string, (t: (key: string) => string) => SeoEntry> = {
     title: t('seo.register_title'),
     description: t('seo.register_description'),
   }),
-  '/download': (t) => ({
-    title: t('download.seo_title'),
-    description: t('download.seo_description'),
-  }),
-  '/dashboard/profile': (t) => ({
+  '/my': (t) => ({
     title: t('seo.profile_title'),
     description: t('seo.profile_description'),
   }),
-  '/dashboard/devices': (t) => ({
+  '/my/devices': (t) => ({
     title: t('seo.devices_title'),
     description: t('seo.devices_description'),
   }),
-  '/dashboard/balance/history': (t) => ({
+  '/my/history': (t) => ({
     title: t('seo.history_title'),
     description: t('seo.history_description'),
   }),
-  '/dashboard/subscription/buy': (t) => ({
+  '/pay': (t) => ({
     title: t('seo.subscription_title'),
     description: t('seo.subscription_description'),
   }),
@@ -68,8 +56,8 @@ export function Seo() {
   useEffect(() => {
     document.documentElement.lang = i18n.language.startsWith('ru') ? 'ru' : 'en';
 
-    const path = location.pathname.replace(/\/+$/, '') || '/';
-    const entryFactory = seoByPath[path] ?? seoByPath['/'];
+    const path = location.pathname.replace(/\/+$/, '') || '/login';
+    const entryFactory = seoByPath[path] ?? seoByPath['/login'];
     const entry = entryFactory(t);
 
     document.title = entry.title;

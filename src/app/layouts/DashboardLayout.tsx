@@ -1,5 +1,6 @@
 import { useMatches, Outlet } from 'react-router-dom';
 import { DashboardSidebar } from '@/widgets/DashboardSidebar';
+import { MobileHeader } from '@/widgets/MobileHeader';
 import { PageContainer } from '@/shared/ui';
 import styles from './DashboardLayout.module.css';
 
@@ -11,14 +12,18 @@ export function DashboardLayout() {
 
   return (
     <div className={styles.root}>
-      <main className={`${styles.wrapper} ${hideSidebar ? styles.fullWidth : ''}`}>
-        {hideSidebar ? null : <DashboardSidebar />}
-        <div className={`${styles.content} ${hideSidebar ? styles.contentFull : ''}`}>
-          <PageContainer>
-            <Outlet />
-          </PageContainer>
-        </div>
-      </main>
+      <MobileHeader />
+
+      <div className={styles.layoutContainer}>
+        {!hideSidebar && <DashboardSidebar />}
+        <main className={`${styles.wrapper} ${hideSidebar ? styles.fullWidth : ''}`}>
+          <div className={`${styles.content} ${hideSidebar ? styles.contentFull : ''}`}>
+            <PageContainer>
+              <Outlet />
+            </PageContainer>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

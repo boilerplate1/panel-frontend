@@ -1,18 +1,14 @@
 .root {
   display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-2);
+  align-items: center;
+  justify-content: center;
   width: 100%;
   padding: var(--spacing-3);
-  border: 1px solid color-mix(in srgb, var(--status-error) 26%, transparent);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--status-error) 10%, transparent);
-  color: var(--status-error);
-}
-
-.icon {
-  flex: 0 0 auto;
-  margin-top: 1px;
+  background: #ef44441a;
+  color: #ef4444;
+  text-align: center;
 }
 
 .message {

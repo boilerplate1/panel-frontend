@@ -41,7 +41,9 @@ export function Dropdown({
       {isOpen && (
         <>
           <div className={styles.overlay} onClick={close} />
-          <div className={`${styles.menu} ${align === 'left' ? styles.menuLeft : styles.menuRight}`}>
+          <div
+            className={`${styles.menu} ${align === 'left' ? styles.menuLeft : styles.menuRight}`}
+          >
             {items.map((item, index) => (
               <button
                 key={index}

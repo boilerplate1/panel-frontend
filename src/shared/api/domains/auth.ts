@@ -1,5 +1,4 @@
-import { UserSchema } from '@/entities/user';
-import { api, validateResponse } from '../base';
+import { api } from '../base';
 import { z } from 'zod';
 
 export const RegisterSchema = z.object({
@@ -29,7 +28,7 @@ export const authApi = {
   },
   getMe: async () => {
     const response = await api.get('/auth/me');
-    return validateResponse(UserSchema, response.data);
+    return response.data;
   },
   initPairing: async () => {
     const response = await api.post('/auth/pair/init');

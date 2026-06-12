@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { z } from 'zod';
 import { APP_CONFIG } from '@/shared/config';
 
 export const API_BASE_URL = APP_CONFIG.API_BASE_URL;
@@ -69,11 +68,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const requestUrl = String(originalRequest?.url ?? '');
-    
+
     // List of endpoints that should NEVER trigger a token refresh on 401
-    const isAuthEndpoint = 
-      requestUrl.includes('/auth/login') || 
-      requestUrl.includes('/auth/register') || 
+    const isAuthEndpoint =
+      requestUrl.includes('/auth/login') ||
+      requestUrl.includes('/auth/register') ||
       requestUrl.includes('/auth/refresh') ||
       requestUrl.includes('/auth/client/login');
 
@@ -81,18 +80,18 @@ api.interceptors.response.use(
 
     // 1. If unauthorized, not an auth endpoint, not already retrying, and we HAVE a token
     if (
-      error.response?.status === 401 && 
-      !isAuthEndpoint && 
-      originalRequest && 
-      !originalRequest._isRetry && 
+      error.response?.status === 401 &&
+      !isAuthEndpoint &&
+      originalRequest &&
+      !originalRequest._isRetry &&
       hasToken
     ) {
       originalRequest._isRetry = true;
-      
+
       try {
         console.log('[Auth] Access token expired, attempting refresh...');
         const newToken = await refreshAccessToken();
-        
+
         // Update header and retry the original request
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api.request(originalRequest);
@@ -133,19 +132,4 @@ export function unwrapArray<T>(payload: unknown, keys: string[]): T[] {
 export function unwrapObject<T>(payload: unknown, fallback: T): T {
   if (payload && typeof payload === 'object') return payload as T;
   return fallback;
-}
-
-/**
- * Validates API response data against a Zod schema.
- * Ensures runtime type safety and fail-fast behavior for contract breaks.
- */
-export function validateResponse<T>(schema: z.ZodType<T>, data: unknown): T {
-  const result = schema.safeParse(data);
-
-  if (!result.success) {
-    // Fail safe in production
-    return data as T;
-  }
-
-  return result.data;
 }

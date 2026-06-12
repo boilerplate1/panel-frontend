@@ -1,19 +1,15 @@
-import { z } from 'zod';
-import { api, unwrapArray, unwrapObject, validateResponse } from '../base';
-import { SubscriptionSchema, SubscriptionPlanSchema } from '@/entities/subscription';
+import { api, unwrapArray, unwrapObject } from '../base';
 import type { Subscription, SubscriptionPlan } from '@/entities/subscription';
 import type { PaymentProvidersResponse, PaymentIntent, PaymentHistoryResponse } from '../types';
 
 export const subscriptionApi = {
   getAll: async (): Promise<Subscription[]> => {
     const response = await api.get('/subscriptions');
-    const data = unwrapArray<Subscription>(response.data, ['subscriptions', 'items', 'data']);
-    return validateResponse(z.array(SubscriptionSchema), data);
+    return unwrapArray<Subscription>(response.data, ['subscriptions', 'items', 'data']);
   },
   getPlans: async (): Promise<SubscriptionPlan[]> => {
     const response = await api.get('/subscriptions/plans');
-    const data = unwrapArray<SubscriptionPlan>(response.data, ['plans', 'items', 'data']);
-    return validateResponse(z.array(SubscriptionPlanSchema), data);
+    return unwrapArray<SubscriptionPlan>(response.data, ['plans', 'items', 'data']);
   },
 };
 

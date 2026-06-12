@@ -38,7 +38,7 @@ export function RegisterForm() {
         const data = await authApi.register({ username, password, confirmPassword });
         login(data.accessToken, data.user);
         showToast(t('auth.register_success'), 'success');
-        navigate('/dashboard/profile');
+        navigate('/my');
       } catch (err) {
         const msg = getApiErrorMessage(err, t('auth.register_error'), t);
         setError(msg);
@@ -71,11 +71,13 @@ export function RegisterForm() {
         <p className={styles.subtitle}>{t('auth.register_hint')}</p>
       </div>
 
+      {error && <FormError message={error} className={styles.globalError} />}
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <FormField
           name="username"
           label={t('auth.username')}
-          placeholder={t('auth.username')}
+          placeholder="shadowmind"
           required
           autoComplete="username"
         />
@@ -83,7 +85,7 @@ export function RegisterForm() {
           name="password"
           type="password"
           label={t('auth.password')}
-          placeholder={t('auth.password')}
+          placeholder={t('auth.password_placeholder')}
           required
           autoComplete="new-password"
         />
@@ -91,12 +93,10 @@ export function RegisterForm() {
           name="confirmPassword"
           type="password"
           label={t('auth.confirm_password')}
-          placeholder={t('auth.confirm_password')}
+          placeholder={t('auth.password_placeholder')}
           required
           autoComplete="new-password"
         />
-
-        {error && <FormError message={error} />}
 
         <Button type="submit" className={styles.submitBtn} disabled={isPending}>
           {isPending ? (

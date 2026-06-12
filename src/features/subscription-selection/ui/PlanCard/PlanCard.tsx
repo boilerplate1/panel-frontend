@@ -42,9 +42,13 @@ export const PlanCard = ({
       <div className={rootClassName}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <div className={styles.name}>{formatPlanDurationLabel(plan.durationDays, monthLabels)}</div>
+            <div className={styles.name}>
+              {formatPlanDurationLabel(plan.durationDays, monthLabels)}
+            </div>
             {isHot && <Flame size={18} className={styles.hotIcon} />}
-            {isHighlighted && <div className={styles.badge}>{t('dashboard.buy_subscription_best_value_badge')}</div>}
+            {isHighlighted && (
+              <div className={styles.badge}>{t('dashboard.buy_subscription_best_value_badge')}</div>
+            )}
           </div>
           <div className={styles.price}>
             {formatCurrency(plan.priceCents, plan.currency ?? 'RUB', locale)}
@@ -71,16 +75,16 @@ export const PlanCard = ({
   }
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={rootClassName}
-    >
+    <button type="button" onClick={onClick} className={rootClassName}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className={styles.name}>{formatPlanDurationLabel(plan.durationDays, monthLabels)}</div>
+          <div className={styles.name}>
+            {formatPlanDurationLabel(plan.durationDays, monthLabels)}
+          </div>
           {isHot && <Flame size={18} className={styles.hotIcon} />}
-          {isHighlighted && <div className={styles.badge}>{t('dashboard.buy_subscription_best_value_badge')}</div>}
+          {isHighlighted && (
+            <div className={styles.badge}>{t('dashboard.buy_subscription_best_value_badge')}</div>
+          )}
         </div>
         <div className={styles.price}>
           {formatCurrency(plan.priceCents, plan.currency ?? 'RUB', locale)}

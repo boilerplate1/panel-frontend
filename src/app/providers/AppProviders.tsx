@@ -3,7 +3,6 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from '@/features/auth';
 import { queryClient } from '@/shared/lib';
-import { BackendAvailabilityGate } from '@/app/ui/BackendAvailabilityGate';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -14,9 +13,7 @@ export function AppProviders({ children }: AppProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BackendAvailabilityGate>
-        <AuthProvider>{children}</AuthProvider>
-      </BackendAvailabilityGate>
+      <AuthProvider>{children}</AuthProvider>
       {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );

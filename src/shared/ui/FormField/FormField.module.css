@@ -4,6 +4,11 @@
   flex-direction: column;
 }
 
+.label {
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--text-main);
+}
 .error {
   margin-top: 6px;
   font-size: var(--font-size-xs);

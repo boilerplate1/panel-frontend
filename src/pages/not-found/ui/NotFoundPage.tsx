@@ -1,7 +1,7 @@
 import { useNavigate, useRouteError, isRouteErrorResponse } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/ui';
-import { AlertCircle, FileQuestion } from 'lucide-react';
+
 import styles from './NotFoundPage.module.css';
 
 export default function NotFoundPage() {
@@ -14,9 +14,7 @@ export default function NotFoundPage() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
-        <h1 className={styles.title}>
-          {is404 ? t('errors.error_404') : t('errors.oops')}
-        </h1>
+        <h1 className={styles.title}>{is404 ? t('errors.error_404') : t('errors.oops')}</h1>
         <p className={styles.text}>
           {is404 ? (
             t('errors.not_found_desc')

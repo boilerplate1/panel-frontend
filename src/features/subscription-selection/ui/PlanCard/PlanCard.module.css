@@ -1,5 +1,5 @@
 .root {
-  background: var(--android-card, #1C1C1E);
+  background: var(--android-card, #1c1c1e);
   border: none;
   padding: 40px 32px;
   border-radius: 24px;
@@ -7,7 +7,10 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 440px;
-  transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), background 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0, 0, 1),
+    background 0.3s ease,
+    border-color 0.3s ease;
   text-decoration: none;
   color: inherit;
   appearance: none;
@@ -17,7 +20,7 @@
 }
 
 .bestValue {
-  background: var(--android-primary, #F5F5F7);
+  background: var(--android-primary, #f5f5f7);
   border: none;
   transform: scale(1.02);
 }
@@ -46,8 +49,6 @@
   transform: scale(1.04) translateY(-8px);
 }
 
-
-
 .content {
   display: flex;
   flex-direction: column;
@@ -69,14 +70,14 @@
 }
 
 .bestValue .name {
-  color: var(--android-text-primary, #F5F5F5);
+  color: var(--android-text-primary, #f5f5f5);
 }
 
 .badge {
   font-size: var(--font-size-xs);
   font-weight: 700;
-  color: var(--android-primary, #F5F5F7);
-  background: var(--android-secondary-bg, #2C2C2E);
+  color: var(--android-primary, #f5f5f7);
+  background: var(--android-secondary-bg, #2c2c2e);
   border: 1px solid var(--android-border, rgba(255, 255, 255, 0.05));
   padding: 4px 10px;
   border-radius: 8px;
@@ -85,7 +86,7 @@
 }
 
 .hotIcon {
-  color: #FF3B30; /* Apple System Red */
+  color: #ff3b30; /* Apple System Red */
   filter: drop-shadow(0 0 8px rgba(255, 59, 48, 0.4));
   margin-left: 2px;
   flex-shrink: 0;
@@ -98,7 +99,7 @@
 .price {
   font-size: 4rem;
   font-weight: 800;
-  color: var(--android-text-primary, #F5F5F5);
+  color: var(--android-text-primary, #f5f5f5);
   letter-spacing: -0.02em;
   line-height: 1;
   margin-top: 12px;

@@ -1,5 +1,7 @@
 :root {
-  --text-font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
+  --text-font-family:
+    Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI',
+    sans-serif;
 
   --spacing-1: 4px;
   --spacing-2: 8px;

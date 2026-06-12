@@ -22,10 +22,7 @@ export function SubscriptionCard({ subscription, onCopyLink }: SubscriptionCardP
       </div>
 
       <div className={styles.subscriptionGrid}>
-        <MetricRow
-          label={t('dashboard.expires')}
-          value={formatDate(subscription.expiresAt)}
-        />
+        <MetricRow label={t('dashboard.expires')} value={formatDate(subscription.expiresAt)} />
         <MetricRow
           label={t('dashboard.traffic')}
           value={formatTraffic(
@@ -53,12 +50,7 @@ export function SubscriptionCard({ subscription, onCopyLink }: SubscriptionCardP
         )}
       </div>
 
-      <Button
-        type="button"
-        variant="secondary"
-        className={styles.devicesBtn}
-        onClick={onCopyLink}
-      >
+      <Button type="button" variant="secondary" className={styles.devicesBtn} onClick={onCopyLink}>
         <Copy size={22} />
         {t('dashboard.copy_subscription_link')}
       </Button>

@@ -28,12 +28,14 @@ export const SubscriptionSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
   plan: SubscriptionPlanSchema.optional(),
-  deviceAvailability: z.object({
-    limit: z.number(),
-    used: z.number(),
-    remaining: z.number(),
-    isFull: z.boolean(),
-  }).optional(),
+  deviceAvailability: z
+    .object({
+      limit: z.number(),
+      used: z.number(),
+      remaining: z.number(),
+      isFull: z.boolean(),
+    })
+    .optional(),
   remnaSquads: z.array(z.unknown()).optional(),
 });
 

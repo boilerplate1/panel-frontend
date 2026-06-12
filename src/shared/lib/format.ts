@@ -11,14 +11,18 @@ export function formatBytes(bytes: string | number, decimals = 2) {
   return parseFloat((b / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-export function formatTraffic(used: string | number, total: string | number, unlimitedLabel: string) {
+export function formatTraffic(
+  used: string | number,
+  total: string | number,
+  unlimitedLabel: string,
+) {
   const totalNum = typeof total === 'string' ? parseInt(total, 10) : total;
   const usedStr = formatBytes(used);
-  
+
   if (totalNum === 0) {
     return `${usedStr} / ${unlimitedLabel}`;
   }
-  
+
   return `${usedStr} / ${formatBytes(total)}`;
 }
 
@@ -35,22 +39,30 @@ export function formatCurrency(amountCents: number, currency = 'RUB', locale = '
   }).format(amountCents / 100);
 }
 
-export function formatPlanDurationLabel(durationDays: number, monthLabels: { singular: string; plural1: string; plural2: string }) {
+export function formatPlanDurationLabel(
+  durationDays: number,
+  monthLabels: { singular: string; plural1: string; plural2: string },
+) {
   const months = Math.max(1, Math.round(durationDays / 30));
-  
+
   const lastTwo = months % 100;
   const last = months % 10;
-  
+
   let label = monthLabels.plural2;
   if (lastTwo < 11 || lastTwo > 14) {
     if (last === 1) label = monthLabels.singular;
     else if (last >= 2 && last <= 4) label = monthLabels.plural1;
   }
-  
+
   return `${months} ${label}`;
 }
 
-export function formatPerMonthLabel(amountCents: number, currency: string, locale: string, perMonthSuffix: string) {
+export function formatPerMonthLabel(
+  amountCents: number,
+  currency: string,
+  locale: string,
+  perMonthSuffix: string,
+) {
   const formatted = formatCurrency(amountCents, currency, locale);
   return `${formatted}${perMonthSuffix}`;
 }

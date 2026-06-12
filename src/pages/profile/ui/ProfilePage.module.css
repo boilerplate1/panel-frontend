@@ -62,10 +62,6 @@
   justify-content: center;
 }
 
-.header {
-  margin-bottom: var(--spacing-2);
-}
-
 .badge {
   display: inline-flex;
   align-items: center;
@@ -291,10 +287,6 @@
     padding: 16px;
     border-radius: 22px;
     gap: 12px;
-  }
-
-  .header {
-    display: none;
   }
 
   .card {

@@ -1,38 +1,88 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { User, MonitorSmartphone, History } from 'lucide-react';
+import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
+import { useAuth } from '@/features/auth';
+import { useUIStore } from '@/shared/lib';
 import styles from './DashboardSidebar.module.css';
 
 export function DashboardSidebar() {
   const { t } = useTranslation();
+  const location = useLocation();
+  const { logout } = useAuth();
+  const { isSidebarOpen, toggleSidebar } = useUIStore();
+
+  // Close sidebar on route change
+  useEffect(() => {
+    toggleSidebar(false);
+  }, [location.pathname, toggleSidebar]);
+
+  // Prevent body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (isSidebarOpen && window.innerWidth <= 992) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [isSidebarOpen]);
 
   return (
-    <aside className={styles.wrapper}>
-      <nav className={styles.nav}>
-        <NavLink
-          to="/dashboard/profile"
-          className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-        >
-          <User size={22} />
-          <span>{t('dashboard.sidebar_profile')}</span>
-        </NavLink>
+    <>
+      {isSidebarOpen && <div className={styles.overlay} onClick={() => toggleSidebar(false)} />}
 
-        <NavLink
-          to="/dashboard/devices"
-          className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-        >
-          <MonitorSmartphone size={22} />
-          <span>{t('dashboard.sidebar_devices')}</span>
-        </NavLink>
+      <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
+        <div className={styles.mobileHeader}>
+          <span className={styles.mobileTitle}>{t('shared.brand_name')}</span>
+          <button className={styles.closeButton} onClick={() => toggleSidebar(false)}>
+            <X size={24} />
+          </button>
+        </div>
 
-        <NavLink
-          to="/dashboard/balance/history"
-          className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-        >
-          <History size={22} />
-          <span>{t('dashboard.sidebar_history')}</span>
-        </NavLink>
-      </nav>
-    </aside>
+        <nav className={styles.nav}>
+          <NavLink
+            to="/my"
+            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+          >
+            <User size={22} />
+            <span>{t('dashboard.sidebar_profile')}</span>
+          </NavLink>
+
+          <NavLink
+            to="/my/devices"
+            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+          >
+            <MonitorSmartphone size={22} />
+            <span>{t('dashboard.sidebar_devices')}</span>
+          </NavLink>
+
+          <NavLink
+            to="/my/history"
+            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+          >
+            <History size={22} />
+            <span>{t('dashboard.sidebar_history')}</span>
+          </NavLink>
+
+          <button
+            onClick={() => {
+              logout();
+              toggleSidebar(false);
+            }}
+            className={`${styles.link} ${styles.logoutButton}`}
+          >
+            <LogOut size={22} />
+            <span>{t('dashboard.sidebar_logout')}</span>
+          </button>
+        </nav>
+      </aside>
+    </>
   );
 }

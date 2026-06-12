@@ -92,13 +92,15 @@ function SubscriptionBuyPage() {
     if (currentIntent) {
       const status = currentIntent.status.toUpperCase();
       if (status === 'PAID') setStage('success');
-      else if (status === 'FAILED' || status === 'CANCELED' || status === 'EXPIRED') setStage('failed');
+      else if (status === 'FAILED' || status === 'CANCELED' || status === 'EXPIRED')
+        setStage('failed');
       else if (status === 'REQUIRES_ACTION') setStage('active');
     }
   }, [currentIntent, setStage]);
 
   const selectedPlan = plans?.find((p) => p.id === selectedPlanId) ?? plans?.[0] ?? null;
-  const activeSubscription = subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
+  const activeSubscription =
+    subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
   const isRenewal = !!activeSubscription;
 
   const getNewExpiryDate = () => {
@@ -107,9 +109,10 @@ function SubscriptionBuyPage() {
     try {
       const expiresAt = activeSubscription?.expiresAt;
       const parsedDate = expiresAt ? new Date(expiresAt).getTime() : null;
-      const baseDate = parsedDate && !Number.isNaN(parsedDate)
-        ? new Date(Math.max(Date.now(), parsedDate))
-        : new Date();
+      const baseDate =
+        parsedDate && !Number.isNaN(parsedDate)
+          ? new Date(Math.max(Date.now(), parsedDate))
+          : new Date();
 
       return new Date(baseDate.getTime() + selectedPlan.durationDays * 24 * 60 * 60 * 1000);
     } catch {
@@ -193,7 +196,7 @@ function SubscriptionBuyPage() {
   };
 
   const handleReturnToDashboard = () => {
-    navigate('/dashboard/profile');
+    navigate('/my');
     setTimeout(() => {
       reset();
     }, 100);
@@ -258,13 +261,20 @@ function SubscriptionBuyPage() {
             </div>
 
             <p className={styles.statusText}>
-              {isFailed ? t('dashboard.buy_subscription_payment_failed_state') : t('dashboard.buy_subscription_active_subtitle')}
+              {isFailed
+                ? t('dashboard.buy_subscription_payment_failed_state')
+                : t('dashboard.buy_subscription_active_subtitle')}
             </p>
           </div>
 
           <div className={styles.statusActions}>
             {activePayment?.invoiceUrl && !isFailed && (
-              <Button as="a" href={activePayment.invoiceUrl} target="_blank" rel="noopener noreferrer">
+              <Button
+                as="a"
+                href={activePayment.invoiceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLink size={20} />
                 <span>{t('dashboard.buy_subscription_open_payment')}</span>
               </Button>
@@ -291,9 +301,24 @@ function SubscriptionBuyPage() {
 
   if (stage === 'selecting_sub_method') {
     const yookassaMethods = [
-      { id: 'bank_card', icon: MirIcon, label: t('dashboard.buy_subscription_method_bank_card'), desc: t('dashboard.buy_subscription_method_bank_card_desc') },
-      { id: 'yoo_money', icon: YookassaIcon, label: t('dashboard.buy_subscription_method_yoomoney'), desc: t('dashboard.buy_subscription_method_yoomoney_desc') },
-      { id: 'sbp', icon: SbpIcon, label: t('dashboard.buy_subscription_method_sbp'), desc: t('dashboard.buy_subscription_method_sbp_desc') },
+      {
+        id: 'bank_card',
+        icon: MirIcon,
+        label: t('dashboard.buy_subscription_method_bank_card'),
+        desc: t('dashboard.buy_subscription_method_bank_card_desc'),
+      },
+      {
+        id: 'sbp',
+        icon: SbpIcon,
+        label: t('dashboard.buy_subscription_method_sbp'),
+        desc: t('dashboard.buy_subscription_method_sbp_desc'),
+      },
+      {
+        id: 'yoo_money',
+        icon: YookassaIcon,
+        label: t('dashboard.buy_subscription_method_yoomoney'),
+        desc: t('dashboard.buy_subscription_method_yoomoney_desc'),
+      },
     ];
 
     return (
@@ -304,12 +329,19 @@ function SubscriptionBuyPage() {
               <ArrowLeft size={16} />
               <span>{t('dashboard.buy_subscription_return_to_payment_methods')}</span>
             </button>
-            <SectionHeader title={t('dashboard.buy_subscription_method_title')} subtitle={t('dashboard.buy_subscription_method_hint')} />
+            <SectionHeader
+              title={t('dashboard.buy_subscription_method_title')}
+              subtitle={t('dashboard.buy_subscription_method_hint')}
+            />
           </div>
 
           <div className={styles.providerList}>
             {yookassaMethods.map((m) => (
-              <button key={m.id} className={styles.providerBtn} onClick={() => startPayment('yookassa', m.id)}>
+              <button
+                key={m.id}
+                className={styles.providerBtn}
+                onClick={() => startPayment('yookassa', m.id)}
+              >
                 <div className={styles.providerContent}>
                   <div className={styles.providerIcon}>
                     <img src={m.icon} alt="" className={styles.providerImage} />
@@ -339,55 +371,58 @@ function SubscriptionBuyPage() {
               <ArrowLeft size={16} />
               <span>{t('dashboard.buy_subscription_return_to_plans')}</span>
             </button>
-            <SectionHeader title={t('dashboard.buy_subscription_method_title')} subtitle={t('dashboard.buy_subscription_method_hint')} />
+            <SectionHeader
+              title={t('dashboard.buy_subscription_method_title')}
+              subtitle={t('dashboard.buy_subscription_method_hint')}
+            />
           </div>
 
           <div className={styles.providerList}>
-            {providersLoading ? (
-              Array.from({ length: 2 }).map((_, i) => <Skeleton key={i} height={74} borderRadius={12} />)
-            ) : (
-              providers.map((p) => {
-                const isCrypto = p.toLowerCase().includes('crypto');
-                const isYookassa = p.toLowerCase() === 'yookassa';
-                const Icon = isCrypto ? Bitcoin : CreditCard;
+            {providersLoading
+              ? Array.from({ length: 2 }).map((_, i) => (
+                  <Skeleton key={i} height={74} borderRadius={12} />
+                ))
+              : providers.map((p) => {
+                  const isCrypto = p.toLowerCase().includes('crypto');
+                  const isYookassa = p.toLowerCase() === 'yookassa';
+                  const Icon = isCrypto ? Bitcoin : CreditCard;
 
-                const label = isYookassa
-                  ? t('dashboard.buy_subscription_method_yookassa')
-                  : isCrypto
-                    ? t('dashboard.buy_subscription_method_cryptopay')
-                    : p;
+                  const label = isYookassa
+                    ? t('dashboard.buy_subscription_method_yookassa')
+                    : isCrypto
+                      ? t('dashboard.buy_subscription_method_cryptopay')
+                      : p;
 
-                const desc = isYookassa
-                  ? t('dashboard.buy_subscription_method_yookassa_desc')
-                  : isCrypto
-                    ? t('dashboard.buy_subscription_method_cryptopay_desc')
-                    : '';
+                  const desc = isYookassa
+                    ? t('dashboard.buy_subscription_method_yookassa_desc')
+                    : isCrypto
+                      ? t('dashboard.buy_subscription_method_cryptopay_desc')
+                      : '';
 
-                return (
-                  <button
-                    key={p}
-                    className={styles.providerBtn}
-                    onClick={() => handleSelectProvider(p)}
-                    disabled={createIntentMutation.isPending}
-                  >
-                    <div className={styles.providerContent}>
-                      <div className={styles.providerIcon}>
-                        {isYookassa ? (
-                          <img src={YookassaIcon} alt="" className={styles.providerImage} />
-                        ) : (
-                          <Icon size={24} />
-                        )}
+                  return (
+                    <button
+                      key={p}
+                      className={styles.providerBtn}
+                      onClick={() => handleSelectProvider(p)}
+                      disabled={createIntentMutation.isPending}
+                    >
+                      <div className={styles.providerContent}>
+                        <div className={styles.providerIcon}>
+                          {isYookassa ? (
+                            <img src={YookassaIcon} alt="" className={styles.providerImage} />
+                          ) : (
+                            <Icon size={24} />
+                          )}
+                        </div>
+                        <div className={styles.providerText}>
+                          <span className={styles.providerLabel}>{label}</span>
+                          {desc && <span className={styles.providerDesc}>{desc}</span>}
+                        </div>
                       </div>
-                      <div className={styles.providerText}>
-                        <span className={styles.providerLabel}>{label}</span>
-                        {desc && <span className={styles.providerDesc}>{desc}</span>}
-                      </div>
-                    </div>
-                    <ChevronRight size={20} className={styles.providerChevron} />
-                  </button>
-                );
-              })
-            )}
+                      <ChevronRight size={20} className={styles.providerChevron} />
+                    </button>
+                  );
+                })}
           </div>
         </Card>
       </div>
@@ -400,14 +435,20 @@ function SubscriptionBuyPage() {
         <Card padding="medium" className={styles.card}>
           <div className={styles.header}>
             <SectionHeader
-              title={isRenewal ? t('dashboard.buy_subscription_renew') : t('dashboard.buy_subscription_title')}
+              title={
+                isRenewal
+                  ? t('dashboard.buy_subscription_renew')
+                  : t('dashboard.buy_subscription_title')
+              }
               subtitle={t('dashboard.buy_subscription_step_title')}
             />
           </div>
 
           <div className={styles.container}>
             {plansLoading ? (
-              Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} height={70} borderRadius={12} />)
+              Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} height={70} borderRadius={12} />
+              ))
             ) : plans && plans.length > 0 ? (
               plans.map((plan) => {
                 const isSelected = selectedPlan?.id === plan.id;
@@ -453,7 +494,9 @@ function SubscriptionBuyPage() {
                       </div>
 
                       <div className={styles.itemMeta}>
-                        <span>{plan.maxDevices} {t('landing.devices_count')}</span>
+                        <span>
+                          {plan.maxDevices} {t('landing.devices_count')}
+                        </span>
                         <span>•</span>
                         <span>{monthlyLabel}</span>
                       </div>
@@ -473,15 +516,26 @@ function SubscriptionBuyPage() {
               <Calendar size={18} />
             </div>
             <div className={styles.summaryText}>
-              <span>{isRenewal ? t('dashboard.buy_subscription_renew_to') : t('dashboard.buy_subscription_active_until')}:</span>
+              <span>
+                {isRenewal
+                  ? t('dashboard.buy_subscription_renew_to')
+                  : t('dashboard.buy_subscription_active_until')}
+                :
+              </span>
               <strong>{newExpiryDate ? formatDate(newExpiryDate.toISOString()) : '-'}</strong>
             </div>
           </div>
         )}
 
         <Card padding="medium" className={styles.paymentCard}>
-          <Button className={styles.modalLink} onClick={handleContinueToPayment} disabled={!selectedPlan || plansLoading}>
-            {isRenewal ? t('dashboard.buy_subscription_renew') : t('dashboard.buy_subscription_continue')}
+          <Button
+            className={styles.modalLink}
+            onClick={handleContinueToPayment}
+            disabled={!selectedPlan || plansLoading}
+          >
+            {isRenewal
+              ? t('dashboard.buy_subscription_renew')
+              : t('dashboard.buy_subscription_continue')}
           </Button>
         </Card>
       </div>

@@ -18,7 +18,9 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div className={`${styles.root} ${containerClassName}`}>
-      <Label required={required}>{label}</Label>
+      <Label className={styles.label} required={required}>
+        {label}
+      </Label>
       <Input required={required} {...props} />
       {error && <div className={styles.error}>{error}</div>}
     </div>
