@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Public Repo
+      - name: Pushing to Static Repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
