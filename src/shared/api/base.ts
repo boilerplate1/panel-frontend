@@ -1,16 +1,25 @@
 import axios from 'axios';
 import { APP_CONFIG } from '@/shared/config';
-
-export const API_BASE_URL = APP_CONFIG.API_BASE_URL;
-const API_TIMEOUT_MS = 7000;
-
-let refreshPromise: Promise<string> | null = null;
+import { resolveGateway, refreshGateway } from './gateway';
 
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: APP_CONFIG.API_BASE_URL,
   withCredentials: true,
-  timeout: API_TIMEOUT_MS,
+  timeout: 7000,
 });
+
+// Flag to track if gateway has been resolved at least once
+let isGatewayResolved = false;
+
+async function ensureGateway() {
+  if (!isGatewayResolved) {
+    const url = await resolveGateway();
+    api.defaults.baseURL = url;
+    isGatewayResolved = true;
+  }
+}
+
+let refreshPromise: Promise<string> | null = null;
 
 function saveAccessToken(token: string) {
   localStorage.setItem('hypex_token', token);
@@ -37,11 +46,14 @@ function isAuthRejected(error: unknown) {
 
 async function refreshAccessToken() {
   if (!refreshPromise) {
+    await ensureGateway();
+    const currentBaseUrl = api.defaults.baseURL || APP_CONFIG.API_BASE_URL;
+    
     refreshPromise = axios
       .post<{ accessToken: string }>(
-        `${API_BASE_URL}/auth/refresh`,
+        `${currentBaseUrl}/auth/refresh`,
         {},
-        { withCredentials: true, timeout: API_TIMEOUT_MS },
+        { withCredentials: true, timeout: 7000 },
       )
       .then((response) => {
         const token = response.data.accessToken;
@@ -55,7 +67,9 @@ async function refreshAccessToken() {
   return refreshPromise;
 }
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
+  await ensureGateway();
+  
   const token = localStorage.getItem('hypex_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -67,6 +81,17 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    
+    // If we get a network error (no response), it might mean the gateway is dead
+    if (!error.response && originalRequest && !originalRequest._isGatewayRetry) {
+      originalRequest._isGatewayRetry = true;
+      console.warn('[Gateway] Network error, attempting to refresh gateway URL...');
+      const newUrl = await refreshGateway();
+      api.defaults.baseURL = newUrl;
+      originalRequest.baseURL = newUrl;
+      return api.request(originalRequest);
+    }
+
     const requestUrl = String(originalRequest?.url ?? '');
 
     // List of endpoints that should NEVER trigger a token refresh on 401
