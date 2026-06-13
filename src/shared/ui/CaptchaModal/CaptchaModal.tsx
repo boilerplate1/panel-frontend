@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import Turnstile from 'react-turnstile';
+import { Turnstile } from '@marsidev/react-turnstile';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import styles from './CaptchaModal.module.css';
@@ -12,9 +12,6 @@ interface CaptchaModalProps {
   onVerify: (token: string) => void;
   siteKey: string;
 }
-
-// Defensive check for Turnstile component
-const TurnstileComponent = (Turnstile as any).default || Turnstile;
 
 export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModalProps) {
   const { t } = useTranslation();
@@ -59,16 +56,14 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
 
             <div className={styles.content}>
               <div className={styles.captchaWrapper}>
-                {TurnstileComponent && typeof TurnstileComponent !== 'string' ? (
-                  <TurnstileComponent
-                    sitekey={siteKey}
-                    onVerify={onVerify}
-                    theme="dark"
-                    language={t('shared.lang_code', 'ru')}
-                  />
-                ) : (
-                  <div style={{ color: 'white' }}>Captcha Loading...</div>
-                )}
+                <Turnstile
+                  siteKey={siteKey}
+                  onSuccess={onVerify}
+                  options={{
+                    theme: 'dark',
+                    language: t('shared.lang_code', 'ru') as any,
+                  }}
+                />
               </div>
               <p className={styles.hint}>
                 {t('auth.captcha_hint', 'Это помогает нам защитить ваш аккаунт от ботов')}
