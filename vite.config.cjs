@@ -10,6 +10,7 @@ module.exports = defineConfig({
     modules: {
       generateScopedName: '[name]__[hash:base64:5]__[local]',
     },
+    devSourcemap: false,
   },
   resolve: {
     alias: {
@@ -19,5 +20,23 @@ module.exports = defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-  }
+    sourcemap: false,
+    minify: 'esbuild', // Default for faster builds
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'vendor-react';
+            }
+            if (id.includes('lucide-react') || id.includes('@tanstack')) {
+              return 'vendor-ui';
+            }
+            return 'vendor-base';
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
 });
