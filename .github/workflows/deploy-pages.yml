@@ -33,6 +33,11 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          VITE_API_URL: http://5.35.127.234:8081/api
+          VITE_TURNSTILE_SITE_KEY: 0x4AAAAAADkJWWinz5uCKpo_
+          VITE_ANDROID_APK_URL: https://hpxvpn.xyz/downloads/hypexvpn.apk
+          VITE_SENTRY_DSN: https://10ed02c942668f0b0ab04ffb470e82e9@o4511559027982336.ingest.us.sentry.io/4511559029030912
         run: npm run build
 
       - name: Deploy to Public Repo
