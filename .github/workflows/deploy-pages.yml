@@ -76,4 +76,5 @@ jobs:
             🏷 *Repo:* ${{ github.repository }}
             👤 *Author:* ${{ github.actor }}
             📝 *Commit:* ${{ github.event.head_commit.message }}
-            🔗 [Check Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            📉 *Status:* Build or Push to static repo failed.
+            🔗 [Check Error Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
