@@ -10,10 +10,12 @@ interface GatewayState {
 }
 
 /**
- * Resolves the actual API Gateway URL from Yandex Disk or LocalStorage.
+ * Resolves the actual API Gateway URL using the resilient discovery path:
+ * 1. Read Yandex Disk (Ultimate Root) -> get Config Service URL.
+ * 2. Read Config Service -> get current API Gateway URL.
  */
 export async function resolveGateway(): Promise<string> {
-  // 1. Check LocalStorage first
+  // 1. Check LocalStorage for cached ACTUAL API URL
   const cached = localStorage.getItem(STORAGE_KEY);
   if (cached) {
     try {
@@ -26,26 +28,31 @@ export async function resolveGateway(): Promise<string> {
     }
   }
 
-  // 2. Fetch from Yandex Disk if no cache or expired
+  // 2. Discovery Flow
   try {
-    // If it's a direct link, use it. If it's a public disk link, we'd normally need 
-    // to use Yandex Disk API to get the download URL. 
-    // For now, we assume GATEWAY_CONFIG_URL points to a raw text file or we use the fallback.
-    
     if (APP_CONFIG.GATEWAY_CONFIG_URL.includes('ВАШ_КОД_ЗДЕСЬ')) {
       return APP_CONFIG.API_BASE_URL;
     }
 
-    const response = await axios.get(APP_CONFIG.GATEWAY_CONFIG_URL, { timeout: 3000 });
-    const newUrl = response.data?.trim();
+    // Step A: Fetch Config Service URL from Yandex Disk
+    const yandexResponse = await axios.get(APP_CONFIG.GATEWAY_CONFIG_URL, { timeout: 3000 });
+    const configServiceUrl = yandexResponse.data?.trim();
 
-    if (newUrl && newUrl.startsWith('http')) {
-      const state: GatewayState = { url: newUrl, timestamp: Date.now() };
+    if (!configServiceUrl || !configServiceUrl.startsWith('http')) {
+      throw new Error('Invalid Config Service URL from Yandex Disk');
+    }
+
+    // Step B: Fetch Actual API URL from Config Service
+    const configResponse = await axios.get(configServiceUrl, { timeout: 3000 });
+    const actualApiUrl = configResponse.data?.trim();
+
+    if (actualApiUrl && actualApiUrl.startsWith('http')) {
+      const state: GatewayState = { url: actualApiUrl, timestamp: Date.now() };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      return newUrl;
+      return actualApiUrl;
     }
   } catch (error) {
-    console.warn('[Gateway] Failed to resolve gateway, using fallback:', error);
+    console.warn('[Gateway] Discovery flow failed, using fallback:', error);
   }
 
   return APP_CONFIG.API_BASE_URL;
