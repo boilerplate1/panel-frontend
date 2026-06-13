@@ -23,13 +23,14 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Pushing to Static Repo
-        uses: cpina/github-action-push-to-another-repository@main
+      - name: Deploy to Public Repo
         env:
           API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
-        with:
-          source-directory: 'dist'
-          destination-github-username: 'boilerplate1'
-          destination-repository-name: 'panel-static'
-          user-email: shadowmind1337@gmail.com
-          target-branch: main
+        run: |
+          cd dist
+          git init
+          git config user.name "shadowmind1337"
+          git config user.email "shadowmind1337@gmail.com"
+          git add .
+          git commit -m "Deploy build to static repo"
+          git push --force https://x-access-token:${API_TOKEN_GITHUB}@github.com/boilerplate1/panel-static.git master:main
