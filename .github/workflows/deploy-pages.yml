@@ -1,4 +1,4 @@
-name: DEBUG-Build-Deploy
+name: Build and Deploy to Static Repo
 
 on:
   push:
@@ -12,9 +12,6 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Debug - List Files
-        run: ls -R
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -22,18 +19,16 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: frontend
 
       - name: Build
         run: npm run build
-        working-directory: frontend
 
       - name: Deploy to Public Repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
         with:
-          source-directory: 'frontend/dist'
+          source-directory: 'dist'
           destination-github-username: 'boilerplate1'
           destination-repository-name: 'panel-static'
           user-email: shadowmind1337@gmail.com
