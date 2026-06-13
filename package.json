@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite --host --configLoader native",
     "build": "npx tsc -b && vite build --config vite.config.cjs",
-    "deploy": "wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "pages:dev": "wrangler pages dev dist --compatibility-date=2026-06-12",
     "pages:preview": "npm run build && wrangler pages dev dist --compatibility-date=2026-06-12",
     "lint": "eslint .",
