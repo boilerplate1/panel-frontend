@@ -1,5 +1,6 @@
 export const APP_CONFIG = {
   BRAND_NAME: 'Hypex',
+  // Use environment variable from Vite build or fallback to secure production API
   API_BASE_URL: import.meta.env.VITE_API_URL || 'https://prod-v1-api.umbr.rest/api',
   ANDROID_APK_URL: import.meta.env.VITE_ANDROID_APK_URL || 'https://hpxvpn.xyz/downloads/hypexvpn.apk',
   TG_CHANNEL: 'https://t.me/hypex_vpn',
