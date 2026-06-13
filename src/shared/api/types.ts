@@ -48,12 +48,6 @@ export interface PaymentHistoryResponse {
   nextCursor?: string | null;
 }
 
-export interface ClientSettings {
-  flags: {
-    allowRegistration: boolean;
-  };
-}
-
 export type ExternalPaymentStatus =
   | 'pending'
   | 'requires_action'

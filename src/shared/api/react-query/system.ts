@@ -3,7 +3,6 @@ import { systemApi } from '../domains/system';
 
 export const systemKeys = {
   health: ['system', 'health'] as const,
-  clientSettings: ['system', 'client-settings'] as const,
 };
 
 export function useBackendHealthQuery() {
@@ -13,14 +12,5 @@ export function useBackendHealthQuery() {
     retry: false,
     staleTime: 30_000,
     refetchOnWindowFocus: true,
-  });
-}
-
-export function useClientSettingsQuery() {
-  return useQuery({
-    queryKey: systemKeys.clientSettings,
-    queryFn: systemApi.getClientSettings,
-    retry: false,
-    staleTime: 60_000,
   });
 }
