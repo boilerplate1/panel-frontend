@@ -35,8 +35,17 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       authLogin(data.accessToken, data.user);
       showToast(t('auth.login_success'), 'success');
       navigate('/my');
-    } catch (err) {
-      const msg = getApiErrorMessage(err, t('auth.login_error'), t);
+    } catch (err: any) {
+      let msg = getApiErrorMessage(err, t('auth.login_error'), t);
+      
+      // Handle custom lockout message from backend
+      const errorMsg = err.response?.data?.message || '';
+      if (typeof errorMsg === 'string' && errorMsg.startsWith('LOCKOUT_ACTIVE:')) {
+        const minutes = errorMsg.split(':')[1] || '5';
+        msg = t('auth.lockout_message', { minutes });
+        showToast(t('auth.too_many_attempts'), 'error');
+      }
+      
       setError(msg);
     } finally {
       setIsLoading(false);

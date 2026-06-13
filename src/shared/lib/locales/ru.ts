@@ -302,6 +302,8 @@ const ru = {
     register_success: 'Аккаунт успешно создан',
     username_exists: 'Пользователь с таким именем уже существует',
     already_registered_from_this_ip: 'С этого IP-адреса уже зарегистрирован аккаунт',
+    too_many_attempts: 'Слишком много попыток. Отдохните немного!',
+    lockout_message: 'Доступ временно ограничен. Попробуйте через {{minutes}} мин.',
     email_exists: 'Пользователь с таким email уже существует',
     registration_disabled: 'Регистрация отключена',
     username_policy: 'Имя пользователя: 3-32 символа, только латинские буквы и цифры',
