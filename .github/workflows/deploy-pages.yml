@@ -9,6 +9,18 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Notify Telegram (Build Started)
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🏗 *Frontend Build & Deploy Started*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            🔗 [View Progress](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
       - name: Checkout Source
         uses: actions/checkout@v4
 
