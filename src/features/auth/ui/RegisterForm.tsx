@@ -6,6 +6,8 @@ import { ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
 import { authApi } from '@/shared/api';
+import styles from './AuthForm.module.css';
+
 export function RegisterForm() {
   const { login } = useAuth();
   const navigate = useNavigate();
