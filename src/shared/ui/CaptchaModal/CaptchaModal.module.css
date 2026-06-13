@@ -14,8 +14,8 @@
   max-width: 440px;
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-8);
+  border-radius: 40px;
+  padding: var(--spacing-10);
   z-index: calc(var(--z-modal) + 1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
