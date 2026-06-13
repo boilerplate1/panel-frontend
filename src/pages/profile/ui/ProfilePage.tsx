@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Loader2, MonitorSmartphone } from 'lucide-react';
+import { ChevronRight, Loader2, MonitorSmartphone, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useDevicesQuery } from '@/entities/device';
 import { useSubscriptionsQuery } from '@/entities/subscription';
@@ -37,7 +37,14 @@ function ProfilePage() {
       <Card padding="medium" className={styles.heroCard}>
         <div className={styles.avatar}>{user.username.charAt(0).toUpperCase()}</div>
         <div className={styles.profileMeta}>
-          <div className={styles.username}>{user.username}</div>
+          <div className={styles.username}>
+            {user.username}
+            {activeSubscription && (
+              <div className={styles.verifiedBadge} title={t('profile.active_subscription')}>
+                <CheckCircle size={20} fill="currentColor" fillOpacity={0.1} />
+              </div>
+            )}
+          </div>
           <div className={styles.profileSubtitle}>{user.email || t('dashboard.email_not_set')}</div>
         </div>
       </Card>

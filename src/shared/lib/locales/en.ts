@@ -314,6 +314,7 @@ const en = {
     register_btn: 'Sign up',
     login_hint: 'Enter your credentials to open the cabinet and manage your subscription',
     register_hint: 'Create an account to access the panel and connect devices',
+    too_many_requests: 'Too many requests. Please wait a moment!',
   },
   profile: {
     title: 'Profile',

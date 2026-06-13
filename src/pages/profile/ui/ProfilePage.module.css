@@ -43,6 +43,15 @@
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   margin-bottom: var(--spacing-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verifiedBadge {
+  color: #34c759;
+  flex-shrink: 0;
+  display: flex;
 }
 
 .profileMeta {
