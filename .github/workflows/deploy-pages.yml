@@ -37,3 +37,31 @@ jobs:
           git add .
           git commit -m "Deploy build to static repo with SPA fix"
           git push --force https://x-access-token:${API_TOKEN_GITHUB}@github.com/boilerplate1/panel-static.git master:main
+
+      - name: Notify Telegram (Success)
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ✅ *Frontend (Sub) Deployed Successfully!*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            📝 *Commit:* ${{ github.event.head_commit.message }}
+            🔗 [View Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      - name: Notify Telegram (Failure)
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ❌ *Frontend (Sub) Deployment Failed!*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            📝 *Commit:* ${{ github.event.head_commit.message }}
+            🔗 [Check Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
