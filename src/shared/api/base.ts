@@ -1,23 +1,11 @@
 import axios from 'axios';
 import { APP_CONFIG } from '@/shared/config';
-import { resolveGateway, refreshGateway } from './gateway';
 
 export const api = axios.create({
   baseURL: APP_CONFIG.API_BASE_URL,
   withCredentials: true,
   timeout: 7000,
 });
-
-// Flag to track if gateway has been resolved at least once
-let isGatewayResolved = false;
-
-async function ensureGateway() {
-  if (!isGatewayResolved) {
-    const url = await resolveGateway();
-    api.defaults.baseURL = url;
-    isGatewayResolved = true;
-  }
-}
 
 let refreshPromise: Promise<string> | null = null;
 
@@ -46,12 +34,9 @@ function isAuthRejected(error: unknown) {
 
 async function refreshAccessToken() {
   if (!refreshPromise) {
-    await ensureGateway();
-    const currentBaseUrl = api.defaults.baseURL || APP_CONFIG.API_BASE_URL;
-    
     refreshPromise = axios
       .post<{ accessToken: string }>(
-        `${currentBaseUrl}/auth/refresh`,
+        `${APP_CONFIG.API_BASE_URL}/auth/refresh`,
         {},
         { withCredentials: true, timeout: 7000 },
       )
@@ -67,9 +52,7 @@ async function refreshAccessToken() {
   return refreshPromise;
 }
 
-api.interceptors.request.use(async (config) => {
-  await ensureGateway();
-  
+api.interceptors.request.use((config) => {
   const token = localStorage.getItem('hypex_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -81,17 +64,6 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
-    // If we get a network error (no response), it might mean the gateway is dead
-    if (!error.response && originalRequest && !originalRequest._isGatewayRetry) {
-      originalRequest._isGatewayRetry = true;
-      console.warn('[Gateway] Network error, attempting to refresh gateway URL...');
-      const newUrl = await refreshGateway();
-      api.defaults.baseURL = newUrl;
-      originalRequest.baseURL = newUrl;
-      return api.request(originalRequest);
-    }
-
     const requestUrl = String(originalRequest?.url ?? '');
 
     // List of endpoints that should NEVER trigger a token refresh on 401
