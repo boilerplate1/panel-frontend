@@ -13,6 +13,9 @@ interface CaptchaModalProps {
   siteKey: string;
 }
 
+// Defensive check for Turnstile component
+const TurnstileComponent = (Turnstile as any).default || Turnstile;
+
 export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModalProps) {
   const { t } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -26,7 +29,7 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
   // Use portal to render at the end of document body
   if (typeof document === 'undefined') return null;
 
-  const content = (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -49,19 +52,23 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
           >
             <div className={styles.header}>
               <h3 className={styles.title}>{t('auth.captcha_title', 'Подтвердите, что вы человек')}</h3>
-              <button className={styles.closeBtn} onClick={onClose}>
+              <button className={styles.closeBtn} onClick={onClose} type="button">
                 <X size={20} />
               </button>
             </div>
 
             <div className={styles.content}>
               <div className={styles.captchaWrapper}>
-                <Turnstile
-                  sitekey={siteKey}
-                  onVerify={onVerify}
-                  theme="dark"
-                  language={t('shared.lang_code', 'ru')}
-                />
+                {TurnstileComponent && typeof TurnstileComponent !== 'string' ? (
+                  <TurnstileComponent
+                    sitekey={siteKey}
+                    onVerify={onVerify}
+                    theme="dark"
+                    language={t('shared.lang_code', 'ru')}
+                  />
+                ) : (
+                  <div style={{ color: 'white' }}>Captcha Loading...</div>
+                )}
               </div>
               <p className={styles.hint}>
                 {t('auth.captcha_hint', 'Это помогает нам защитить ваш аккаунт от ботов')}
@@ -70,8 +77,7 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
-
-  return createPortal(content, document.body);
 }
