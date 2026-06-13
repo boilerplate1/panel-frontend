@@ -10,6 +10,7 @@ export * from './ThemeToggle';
 export * from './Toast';
 export * from './LangSwitcher';
 export * from './Skeleton';
+export * from './CaptchaModal/CaptchaModal';
 export * from './FormField';
 export * from './FormError';
 export * from './MetricRow';

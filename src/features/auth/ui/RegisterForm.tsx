@@ -1,7 +1,7 @@
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, FormField, FormError } from '@/shared/ui';
+import { Button, FormField, FormError, CaptchaModal } from '@/shared/ui';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
@@ -16,7 +16,9 @@ export function RegisterForm() {
   const registrationEnabled = true;
 
   const [error, setError] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [pendingData, setPendingData] = useState<any>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,17 +33,30 @@ export function RegisterForm() {
     }
 
     setError(null);
-    startTransition(async () => {
-      try {
-        const data = await authApi.register({ username, password, confirmPassword });
-        login(data.accessToken, data.user);
-        showToast(t('auth.register_success'), 'success');
-        navigate('/my');
-      } catch (err) {
-        const msg = getApiErrorMessage(err, t('auth.register_error'), t);
-        setError(msg);
-      }
-    });
+    setPendingData({ username, password, confirmPassword });
+    setShowCaptcha(true);
+  };
+
+  const handleCaptchaVerify = async (token: string) => {
+    setShowCaptcha(false);
+    if (!pendingData) return;
+
+    setIsLoading(true);
+    try {
+      const data = await authApi.register({ 
+        ...pendingData, 
+        captchaToken: token 
+      });
+      login(data.accessToken, data.user);
+      showToast(t('auth.register_success'), 'success');
+      navigate('/my');
+    } catch (err) {
+      const msg = getApiErrorMessage(err, t('auth.register_error'), t);
+      setError(msg);
+    } finally {
+      setIsLoading(false);
+      setPendingData(null);
+    }
   };
 
   if (!registrationEnabled) {
@@ -96,8 +111,8 @@ export function RegisterForm() {
           autoComplete="new-password"
         />
 
-        <Button type="submit" className={styles.submitBtn} disabled={isPending}>
-          {isPending ? (
+        <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
+          {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />
           ) : (
             <>
@@ -107,6 +122,13 @@ export function RegisterForm() {
           )}
         </Button>
       </form>
+
+      <CaptchaModal
+        isOpen={showCaptcha}
+        onClose={() => setShowCaptcha(false)}
+        onVerify={handleCaptchaVerify}
+        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+      />
 
       <div className={styles.footer}>
         <p>

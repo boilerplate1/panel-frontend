@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, FormField, FormError } from '@/shared/ui';
+import { Button, FormField, FormError, CaptchaModal } from '@/shared/ui';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
@@ -20,25 +20,36 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
 
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [pendingData, setPendingData] = useState<any>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
 
     setError(null);
-    setIsLoading(true);
+    setPendingData({ username, password });
+    setShowCaptcha(true);
+  };
 
+  const handleCaptchaVerify = async (token: string) => {
+    setShowCaptcha(false);
+    if (!pendingData) return;
+
+    setIsLoading(true);
     try {
-      const data = await authApi.loginWeb({ username, password });
+      const data = await authApi.loginWeb({ 
+        ...pendingData,
+        captchaToken: token 
+      });
       authLogin(data.accessToken, data.user);
       showToast(t('auth.login_success'), 'success');
       navigate('/my');
     } catch (err: any) {
       let msg = getApiErrorMessage(err, t('auth.login_error'), t);
       
-      // Handle custom lockout message from backend
       const errorMsg = err.response?.data?.message || '';
       if (typeof errorMsg === 'string' && errorMsg.startsWith('LOCKOUT_ACTIVE:')) {
         const minutes = errorMsg.split(':')[1] || '5';
@@ -49,6 +60,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       setError(msg);
     } finally {
       setIsLoading(false);
+      setPendingData(null);
     }
   };
 
@@ -89,6 +101,13 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           )}
         </Button>
       </form>
+
+      <CaptchaModal
+        isOpen={showCaptcha}
+        onClose={() => setShowCaptcha(false)}
+        onVerify={handleCaptchaVerify}
+        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+      />
 
       <div className={styles.footer}>
         <p>

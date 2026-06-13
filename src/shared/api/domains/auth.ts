@@ -5,12 +5,14 @@ export const RegisterSchema = z.object({
   username: z.string().min(3),
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
+  captchaToken: z.string().optional(),
 });
 export type RegisterDto = z.infer<typeof RegisterSchema>;
 
 export const LoginSchema = z.object({
   username: z.string().min(3),
   password: z.string().min(6),
+  captchaToken: z.string().optional(),
 });
 export type LoginDto = z.infer<typeof LoginSchema>;
 
