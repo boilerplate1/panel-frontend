@@ -133,16 +133,6 @@
   font-weight: 600 !important;
 }
 
-.renewBtn {
-  background: #34c759 !important; /* iOS Success Green */
-  color: #000000 !important;
-}
-
-.renewBtn:hover {
-  background: #28a745 !important;
-  transform: translateY(-2px);
-}
-
 .paymentCard {
   gap: 0;
   background: var(--surface-card);

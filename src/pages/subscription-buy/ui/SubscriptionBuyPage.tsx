@@ -529,7 +529,7 @@ function SubscriptionBuyPage() {
 
         <Card padding="medium" className={styles.paymentCard}>
           <Button
-            className={`${styles.modalLink} ${isRenewal ? styles.renewBtn : ''}`}
+            className={styles.modalLink}
             onClick={handleContinueToPayment}
             disabled={!selectedPlan || plansLoading}
           >
