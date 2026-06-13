@@ -1,49 +1,39 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy to Static Repo
 
 on:
   push:
-    branches: ["main"]
+    branches: ["master", "main"]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/node-version@v4
         with:
           node-version: 22
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
         run: npm install
         working-directory: frontend
+
       - name: Build
         run: npm run build
         working-directory: frontend
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: frontend/dist
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to Public Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
+        with:
+          source-directory: 'frontend/dist'
+          destination-github-username: 'boilerplate1'
+          destination-repository-name: 'panel-static'
+          user-email: shadowmind1337@gmail.com
+          target-branch: main
