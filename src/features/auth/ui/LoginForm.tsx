@@ -108,11 +108,19 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           padding: '12px',
           background: 'rgba(255, 255, 255, 0.03)',
           borderRadius: '12px',
-          minHeight: '65px' 
+          minHeight: '65px',
+          position: 'relative'
         }}>
+          {!captchaToken && !isLoading && (
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.5 }}>
+              <Loader2 className={styles.spinner} size={20} />
+            </div>
+          )}
           <Turnstile
             siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-            onSuccess={(token) => setCaptchaToken(token)}
+            onSuccess={(token) => {
+              setCaptchaToken(token);
+            }}
             onExpire={() => setCaptchaToken(null)}
             onError={() => setCaptchaToken(null)}
             options={{
