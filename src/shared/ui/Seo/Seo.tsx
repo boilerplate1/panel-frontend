@@ -61,10 +61,8 @@ export function Seo() {
   useEffect(() => {
     document.documentElement.lang = i18n.language.startsWith('ru') ? 'ru' : 'en';
 
-    // Normalize path for matching
     const currentPath = location.pathname.replace(/\/+$/, '') || '/';
     
-    // Find best match or fallback to HOME
     const entryFactory = seoByPath[currentPath] || seoByPath[ROUTES.HOME];
     const entry = entryFactory(t);
 

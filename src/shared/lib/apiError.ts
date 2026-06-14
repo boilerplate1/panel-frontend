@@ -8,11 +8,6 @@ type ApiErrorResponse = {
 
 type Translate = (key: string) => string;
 
-/**
- * Simplified ApiError utility.
- * It takes whatever message the backend sends (which are now i18n keys)
- * and passes them directly to the translation function.
- */
 export function getApiErrorMessage(error: unknown, fallback: string, t?: Translate): string {
   let message = fallback;
 
@@ -25,7 +20,6 @@ export function getApiErrorMessage(error: unknown, fallback: string, t?: Transla
     const rawMessage = data?.message || data?.error;
 
     if (Array.isArray(rawMessage)) {
-      // If backend sends multiple validation errors, translate each and join
       message = rawMessage
         .filter(Boolean)
         .map((m) => (t ? t(m) : m))

@@ -75,7 +75,3 @@
 .checkIcon {
   display: none;
 }
-
-@media (max-width: 768px) {
-  /* No changes needed as Dropdown handles it */
-}

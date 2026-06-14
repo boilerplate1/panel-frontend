@@ -1,5 +1,4 @@
 export const copyToClipboard = async (text: string) => {
-  // 1. Try modern clipboard API
   if (navigator.clipboard && window.isSecureContext) {
     try {
       await navigator.clipboard.writeText(text);
@@ -9,12 +8,10 @@ export const copyToClipboard = async (text: string) => {
     }
   }
 
-  // 2. Fallback to old-school textarea method for mobile/older browsers
   try {
     const textArea = document.createElement('textarea');
     textArea.value = text;
 
-    // Ensure textarea is not visible but part of DOM
     textArea.style.position = 'fixed';
     textArea.style.left = '-9999px';
     textArea.style.top = '0';

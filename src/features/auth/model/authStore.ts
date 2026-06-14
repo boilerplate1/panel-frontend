@@ -34,7 +34,6 @@ export const useAuthStore = create<AuthState>()(
 
       actions: {
         login: (token, user) => {
-          // Reset payment state on new login
           usePaymentStore.getState().reset();
           queryClient.clear();
 
@@ -71,7 +70,6 @@ export const useAuthStore = create<AuthState>()(
   ),
 );
 
-// Helper selectors
 export const useAuthUser = () => useAuthStore((s) => s.user);
 export const useIsAuthenticated = () => useAuthStore((s) => s.isAuthenticated);
 export const useAuthActions = () => useAuthStore((s) => s.actions);

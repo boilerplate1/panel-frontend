@@ -7,7 +7,7 @@
   border: none;
   position: sticky;
   top: 0;
-  z-index: 100; /* Ensure it stays above the sidebar dropdown */
+  z-index: 100;
 }
 
 .leftSlot {
@@ -64,9 +64,7 @@
 
 .backButton {
   margin-left: -8px;
-  color: var(
-    --text-primary
-  ); /* iOS-like back button style usually uses the link color or primary text */
+  color: var(--text-primary);
 }
 
 .backButton:active,

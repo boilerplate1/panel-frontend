@@ -20,7 +20,6 @@
   opacity: 1;
 }
 
-/* Fix browser autofill styling */
 .root:-webkit-autofill,
 .root:-webkit-autofill:hover, 
 .root:-webkit-autofill:focus, 

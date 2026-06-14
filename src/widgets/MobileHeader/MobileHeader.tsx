@@ -15,7 +15,6 @@ export function MobileHeader() {
 
   const isRoot = location.pathname === ROUTES.DASHBOARD;
 
-  // Get title from router handle
   const currentMatch = matches[matches.length - 1];
   const titleKey = (currentMatch?.handle as { title?: string })?.title;
   const pageTitle = titleKey ? t(titleKey) : '';

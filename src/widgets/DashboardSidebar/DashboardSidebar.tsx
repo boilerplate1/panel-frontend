@@ -13,12 +13,10 @@ export function DashboardSidebar() {
   const { logout } = useAuth();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
 
-  // Close sidebar on route change
   useEffect(() => {
     toggleSidebar(false);
   }, [location.pathname, toggleSidebar]);
 
-  // Prevent body scroll when sidebar is open on mobile
   useEffect(() => {
     if (isSidebarOpen && window.innerWidth <= 992) {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;

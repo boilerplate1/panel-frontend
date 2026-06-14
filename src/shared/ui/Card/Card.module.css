@@ -12,7 +12,6 @@
   cursor: pointer;
 }
 
-/* Variants */
 .flat {
   background-color: var(--surface-card);
 }
@@ -39,7 +38,6 @@
   border-color: var(--border-color);
 }
 
-/* Paddings */
 .padding-none {
   padding: 0;
 }

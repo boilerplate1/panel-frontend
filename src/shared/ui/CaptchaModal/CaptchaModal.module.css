@@ -79,14 +79,13 @@
 
 .captchaWrapper {
   position: relative;
-  width: 300px; /* 304px - 4px (2px border on each side) */
-  height: 74px; /* 78px - 4px (2px border top/bottom) */
+  width: 300px;
+  height: 74px;
   margin: 0 auto;
   border-radius: 4px;
   overflow: hidden;
 }
 
-/* We target the div created by react-google-recaptcha and shift it to hide borders */
 .captchaWrapper > div {
   position: absolute;
   top: -2px;

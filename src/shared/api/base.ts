@@ -66,7 +66,6 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     const requestUrl = String(originalRequest?.url ?? '');
 
-    // List of endpoints that should NEVER trigger a token refresh on 401
     const isAuthEndpoint =
       requestUrl.includes('/auth/login') ||
       requestUrl.includes('/auth/register') ||
@@ -75,7 +74,6 @@ api.interceptors.response.use(
 
     const hasToken = !!localStorage.getItem('hypex_token');
 
-    // 1. If unauthorized, not an auth endpoint, not already retrying, and we HAVE a token
     if (
       error.response?.status === 401 &&
       !isAuthEndpoint &&
@@ -89,14 +87,11 @@ api.interceptors.response.use(
         console.log('[Auth] Access token expired, attempting refresh...');
         const newToken = await refreshAccessToken();
 
-        // Update header and retry the original request
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api.request(originalRequest);
       } catch (refreshError) {
         console.error('[Auth] Refresh failed permanently:', refreshError);
 
-        // Network timeouts, backend restarts, and temporary 5xx responses should not
-        // destroy a valid local session. Log out only when the server rejects refresh.
         if (hasToken && isAuthRejected(refreshError)) {
           console.warn('[Auth] Session lost. Logging out...');
           clearAccessToken();
@@ -106,15 +101,10 @@ api.interceptors.response.use(
       }
     }
 
-    // 2. Handle specific 401/403 for blocked accounts or invalid credentials on login
-    // If it's a login attempt and it failed with 401/403, just pass the error through
-    // to the UI. The interceptor shouldn't do anything special here.
-
     throw error;
   },
 );
 
-// Helpers for unwrapping response data
 export function unwrapArray<T>(payload: unknown, keys: string[]): T[] {
   if (Array.isArray(payload)) return payload as T[];
   if (payload && typeof payload === 'object') {

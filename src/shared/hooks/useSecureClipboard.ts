@@ -11,7 +11,6 @@ export const useSecureClipboard = () => {
     try {
       await navigator.clipboard.writeText(data);
 
-      // Audit log (security best practice)
       console.info(`[Security Audit]: Sensitive information (${label}) copied to clipboard`);
 
       showToast(t('auth.copied'), 'success');

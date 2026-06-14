@@ -9,7 +9,6 @@ import { ROUTES } from '@/shared/config';
 import { Loader2 } from 'lucide-react';
 import styles from './PageLoader.module.css';
 
-// Lazy loading all pages for better performance and smaller initial bundle
 const LoginPage = lazy(() => import('@/pages/login/ui/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/register/ui/RegisterPage'));
 const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));

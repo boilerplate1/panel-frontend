@@ -20,11 +20,6 @@ export function Drawer({ isOpen, onClose, title, children, description }: Drawer
           <div className={styles.inner}>
             {title && <VaulDrawer.Title className={styles.title}>{title}</VaulDrawer.Title>}
 
-            {/* 
-              Accessibility: Vaul requires a Description for DialogContent. 
-              We provide it if passed, or render a visually hidden one to satisfy the requirement 
-              while keeping the UI clean if no description is needed.
-            */}
             {description ? (
               <VaulDrawer.Description className={styles.description}>
                 {description}

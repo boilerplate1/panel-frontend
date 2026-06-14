@@ -47,7 +47,6 @@ body {
   padding: 0;
 }
 
-/* Скрываем плашку reCAPTCHA v3 */
 .grecaptcha-badge {
   visibility: hidden !important;
 }

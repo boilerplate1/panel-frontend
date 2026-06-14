@@ -25,7 +25,6 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Fix aria-hidden issue by blurring active element when modal opens
   useEffect(() => {
     if (isOpen && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -38,7 +37,6 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
     }
   };
 
-  // Use portal to render at the end of document body
   if (typeof document === 'undefined') return null;
 
   const captchaContent = siteKey ? (
@@ -83,7 +81,6 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             className={styles.backdrop}
             initial={{ opacity: 0 }}
@@ -92,7 +89,6 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
             onClick={onClose}
           />
 
-          {/* Modal Container */}
           <motion.div
             className={styles.modal}
             initial={{ opacity: 0, scale: 0.95, y: '-50%', x: '-50%' }}
