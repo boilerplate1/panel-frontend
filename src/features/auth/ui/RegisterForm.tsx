@@ -19,12 +19,13 @@ export function RegisterForm() {
 
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showCaptcha, setShowCaptcha] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [formDataState, setFormDataState] = useState<any>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isLoading) return;
+
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
@@ -36,16 +37,10 @@ export function RegisterForm() {
     }
 
     if (!captchaToken) {
-      setError(null);
-      setFormDataState({ username, password, confirmPassword });
-      setShowCaptcha(true);
+      setError(t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'));
       return;
     }
 
-    await performRegister(username, password, confirmPassword, captchaToken);
-  };
-
-  const performRegister = async (username: string, password: string, confirmPassword: string, token: string) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -53,7 +48,7 @@ export function RegisterForm() {
         username, 
         password, 
         confirmPassword, 
-        captchaToken: token 
+        captchaToken: captchaToken 
       });
       login(data.accessToken, data.user);
       showToast(t('auth.register_success'), 'success');
@@ -61,8 +56,6 @@ export function RegisterForm() {
     } catch (err) {
       const msg = getApiErrorMessage(err, t('auth.register_error'), t);
       setError(msg);
-      // Reset captcha on error
-      setCaptchaToken(null);
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +96,6 @@ export function RegisterForm() {
           required
           autoComplete="username"
           disabled={isLoading}
-          defaultValue={formDataState?.username}
         />
         <FormField
           name="password"
@@ -114,7 +106,6 @@ export function RegisterForm() {
           autoComplete="new-password"
           showPasswordToggle
           disabled={isLoading}
-          defaultValue={formDataState?.password}
         />
         <FormField
           name="confirmPassword"
@@ -125,28 +116,22 @@ export function RegisterForm() {
           autoComplete="new-password"
           showPasswordToggle
           disabled={isLoading}
-          defaultValue={formDataState?.confirmPassword}
         />
 
-        {showCaptcha && (
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
-            <Turnstile
-              siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-              onSuccess={(token) => {
-                setCaptchaToken(token);
-                if (formDataState) {
-                  performRegister(formDataState.username, formDataState.password, formDataState.confirmPassword, token);
-                }
-              }}
-              options={{
-                action: 'register',
-                theme: 'dark',
-              }}
-            />
-          </div>
-        )}
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0', minHeight: '65px' }}>
+          <Turnstile
+            siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
+            onSuccess={(token) => setCaptchaToken(token)}
+            onExpire={() => setCaptchaToken(null)}
+            onError={() => setCaptchaToken(null)}
+            options={{
+              action: 'register',
+              theme: 'dark',
+            }}
+          />
+        </div>
 
-        <Button type="submit" className={styles.submitBtn} disabled={isLoading || (showCaptcha && !captchaToken)}>
+        <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />
           ) : (
