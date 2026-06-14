@@ -12,9 +12,13 @@ interface DrawerProps {
 
 export function Drawer({ isOpen, onClose, title, children, description }: DrawerProps) {
   return (
-    <VaulDrawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <VaulDrawer.Root 
+      open={isOpen} 
+      onOpenChange={(open) => !open && onClose()}
+      shouldScaleBackground={false}
+    >
       <VaulDrawer.Portal>
-        <VaulDrawer.Overlay className={styles.overlay} onClick={onClose} />
+        <VaulDrawer.Overlay className={styles.overlay} />
         <VaulDrawer.Content className={styles.content}>
           <div className={styles.handle} />
           <div className={styles.inner}>

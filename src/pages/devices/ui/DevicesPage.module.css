@@ -153,9 +153,17 @@
   .modalActions {
     flex-direction: column;
     width: 100%;
+    gap: var(--spacing-2);
   }
 
   .modalActions button {
     width: 100%;
+    padding: var(--spacing-4);
+    font-size: var(--font-size-base);
+  }
+
+  .modalContent {
+    gap: var(--spacing-4);
+    padding-bottom: var(--spacing-2);
   }
 }
