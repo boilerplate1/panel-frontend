@@ -101,20 +101,14 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           disabled={isLoading}
         />
 
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0', minHeight: '65px', border: '1px dashed #444' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
           <Turnstile
             siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-            onSuccess={(token) => {
-              console.log('Turnstile Success:', token.substring(0, 10) + '...');
-              setCaptchaToken(token);
-            }}
-            onExpire={() => {
-              console.warn('Turnstile Expired');
-              setCaptchaToken(null);
-            }}
-            onError={(err) => {
-              console.error('Turnstile Error:', err);
-              setCaptchaToken(null);
+            onSuccess={(token) => setCaptchaToken(token)}
+            onExpire={() => setCaptchaToken(null)}
+            onError={() => setCaptchaToken(null)}
+            options={{
+              theme: 'dark',
             }}
           />
         </div>
