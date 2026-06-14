@@ -116,6 +116,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           showPasswordToggle
           disabled={isLoading}
+        />
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
