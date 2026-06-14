@@ -12,6 +12,18 @@ jobs:
       contents: read
       deployments: write
     steps:
+      - name: Notify Telegram (Build Started)
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🏗 *Frontend (Cloudflare) Build & Deploy Started*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            🔗 [View Progress](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
       - name: Checkout Source
         uses: actions/checkout@v4
 
@@ -30,15 +42,37 @@ jobs:
           VITE_ANDROID_APK_URL: https://hpxvpn.xyz/downloads/hypexvpn.apk
         run: npm run build
 
-      - name: Verify Build
-        run: ls -R dist
-
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          echo "Checking wrangler version..."
-          npx wrangler --version
-          echo "Deploying to Pages..."
-          npx wrangler pages deploy dist --project-name=hypex-frontend --branch=master
+        run: npx wrangler pages deploy dist --project-name=hypex-frontend --branch=master
+
+      - name: Notify Telegram (Success)
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ✅ *Frontend (Cloudflare) Deployed Successfully!*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            📝 *Commit:* ${{ github.event.head_commit.message }}
+            🔗 [View Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      - name: Notify Telegram (Failure)
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ❌ *Frontend (Cloudflare) Deployment Failed!*
+            
+            🏷 *Repo:* ${{ github.repository }}
+            👤 *Author:* ${{ github.actor }}
+            📝 *Commit:* ${{ github.event.head_commit.message }}
+            📉 *Status:* Build or Push to Cloudflare failed.
+            🔗 [Check Error Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
