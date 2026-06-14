@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, FormField, FormError, CaptchaModal } from '@/shared/ui';
+import { Turnstile } from '@marsidev/react-turnstile';
+import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
@@ -22,10 +23,12 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showCaptcha, setShowCaptcha] = useState(false);
-  const [pendingData, setPendingData] = useState<any>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [formDataState, setFormDataState] = useState<any>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
@@ -35,19 +38,23 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       return;
     }
 
-    setError(null);
-    setPendingData({ username, password });
-    setShowCaptcha(true);
+    if (!captchaToken) {
+      setError(null);
+      setFormDataState({ username, password });
+      setShowCaptcha(true);
+      return;
+    }
+
+    await performLogin(username, password, captchaToken);
   };
 
-  const handleCaptchaVerify = async (token: string) => {
-    setShowCaptcha(false);
-    if (!pendingData) return;
-
+  const performLogin = async (username: string, password: string, token: string) => {
     setIsLoading(true);
+    setError(null);
     try {
       const data = await authApi.loginWeb({ 
-        ...pendingData,
+        username,
+        password,
         captchaToken: token 
       });
 
@@ -65,9 +72,10 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       }
       
       setError(msg);
+      // Reset captcha on error
+      setCaptchaToken(null);
     } finally {
       setIsLoading(false);
-      setPendingData(null);
     }
   };
 
@@ -88,6 +96,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           required
           autoComplete="username"
           disabled={isLoading}
+          defaultValue={formDataState?.username}
         />
         <FormField
           name="password"
@@ -98,9 +107,28 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           autoComplete="current-password"
           showPasswordToggle
           disabled={isLoading}
+          defaultValue={formDataState?.password}
         />
 
-        <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
+        {showCaptcha && (
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
+            <Turnstile
+              siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
+              onSuccess={(token) => {
+                setCaptchaToken(token);
+                if (formDataState) {
+                  performLogin(formDataState.username, formDataState.password, token);
+                }
+              }}
+              options={{
+                action: 'login',
+                theme: 'dark',
+              }}
+            />
+          </div>
+        )}
+
+        <Button type="submit" className={styles.submitBtn} disabled={isLoading || (showCaptcha && !captchaToken)}>
           {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />
           ) : (
@@ -108,13 +136,6 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           )}
         </Button>
       </form>
-
-      <CaptchaModal
-        isOpen={showCaptcha}
-        onClose={() => setShowCaptcha(false)}
-        onVerify={handleCaptchaVerify}
-        siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-      />
 
       <div className={styles.footer}>
         <p>

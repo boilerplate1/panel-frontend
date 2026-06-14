@@ -23,7 +23,7 @@ export const APP_CONFIG = {
   API_BASE_URL: import.meta.env.VITE_API_URL,
   ANDROID_APK_URL: import.meta.env.VITE_ANDROID_APK_URL,
   RECAPTCHA_SITE_KEY:
-    import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6Le4KR4tAAAAADWC6zRe_vYosJMqDttFjiGSCNv7',
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY || '0x4AAAAAADksO24nf-9vXTAc',
   BASE_URL: import.meta.env.VITE_BASE_URL,
 } as const;
 

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, FormField, FormError, CaptchaModal } from '@/shared/ui';
+import { Turnstile } from '@marsidev/react-turnstile';
+import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
@@ -19,9 +20,10 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showCaptcha, setShowCaptcha] = useState(false);
-  const [pendingData, setPendingData] = useState<any>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [formDataState, setFormDataState] = useState<any>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
@@ -33,19 +35,24 @@ export function RegisterForm() {
       return;
     }
 
-    setError(null);
-    setPendingData({ username, password, confirmPassword });
-    setShowCaptcha(true);
+    if (!captchaToken) {
+      setError(null);
+      setFormDataState({ username, password, confirmPassword });
+      setShowCaptcha(true);
+      return;
+    }
+
+    await performRegister(username, password, confirmPassword, captchaToken);
   };
 
-  const handleCaptchaVerify = async (token: string) => {
-    setShowCaptcha(false);
-    if (!pendingData) return;
-
+  const performRegister = async (username: string, password: string, confirmPassword: string, token: string) => {
     setIsLoading(true);
+    setError(null);
     try {
       const data = await authApi.register({ 
-        ...pendingData, 
+        username, 
+        password, 
+        confirmPassword, 
         captchaToken: token 
       });
       login(data.accessToken, data.user);
@@ -54,9 +61,10 @@ export function RegisterForm() {
     } catch (err) {
       const msg = getApiErrorMessage(err, t('auth.register_error'), t);
       setError(msg);
+      // Reset captcha on error
+      setCaptchaToken(null);
     } finally {
       setIsLoading(false);
-      setPendingData(null);
     }
   };
 
@@ -95,6 +103,7 @@ export function RegisterForm() {
           required
           autoComplete="username"
           disabled={isLoading}
+          defaultValue={formDataState?.username}
         />
         <FormField
           name="password"
@@ -105,6 +114,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           showPasswordToggle
           disabled={isLoading}
+          defaultValue={formDataState?.password}
         />
         <FormField
           name="confirmPassword"
@@ -115,9 +125,28 @@ export function RegisterForm() {
           autoComplete="new-password"
           showPasswordToggle
           disabled={isLoading}
+          defaultValue={formDataState?.confirmPassword}
         />
 
-        <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
+        {showCaptcha && (
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
+            <Turnstile
+              siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
+              onSuccess={(token) => {
+                setCaptchaToken(token);
+                if (formDataState) {
+                  performRegister(formDataState.username, formDataState.password, formDataState.confirmPassword, token);
+                }
+              }}
+              options={{
+                action: 'register',
+                theme: 'dark',
+              }}
+            />
+          </div>
+        )}
+
+        <Button type="submit" className={styles.submitBtn} disabled={isLoading || (showCaptcha && !captchaToken)}>
           {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />
           ) : (
@@ -125,13 +154,6 @@ export function RegisterForm() {
           )}
         </Button>
       </form>
-
-      <CaptchaModal
-        isOpen={showCaptcha}
-        onClose={() => setShowCaptcha(false)}
-        onVerify={handleCaptchaVerify}
-        siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-      />
 
       <div className={styles.footer}>
         <p>
