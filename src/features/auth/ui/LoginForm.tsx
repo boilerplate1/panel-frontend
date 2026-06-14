@@ -107,10 +107,6 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
             onSuccess={(token) => setCaptchaToken(token)}
             onExpire={() => setCaptchaToken(null)}
             onError={() => setCaptchaToken(null)}
-            options={{
-              action: 'login',
-              theme: 'dark',
-            }}
           />
         </div>
 

@@ -124,10 +124,6 @@ export function RegisterForm() {
             onSuccess={(token) => setCaptchaToken(token)}
             onExpire={() => setCaptchaToken(null)}
             onError={() => setCaptchaToken(null)}
-            options={{
-              action: 'register',
-              theme: 'dark',
-            }}
           />
         </div>
 
