@@ -11,7 +11,6 @@ export * from './Toast';
 export * from './LangSwitcher';
 export * from './Seo/Seo';
 export * from './Drawer';
-export * from './CaptchaModal/CaptchaModal';
 export * from './FormField';
 export * from './FormError';
 export * from './MetricRow';
