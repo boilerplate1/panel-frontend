@@ -7,11 +7,10 @@ interface LabelProps {
   className?: string;
 }
 
-export function Label({ children, required, className = '' }: LabelProps) {
+export function Label({ children, className = '' }: LabelProps) {
   return (
     <label className={`${styles.root} ${className}`}>
       {children}
-      {required && <span className={styles.required}>*</span>}
     </label>
   );
 }

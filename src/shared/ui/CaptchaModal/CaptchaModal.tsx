@@ -11,7 +11,7 @@ interface CaptchaModalProps {
   isOpen: boolean;
   onClose: () => void;
   onVerify: (token: string) => void;
-  siteKey: string;
+  siteKey?: string;
 }
 
 export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModalProps) {
@@ -41,7 +41,7 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
   // Use portal to render at the end of document body
   if (typeof document === 'undefined') return null;
 
-  const captchaContent = (
+  const captchaContent = siteKey ? (
     <div className={styles.captchaWrapper}>
       <ReCAPTCHA
         ref={recaptchaRef}
@@ -51,6 +51,10 @@ export function CaptchaModal({ isOpen, onClose, onVerify, siteKey }: CaptchaModa
         size="normal"
         hl={t('shared.lang_code', 'ru')}
       />
+    </div>
+  ) : (
+    <div className={styles.configError} role="alert">
+      {t('auth.captcha_config_error', 'Captcha is not configured. Set VITE_RECAPTCHA_SITE_KEY.')}
     </div>
   );
 

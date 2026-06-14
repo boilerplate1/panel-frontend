@@ -31,12 +31,13 @@ select {
 
 html {
   min-height: 100%;
-  background-color: #0f0f0f;
+  background-color: var(--page-bg);
   overflow-x: clip;
 }
 
 body {
-  background-color: #0f0f0f;
+  min-height: 100%;
+  background-color: var(--page-bg);
   font-family: var(--text-font-family);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -53,6 +54,8 @@ body {
 
 #root {
   width: 100%;
+  min-height: 100dvh;
+  background-color: var(--page-bg);
   max-width: 100%;
   overflow-x: clip;
 }

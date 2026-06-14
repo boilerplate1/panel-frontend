@@ -10,22 +10,15 @@ export default function NotFoundPage() {
   const { t } = useTranslation();
 
   const is404 = !error || (isRouteErrorResponse(error) && error.status === 404);
+  const heading = is404 ? t('errors.error_404') : t('errors.system_error_title');
+  const description = is404 ? t('errors.not_found_desc') : t('errors.system_error_desc');
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
-        <h1 className={styles.title}>{is404 ? t('errors.error_404') : t('errors.oops')}</h1>
-        <p className={styles.text}>
-          {is404 ? (
-            t('errors.not_found_desc')
-          ) : (
-            <>
-              {t('errors.system_error_title')}
-              <br />
-              {t('errors.system_error_desc')}
-            </>
-          )}
-        </p>
+        <h1 className={styles.title}>{is404 ? heading : t('errors.oops')}</h1>
+        {!is404 && <h2 className={styles.subtitle}>{heading}</h2>}
+        <p className={styles.text}>{description}</p>
         <Button onClick={() => navigate('/')} variant="primary" className={styles.btn}>
           {t('shared.back_to_home')}
         </Button>
