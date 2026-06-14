@@ -70,7 +70,7 @@
   --status-error: #ff3b30;
   --status-info: #1d1d1f;
 
-  --overscroll-bg: #151515;
+  --overscroll-bg: #0f0f0f;
   --bg-app: #0f0f0f;
   --bg-page: #0f0f0f;
   --surface-app: #0f0f0f;
@@ -132,7 +132,7 @@ html[data-theme='dark'] {
   --status-error: #ff453a;
   --status-info: #f5f5f7;
 
-  --overscroll-bg: #151515;
+  --overscroll-bg: #0f0f0f;
   --bg-app: #0f0f0f;
   --bg-page: #0f0f0f;
   --surface-app: #0f0f0f;
