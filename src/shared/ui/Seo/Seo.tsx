@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ROUTES } from '@/shared/config';
 
 type SeoEntry = {
   title: string;
@@ -8,29 +9,33 @@ type SeoEntry = {
 };
 
 const seoByPath: Record<string, (t: (key: string) => string) => SeoEntry> = {
-  '/login': (t) => ({
+  [ROUTES.LOGIN]: (t) => ({
     title: t('seo.login_title'),
     description: t('seo.login_description'),
   }),
-  '/register': (t) => ({
+  [ROUTES.REGISTER]: (t) => ({
     title: t('seo.register_title'),
     description: t('seo.register_description'),
   }),
-  '/my': (t) => ({
+  [ROUTES.DASHBOARD]: (t) => ({
     title: t('seo.profile_title'),
     description: t('seo.profile_description'),
   }),
-  '/my/devices': (t) => ({
+  [ROUTES.DEVICES]: (t) => ({
     title: t('seo.devices_title'),
     description: t('seo.devices_description'),
   }),
-  '/my/history': (t) => ({
+  [ROUTES.HISTORY]: (t) => ({
     title: t('seo.history_title'),
     description: t('seo.history_description'),
   }),
-  '/pay': (t) => ({
+  [ROUTES.PAY]: (t) => ({
     title: t('seo.subscription_title'),
     description: t('seo.subscription_description'),
+  }),
+  [ROUTES.HOME]: (t) => ({
+    title: t('seo.home_title'),
+    description: t('seo.home_description'),
   }),
 };
 
@@ -56,8 +61,11 @@ export function Seo() {
   useEffect(() => {
     document.documentElement.lang = i18n.language.startsWith('ru') ? 'ru' : 'en';
 
-    const path = location.pathname.replace(/\/+$/, '') || '/login';
-    const entryFactory = seoByPath[path] ?? seoByPath['/login'];
+    // Normalize path for matching
+    const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+    
+    // Find best match or fallback to HOME
+    const entryFactory = seoByPath[currentPath] || seoByPath[ROUTES.HOME];
     const entry = entryFactory(t);
 
     document.title = entry.title;

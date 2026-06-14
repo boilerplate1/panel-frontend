@@ -6,6 +6,7 @@ import { useDevicesQuery } from '@/entities/device';
 import { useSubscriptionsQuery } from '@/entities/subscription';
 import { copyToClipboard, useUIStore } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
+import { ROUTES } from '@/shared/config';
 import { SubscriptionCard } from './SubscriptionCard';
 import styles from './ProfilePage.module.css';
 
@@ -64,7 +65,7 @@ function ProfilePage() {
               type="button"
               variant="secondary"
               className={styles.devicesBtn}
-              onClick={() => navigate('/pay')}
+              onClick={() => navigate(ROUTES.PAY)}
             >
               {t('dashboard.renew_subscription', 'Продлить подписку')}
             </Button>
@@ -73,12 +74,11 @@ function ProfilePage() {
           <>
             <SectionHeader
               title={t('dashboard.subscriptions')}
-              subtitle={t('dashboard.no_subscriptions')}
               className={styles.header}
             />
             <div className={styles.subscriptionEmpty}>
               <div className={styles.emptyState}>{t('dashboard.no_subscriptions')}</div>
-              <Button type="button" className={styles.devicesBtn} onClick={() => navigate('/pay')}>
+              <Button type="button" className={styles.devicesBtn} onClick={() => navigate(ROUTES.PAY)}>
                 {t('dashboard.purchase_subscription')}
               </Button>
             </div>
@@ -117,7 +117,7 @@ function ProfilePage() {
           type="button"
           variant="secondary"
           className={styles.devicesBtn}
-          onClick={() => navigate('/my/devices')}
+          onClick={() => navigate(ROUTES.DEVICES)}
         >
           <MonitorSmartphone size={22} />
           {t('dashboard.sidebar_devices')}

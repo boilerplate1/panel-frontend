@@ -144,7 +144,7 @@ const ru = {
     error_404: '404',
     not_found_desc: 'Походу кто-то удалил данную страницу',
     system_error_title: 'Упс, у нас проблемы',
-    system_error_desc: 'Уже работаем',
+    system_error_desc: 'Мы уже держим паяльник в руках и всё чиним',
   },
   footer: {
     all_rights_reserved: 'Все права защищены',

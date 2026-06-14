@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, FormField, FormError, CaptchaModal } from '@/shared/ui';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
 import { authApi } from '@/shared/api';
+import { APP_CONFIG, ROUTES } from '@/shared/config';
 import styles from './AuthForm.module.css';
 
 export function RegisterForm() {
@@ -49,7 +50,7 @@ export function RegisterForm() {
       });
       login(data.accessToken, data.user);
       showToast(t('auth.register_success'), 'success');
-      navigate('/my');
+      navigate(ROUTES.DASHBOARD);
     } catch (err) {
       const msg = getApiErrorMessage(err, t('auth.register_error'), t);
       setError(msg);
@@ -69,7 +70,7 @@ export function RegisterForm() {
         <div className={styles.disabledState}>
           <p className={styles.disabledTitle}>{t('auth.register_error')}</p>
           <p className={styles.disabledText}>{t('auth.register_hint')}</p>
-          <button type="button" onClick={() => navigate('/login')} className={styles.backBtn}>
+          <button type="button" onClick={() => navigate(ROUTES.LOGIN)} className={styles.backBtn}>
             {t('auth.login')}
           </button>
         </div>
@@ -86,13 +87,14 @@ export function RegisterForm() {
 
       {error && <FormError message={error} className={styles.globalError} />}
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} onChange={() => setError(null)}>
         <FormField
           name="username"
           label={t('auth.username')}
-          placeholder="shadowmind"
+          placeholder="tonystark"
           required
           autoComplete="username"
+          disabled={isLoading}
         />
         <FormField
           name="password"
@@ -101,6 +103,8 @@ export function RegisterForm() {
           placeholder={t('auth.password_placeholder')}
           required
           autoComplete="new-password"
+          showPasswordToggle
+          disabled={isLoading}
         />
         <FormField
           name="confirmPassword"
@@ -109,16 +113,15 @@ export function RegisterForm() {
           placeholder={t('auth.password_placeholder')}
           required
           autoComplete="new-password"
+          showPasswordToggle
+          disabled={isLoading}
         />
 
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />
           ) : (
-            <>
-              <span>{t('auth.register_btn')}</span>
-              <ArrowRight size={22} />
-            </>
+            t('auth.register_btn')
           )}
         </Button>
       </form>
@@ -127,13 +130,13 @@ export function RegisterForm() {
         isOpen={showCaptcha}
         onClose={() => setShowCaptcha(false)}
         onVerify={handleCaptchaVerify}
-        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+        siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
       />
 
       <div className={styles.footer}>
         <p>
           {t('auth.have_account')}
-          <button type="button" onClick={() => navigate('/login')} className={styles.link}>
+          <button type="button" onClick={() => navigate(ROUTES.LOGIN)} className={styles.link}>
             {t('auth.login')}
           </button>
         </p>

@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+}
+
+.content {
+  background: var(--surface-card);
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-top: 1px solid var(--border-subtle);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 94%;
+  max-height: 94%;
+  z-index: calc(var(--z-modal) + 1);
+  outline: none;
+}
+
+.handle {
+  width: 48px;
+  height: 6px;
+  border-radius: 100px;
+  background: var(--surface-secondary);
+  margin: 16px auto;
+  flex-shrink: 0;
+}
+
+.inner {
+  padding: 0 var(--spacing-8) calc(var(--spacing-10) + env(safe-area-inset-bottom));
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+  text-align: center;
+}
+
+.description {
+  font-size: var(--font-size-sm);
+  color: var(--text-dimmed);
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

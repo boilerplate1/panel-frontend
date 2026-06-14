@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useUIStore } from '@/shared/lib';
+import { ROUTES } from '@/shared/config';
 import styles from './DashboardSidebar.module.css';
 
 export function DashboardSidebar() {
@@ -48,7 +49,7 @@ export function DashboardSidebar() {
 
         <nav className={styles.nav}>
           <NavLink
-            to="/my"
+            to={ROUTES.DASHBOARD}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
           >
             <User size={22} />
@@ -56,7 +57,7 @@ export function DashboardSidebar() {
           </NavLink>
 
           <NavLink
-            to="/my/devices"
+            to={ROUTES.DEVICES}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
           >
             <MonitorSmartphone size={22} />
@@ -64,7 +65,7 @@ export function DashboardSidebar() {
           </NavLink>
 
           <NavLink
-            to="/my/history"
+            to={ROUTES.HISTORY}
             className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
           >
             <History size={22} />

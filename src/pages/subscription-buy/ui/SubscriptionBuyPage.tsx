@@ -32,6 +32,7 @@ import {
   formatDate,
   getApiErrorMessage,
 } from '@/shared/lib';
+import { ROUTES } from '@/shared/config';
 import styles from './SubscriptionBuyPage.module.css';
 
 function SubscriptionBuyPage() {
@@ -196,7 +197,7 @@ function SubscriptionBuyPage() {
   };
 
   const handleReturnToDashboard = () => {
-    navigate('/my');
+    navigate(ROUTES.DASHBOARD);
     setTimeout(() => {
       reset();
     }, 100);

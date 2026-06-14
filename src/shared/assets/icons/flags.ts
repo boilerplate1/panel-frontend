@@ -1,4 +1,6 @@
-const RU_FLAG = 'https://flagcdn.com/w40/ru.png';
-const EN_FLAG = 'https://flagcdn.com/w40/gb.png';
+import { EXTERNAL_CONFIG } from '../../config';
+
+const RU_FLAG = `${EXTERNAL_CONFIG.FLAG_CDN}/ru.png`;
+const EN_FLAG = `${EXTERNAL_CONFIG.FLAG_CDN}/gb.png`;
 
 export { RU_FLAG, EN_FLAG };

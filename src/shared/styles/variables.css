@@ -35,6 +35,7 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
+  --radius-button: 20px;
   --buy-card-radius: var(--radius-lg);
 
   --border-width: 1px;
@@ -49,9 +50,11 @@
   --z-modal: 50;
   --z-toast: 60;
 
-  --color-black: #000000;
+  --input-border: rgba(255, 255, 255, 0.1);
+
+  --color-black: #0f0f0f;
   --color-white: #ffffff;
-  --black: #000000;
+  --black: #0f0f0f;
   --white: #ffffff;
   --pure-white: #ffffff;
 
@@ -67,9 +70,9 @@
   --status-error: #ff3b30;
   --status-info: #1d1d1f;
 
-  --bg-app: #000000;
-  --bg-page: #000000;
-  --surface-app: #000000;
+  --bg-app: #0f0f0f;
+  --bg-page: #0f0f0f;
+  --surface-app: #0f0f0f;
   --surface-card: #1c1c1e;
   --surface-secondary: #2c2c2e;
   --surface-input: #1c1c1e;
@@ -97,8 +100,8 @@
   --text-on-accent: #000000;
   --avatar-bg: #f5f5f7;
   --avatar-foreground: #000000;
-  --text-primary: #f5f5f7;
-  --text-main: #f5f5f7;
+  --text-primary: #f5f5f5;
+  --text-main: #f5f5f5;
   --text-secondary: rgba(235, 235, 245, 0.72);
   --text-dimmed: rgba(235, 235, 245, 0.56);
   --text-muted: rgba(235, 235, 245, 0.44);
@@ -128,9 +131,9 @@ html[data-theme='dark'] {
   --status-error: #ff453a;
   --status-info: #f5f5f7;
 
-  --bg-app: #000000;
-  --bg-page: #000000;
-  --surface-app: #000000;
+  --bg-app: #0f0f0f;
+  --bg-page: #0f0f0f;
+  --surface-app: #0f0f0f;
   --surface-card: #1c1c1e;
   --surface-secondary: #2c2c2e;
   --surface-input: #1c1c1e;
@@ -158,8 +161,8 @@ html[data-theme='dark'] {
   --text-on-accent: #000000;
   --avatar-bg: #f5f5f7;
   --avatar-foreground: #000000;
-  --text-primary: #f5f5f7;
-  --text-main: #f5f5f7;
+  --text-primary: #f5f5f5;
+  --text-main: #f5f5f5;
   --text-secondary: rgba(235, 235, 245, 0.72);
   --text-dimmed: rgba(235, 235, 245, 0.56);
   --text-muted: rgba(235, 235, 245, 0.44);

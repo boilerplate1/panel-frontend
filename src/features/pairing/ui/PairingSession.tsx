@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui';
+import { APP_CONFIG } from '@/shared/config';
 import { usePairingInitQuery, usePairingStatusQuery } from '../api/query';
 import styles from './PairingSession.module.css';
 
@@ -28,7 +29,7 @@ export function PairingSession() {
       <Card className={styles.card}>
         <h2 className={styles.title}>{t('pairing.title')}</h2>
         <div className={styles.qrWrapper}>
-          <QRCodeSVG value={`https://hypex.web/auth/pair?sessionId=${sessionId}`} size={256} />
+          <QRCodeSVG value={`${APP_CONFIG.BASE_URL}/auth/pair?sessionId=${sessionId}`} size={256} />
         </div>
         <p className={styles.text}>{t('pairing.subtitle')}</p>
         {shortCode ? (

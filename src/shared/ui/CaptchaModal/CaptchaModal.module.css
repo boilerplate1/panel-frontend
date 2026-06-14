@@ -11,57 +11,48 @@
   top: 50%;
   left: 50%;
   width: 90%;
-  max-width: 440px;
+  max-width: 380px;
   background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 40px;
-  padding: var(--spacing-10);
-  z-index: calc(var(--z-modal) + 1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-.bottomSheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--surface-card);
-  border-top: 1px solid var(--border-subtle);
-  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  border: none;
+  border-radius: 32px;
   padding: var(--spacing-8);
-  padding-bottom: calc(var(--spacing-10) + env(safe-area-inset-bottom));
   z-index: calc(var(--z-modal) + 1);
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
-  min-height: 40vh;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-8);
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: var(--spacing-6);
+  padding: 0 var(--spacing-10);
+  position: relative;
+  min-height: 40px;
 }
 
 .title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   margin: 0;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .closeBtn {
   background: var(--surface-secondary);
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .closeBtn:hover {
@@ -74,16 +65,34 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-8);
-  flex: 1;
-  justify-content: center;
+  padding-top: var(--spacing-4);
+}
+
+.mobileContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: var(--spacing-6);
+  gap: var(--spacing-10);
 }
 
 .captchaWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  min-height: 80px;
-  transform: scale(1.1);
+  position: relative;
+  width: 300px; /* 304px - 4px (2px border on each side) */
+  height: 74px; /* 78px - 4px (2px border top/bottom) */
+  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* We target the div created by react-google-recaptcha and shift it to hide borders */
+.captchaWrapper > div {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 304px;
+  height: 78px;
 }
 
 .hint {

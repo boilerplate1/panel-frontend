@@ -7,6 +7,7 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
   containerClassName?: string;
+  showPasswordToggle?: boolean;
 }
 
 export function FormField({
@@ -14,6 +15,7 @@ export function FormField({
   error,
   required,
   containerClassName = '',
+  showPasswordToggle,
   ...props
 }: FormFieldProps) {
   return (
@@ -21,7 +23,7 @@ export function FormField({
       <Label className={styles.label} required={required}>
         {label}
       </Label>
-      <Input required={required} {...props} />
+      <Input required={required} showPasswordToggle={showPasswordToggle} {...props} />
       {error && <div className={styles.error}>{error}</div>}
     </div>
   );

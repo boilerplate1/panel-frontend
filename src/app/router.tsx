@@ -5,6 +5,7 @@ import { PublicRoute } from '@/app/guards/PublicRoute';
 import { GlobalLayout } from '@/app/layouts/GlobalLayout';
 import { DashboardLayout } from '@/app/layouts/DashboardLayout';
 import { AuthLayout } from '@/app/layouts/AuthLayout';
+import { ROUTES } from '@/shared/config';
 import { Loader2 } from 'lucide-react';
 import styles from './PageLoader.module.css';
 
@@ -29,7 +30,7 @@ const LazyLoad = ({ children }: { children: React.ReactNode }) => (
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <GlobalLayout />,
     errorElement: (
       <LazyLoad>
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/my" replace />,
+        element: <Navigate to={ROUTES.DASHBOARD} replace />,
       },
       {
         element: (
@@ -88,7 +89,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard/*',
-        element: <Navigate to="/my" replace />,
+        element: <Navigate to={ROUTES.DASHBOARD} replace />,
       },
       {
         element: (
@@ -104,6 +105,7 @@ export const router = createBrowserRouter([
                 <LoginPage />
               </LazyLoad>
             ),
+            handle: { title: 'auth.login' },
           },
           {
             path: 'register',
@@ -112,6 +114,7 @@ export const router = createBrowserRouter([
                 <RegisterPage />
               </LazyLoad>
             ),
+            handle: { title: 'auth.register' },
           },
         ],
       },

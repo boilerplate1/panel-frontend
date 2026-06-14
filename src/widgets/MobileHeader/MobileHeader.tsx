@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft } from 'lucide-react';
 import { Logo } from '@/shared/ui';
 import { useUIStore } from '@/shared/lib';
+import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
 
 export function MobileHeader() {
@@ -12,7 +13,7 @@ export function MobileHeader() {
   const matches = useMatches();
   const { toggleSidebar } = useUIStore();
 
-  const isRoot = location.pathname === '/my';
+  const isRoot = location.pathname === ROUTES.DASHBOARD;
 
   // Get title from router handle
   const currentMatch = matches[matches.length - 1];

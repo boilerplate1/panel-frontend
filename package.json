@@ -7,7 +7,7 @@
     "node": ">=23"
   },
   "scripts": {
-    "dev": "vite --host --configLoader native",
+    "dev": "vite --host --mode dev --configLoader native",
     "build": "npx tsc -b && vite build --config vite.config.cjs",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
@@ -16,21 +16,22 @@
   "dependencies": {
     "@tanstack/react-query": "^5.99.0",
     "@tanstack/react-query-devtools": "^5.99.0",
+    "@types/react-google-recaptcha": "^2.1.9",
     "axios": "^1.16.1",
+    "framer-motion": "^12.4.10",
     "i18next": "^26.0.8",
     "i18next-browser-languagedetector": "^8.2.1",
     "lucide-react": "^1.8.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-google-recaptcha": "^3.1.0",
     "react-i18next": "^17.0.6",
     "react-icons": "^5.6.0",
     "react-router-dom": "^7.14.1",
-    "@sentry/react": "^10.57.0",
+    "vaul": "^1.1.2",
     "zod": "^4.4.3",
-    "zustand": "^5.0.12",
-    "@marsidev/react-turnstile": "^1.1.0",
-    "framer-motion": "^12.4.10"
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -38,6 +39,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "esbuild": "^0.28.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -47,7 +49,6 @@
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.58.0",
-    "vite": "^8.0.16",
-    "esbuild": "^0.28.0"
+    "vite": "^8.0.16"
   }
 }

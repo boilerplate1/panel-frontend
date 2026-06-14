@@ -31,24 +31,24 @@ select {
 
 html {
   min-height: 100%;
-  background-color: #000000;
+  background-color: #0f0f0f;
   overflow-x: clip;
 }
 
 body {
-  background-color: #000000;
+  background-color: #0f0f0f;
   font-family: var(--text-font-family);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings:
-    'liga' 1,
-    'kern' 1;
-  line-height: 1.5;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+}
+
+/* Скрываем плашку reCAPTCHA v3 */
+.grecaptcha-badge {
+  visibility: hidden !important;
 }
 
 #root {
