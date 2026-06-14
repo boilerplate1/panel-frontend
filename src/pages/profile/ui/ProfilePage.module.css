@@ -91,16 +91,30 @@
 .item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--spacing-4);
   padding: var(--spacing-4) 0;
   border-bottom: none;
   background: transparent;
   border-radius: 0;
 }
 
+.itemIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
 .itemContent {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
   gap: 3px;
 }
 

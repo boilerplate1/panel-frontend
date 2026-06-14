@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Loader2, MonitorSmartphone, CheckCircle } from 'lucide-react';
+import { ChevronRight, Loader2, MonitorSmartphone, CheckCircle, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useDevicesQuery } from '@/entities/device';
 import { useSubscriptionsQuery } from '@/entities/subscription';
@@ -31,6 +31,13 @@ function ProfilePage() {
     if (success) {
       showToast(t('profile.copied'), 'success');
     }
+  };
+
+  const getDeviceIcon = (type: string) => {
+    const t = type.toLowerCase();
+    if (t.includes('ios') || t.includes('android') || t.includes('phone')) return <Smartphone size={18} />;
+    if (t.includes('windows') || t.includes('macos') || t.includes('desktop')) return <Monitor size={18} />;
+    return <Globe size={18} />;
   };
 
   return (
@@ -100,10 +107,20 @@ function ProfilePage() {
             </div>
           ) : devicePreview.length > 0 ? (
             devicePreview.map((device) => (
-              <div key={device.id} className={styles.item}>
+              <div 
+                key={device.id} 
+                className={styles.item}
+                onClick={() => navigate(ROUTES.DEVICES)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className={styles.itemIconWrapper}>
+                  {getDeviceIcon(device.type)}
+                </div>
                 <div className={styles.itemContent}>
                   <div className={styles.itemName}>{device.name}</div>
-                  <div className={styles.itemStatus}>{device.lastSeen}</div>
+                  <div className={styles.itemStatus}>
+                    {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
+                  </div>
                 </div>
                 <ChevronRight size={22} className={styles.itemChevron} />
               </div>
