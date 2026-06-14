@@ -2,6 +2,7 @@ import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Turnstile as ReactTurnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { Loader2 } from 'lucide-react';
 import { APP_CONFIG } from '@/shared/config';
+import styles from './TurnstileWidget.module.css';
 
 interface TurnstileWidgetProps {
   onSuccess: (token: string) => void;
@@ -24,20 +25,10 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
     }));
 
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        width: '100%',
-        margin: '1rem 0', 
-        padding: '8px',
-        background: 'var(--surface-secondary, rgba(255, 255, 255, 0.05))',
-        borderRadius: '12px',
-        minHeight: '65px',
-        position: 'relative'
-      }}>
+      <div className={styles.wrapper}>
         {!isLoaded && (
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
-            <Loader2 className="spinner" size={20} />
+          <div className={styles.loaderWrapper}>
+            <Loader2 className={styles.spinner} size={20} />
           </div>
         )}
         <ReactTurnstile

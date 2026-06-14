@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Turnstile } from '@marsidev/react-turnstile';
+import { TurnstileWidget, type TurnstileWidgetRef } from '@/features/captcha';
 import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
 import { authApi } from '@/shared/api';
-import { APP_CONFIG, ROUTES } from '@/shared/config';
+import { ROUTES } from '@/shared/config';
 import styles from './AuthForm.module.css';
 
 export function RegisterForm() {
@@ -20,7 +20,7 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const turnstileRef = useRef<any>(null);
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
   const isSubmitting = useRef(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -126,34 +126,13 @@ export function RegisterForm() {
           disabled={isLoading}
         />
 
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          width: '100%',
-          margin: '1rem 0', 
-          padding: '8px',
-          background: 'var(--surface-secondary, rgba(255, 255, 255, 0.05))',
-          borderRadius: '12px',
-          minHeight: '65px',
-          position: 'relative'
-        }}>
-          {!captchaToken && !isLoading && (
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
-              <Loader2 className={styles.spinner} size={20} />
-            </div>
-          )}
-          <Turnstile
-            ref={turnstileRef}
-            siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-            onSuccess={(token) => setCaptchaToken(token)}
-            onExpire={() => setCaptchaToken(null)}
-            onError={() => setCaptchaToken(null)}
-            options={{
-              theme: 'dark',
-              size: 'normal',
-            }}
-          />
-        </div>
+        <TurnstileWidget
+          ref={turnstileRef}
+          onSuccess={setCaptchaToken}
+          onExpire={() => setCaptchaToken(null)}
+          onError={() => setCaptchaToken(null)}
+          action="register"
+        />
 
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? (
