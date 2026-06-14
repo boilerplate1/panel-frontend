@@ -120,15 +120,13 @@ export function RegisterForm() {
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
-          margin: '1.25rem 0', 
-          padding: '12px',
-          background: 'rgba(255, 255, 255, 0.03)',
-          borderRadius: '12px',
+          width: '100%',
+          margin: '0.75rem 0', 
           minHeight: '65px',
           position: 'relative'
         }}>
           {!captchaToken && !isLoading && (
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.5 }}>
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.3 }}>
               <Loader2 className={styles.spinner} size={20} />
             </div>
           )}
@@ -139,6 +137,7 @@ export function RegisterForm() {
             onError={() => setCaptchaToken(null)}
             options={{
               theme: 'dark',
+              size: 'normal',
             }}
           />
         </div>
