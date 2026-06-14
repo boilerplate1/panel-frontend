@@ -48,16 +48,6 @@
   white-space: nowrap;
 }
 
-.renameInput {
-  background: var(--surface-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  padding: var(--spacing-1) var(--spacing-2);
-  width: 100%;
-}
-
 .itemActions {
   display: flex;
   align-items: center;
@@ -76,6 +66,20 @@
 .dropdownTrigger:hover {
   background: var(--surface-tertiary);
   color: var(--text-primary);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.modalActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-2);
 }
 
 .itemStatus {
@@ -144,5 +148,14 @@
     font-size: 11px;
     line-height: 1.35;
     margin-top: 2px;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .modalActions button {
+    width: 100%;
   }
 }

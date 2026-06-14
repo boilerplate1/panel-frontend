@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth';
-import { Card, SectionHeader, Dropdown } from '@/shared/ui';
+import { Card, SectionHeader, Dropdown, Modal, Button, Input } from '@/shared/ui';
 import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
@@ -62,21 +62,7 @@ function DevicesPage() {
               devices.map((device) => (
                 <div key={device.id} className={styles.item}>
                   <div className={styles.itemInfo}>
-                    {editingId === device.id ? (
-                      <input
-                        autoFocus
-                        className={styles.renameInput}
-                        value={editName}
-                        onChange={(e) => setEditName(e.target.value)}
-                        onBlur={handleSaveEdit}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') handleSaveEdit();
-                          if (e.key === 'Escape') setEditingId(null);
-                        }}
-                      />
-                    ) : (
-                      <div className={styles.itemName}>{device.name}</div>
-                    )}
+                    <div className={styles.itemName}>{device.name}</div>
                     <div className={styles.itemStatus}>
                       {getDeviceIcon(device.type)}
                       <span>{device.type}</span>
@@ -116,6 +102,36 @@ function DevicesPage() {
           </div>
         )}
       </Card>
+
+      <Modal
+        isOpen={!!editingId}
+        onClose={() => setEditingId(null)}
+        title={t('common.rename')}
+      >
+        <div className={styles.modalContent}>
+          <Input
+            autoFocus
+            label={t('devices.name_label', 'Название устройства')}
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSaveEdit();
+              if (e.key === 'Escape') setEditingId(null);
+            }}
+          />
+          <div className={styles.modalActions}>
+            <Button variant="outline" onClick={() => setEditingId(null)}>
+              {t('common.cancel')}
+            </Button>
+            <Button 
+              onClick={handleSaveEdit}
+              disabled={!editName.trim() || updateDeviceMutation.isPending}
+            >
+              {updateDeviceMutation.isPending ? <Loader2 className={styles.spinner} size={18} /> : t('common.save')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
