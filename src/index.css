@@ -31,13 +31,14 @@ select {
 
 html {
   min-height: 100%;
-  background-color: var(--page-bg);
+  background: var(--overscroll-bg);
   overflow-x: clip;
+  overscroll-behavior-y: none;
 }
 
 body {
   min-height: 100%;
-  background-color: var(--page-bg);
+  background: var(--overscroll-bg);
   font-family: var(--text-font-family);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -55,7 +56,7 @@ body {
 #root {
   width: 100%;
   min-height: 100dvh;
-  background-color: var(--page-bg);
+  background: var(--page-bg);
   max-width: 100%;
   overflow-x: clip;
 }
