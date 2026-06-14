@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Turnstile } from '@marsidev/react-turnstile';
@@ -23,11 +23,13 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  
+  const isSubmitting = useRef(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    if (isLoading) return;
+    if (isLoading || isSubmitting.current) return;
 
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
@@ -43,13 +45,17 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       return;
     }
 
+    const currentToken = captchaToken;
+    setCaptchaToken(null);
     setIsLoading(true);
+    isSubmitting.current = true;
     setError(null);
+
     try {
       const data = await authApi.loginWeb({ 
         username,
         password,
-        captchaToken: captchaToken 
+        captchaToken: currentToken 
       });
 
       authLogin(data.accessToken, data.user);
@@ -66,9 +72,9 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       }
       
       setError(msg);
-      // Reset captcha on error is often not needed for Turnstile as it handles retries
     } finally {
       setIsLoading(false);
+      isSubmitting.current = false;
     }
   };
 
