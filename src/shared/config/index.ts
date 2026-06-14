@@ -22,7 +22,8 @@ export const APP_CONFIG = {
   BRAND_NAME: 'Hypex',
   API_BASE_URL: import.meta.env.VITE_API_URL,
   ANDROID_APK_URL: import.meta.env.VITE_ANDROID_APK_URL,
-  RECAPTCHA_SITE_KEY: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+  RECAPTCHA_SITE_KEY:
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6Le4KR4tAAAAADWC6zRe_vYosJMqDttFjiGSCNv7',
   BASE_URL: import.meta.env.VITE_BASE_URL,
 } as const;
 

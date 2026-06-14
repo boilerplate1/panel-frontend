@@ -40,6 +40,11 @@
   padding-right: 48px;
 }
 
+.passwordDots {
+  font-size: var(--font-size-sm);
+  letter-spacing: 1px;
+}
+
 .toggle {
   position: absolute;
   right: 14px;

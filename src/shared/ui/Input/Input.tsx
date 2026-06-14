@@ -11,12 +11,13 @@ export function Input({ className = '', type, showPasswordToggle, ...props }: In
 
   const isPassword = type === 'password';
   const inputType = isPassword && showPassword ? 'text' : type;
+  const passwordClass = isPassword && !showPassword ? styles.passwordDots : '';
 
   if (isPassword && showPasswordToggle) {
     return (
       <div className={styles.wrapper}>
         <input
-          className={`${styles.root} ${styles.withToggle} ${className}`}
+          className={`${styles.root} ${styles.withToggle} ${passwordClass} ${className}`}
           type={inputType}
           {...props}
         />
