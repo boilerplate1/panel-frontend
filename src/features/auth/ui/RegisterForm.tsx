@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Turnstile } from '@marsidev/react-turnstile';
@@ -20,11 +20,13 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<any>(null);
+  const isSubmitting = useRef(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (isLoading) return;
+    if (isLoading || isSubmitting.current) return;
 
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
@@ -41,14 +43,18 @@ export function RegisterForm() {
       return;
     }
 
+    const currentToken = captchaToken;
+    setCaptchaToken(null);
     setIsLoading(true);
+    isSubmitting.current = true;
     setError(null);
+
     try {
       const data = await authApi.register({ 
         username, 
         password, 
         confirmPassword, 
-        captchaToken: captchaToken 
+        captchaToken: currentToken 
       });
       login(data.accessToken, data.user);
       showToast(t('auth.register_success'), 'success');
@@ -56,8 +62,10 @@ export function RegisterForm() {
     } catch (err) {
       const msg = getApiErrorMessage(err, t('auth.register_error'), t);
       setError(msg);
+      turnstileRef.current?.reset();
     } finally {
       setIsLoading(false);
+      isSubmitting.current = false;
     }
   };
 
@@ -117,14 +125,15 @@ export function RegisterForm() {
           showPasswordToggle
           disabled={isLoading}
         />
+
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
           width: '100%',
-          margin: '1.25rem 0', 
-          padding: '16px',
-          border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
-          borderRadius: '16px',
+          margin: '1rem 0', 
+          padding: '8px',
+          background: 'var(--surface-secondary, rgba(255, 255, 255, 0.05))',
+          borderRadius: '12px',
           minHeight: '65px',
           position: 'relative'
         }}>
@@ -134,6 +143,7 @@ export function RegisterForm() {
             </div>
           )}
           <Turnstile
+            ref={turnstileRef}
             siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
             onSuccess={(token) => setCaptchaToken(token)}
             onExpire={() => setCaptchaToken(null)}
@@ -144,6 +154,7 @@ export function RegisterForm() {
             }}
           />
         </div>
+
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? (
             <Loader2 className={styles.spinner} size={22} />

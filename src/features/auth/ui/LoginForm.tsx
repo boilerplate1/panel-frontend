@@ -23,7 +23,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  
+  const turnstileRef = useRef<any>(null);
   const isSubmitting = useRef(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +72,8 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       }
       
       setError(msg);
+      // Reset Turnstile widget so user can get a new token
+      turnstileRef.current?.reset();
     } finally {
       setIsLoading(false);
       isSubmitting.current = false;
@@ -111,10 +113,10 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           display: 'flex', 
           justifyContent: 'center', 
           width: '100%',
-          margin: '1.25rem 0', 
-          padding: '16px',
-          border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
-          borderRadius: '16px',
+          margin: '1rem 0', 
+          padding: '8px',
+          background: 'var(--surface-secondary, rgba(255, 255, 255, 0.05))',
+          borderRadius: '12px',
           minHeight: '65px',
           position: 'relative'
         }}>
@@ -124,10 +126,9 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
             </div>
           )}
           <Turnstile
+            ref={turnstileRef}
             siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-            onSuccess={(token) => {
-              setCaptchaToken(token);
-            }}
+            onSuccess={(token) => setCaptchaToken(token)}
             onExpire={() => setCaptchaToken(null)}
             onError={() => setCaptchaToken(null)}
             options={{
