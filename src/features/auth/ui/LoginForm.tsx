@@ -105,7 +105,10 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           display: 'flex', 
           justifyContent: 'center', 
           width: '100%',
-          margin: '0.75rem 0', 
+          margin: '1.25rem 0', 
+          padding: '16px',
+          border: '1px solid var(--border-color, rgba(255, 255, 255, 0.1))',
+          borderRadius: '16px',
           minHeight: '65px',
           position: 'relative'
         }}>
