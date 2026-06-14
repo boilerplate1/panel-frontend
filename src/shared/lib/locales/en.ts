@@ -284,6 +284,7 @@ const en = {
     already_registered_from_this_ip: 'An account is already registered from this IP address',
     too_many_attempts: 'Too many attempts. Take a rest!',
     lockout_message: 'Access temporarily restricted. Try again in {{minutes}} min.',
+    device_limit_reached: 'Device limit reached. Delete old devices in your profile.',
     email_exists: 'A user with this email already exists',
     registration_disabled: 'Registration is disabled',
     username_policy: 'Username must be 3-32 characters and use only Latin letters or numbers',
@@ -328,6 +329,14 @@ const en = {
     empty: 'You do not have any devices yet',
     pending: 'Pending pairing',
     paired: 'Paired device',
+    last_seen: 'Last seen:',
+    confirm_delete: 'Are you sure you want to delete this device? It will be logged out.',
+  },
+  common: {
+    rename: 'Rename',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    save: 'Save',
   },
   settings: {
     title: 'Settings',

@@ -25,6 +25,7 @@
 .item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--spacing-4);
   padding: var(--spacing-3) var(--spacing-4);
   background: var(--surface-secondary);
@@ -32,9 +33,49 @@
   transition: all 0.2s ease;
 }
 
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
 .itemName {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.renameInput {
+  background: var(--surface-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  padding: var(--spacing-1) var(--spacing-2);
+  width: 100%;
+}
+
+.itemActions {
+  display: flex;
+  align-items: center;
+}
+
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.dropdownTrigger:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
 }
 
 .itemStatus {
