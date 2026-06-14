@@ -101,7 +101,15 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           disabled={isLoading}
         />
 
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          margin: '1.25rem 0', 
+          padding: '12px',
+          background: 'rgba(255, 255, 255, 0.03)',
+          borderRadius: '12px',
+          minHeight: '65px' 
+        }}>
           <Turnstile
             siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
             onSuccess={(token) => setCaptchaToken(token)}
