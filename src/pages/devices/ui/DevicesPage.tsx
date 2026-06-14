@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth';
-import { Card, SectionHeader, Dropdown, Modal, Button, Input } from '@/shared/ui';
+import { Card, SectionHeader, Dropdown, Modal, Button, FormField } from '@/shared/ui';
 import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
@@ -109,7 +109,7 @@ function DevicesPage() {
         title={t('common.rename')}
       >
         <div className={styles.modalContent}>
-          <Input
+          <FormField
             autoFocus
             label={t('devices.name_label', 'Название устройства')}
             value={editName}
