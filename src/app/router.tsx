@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
             handle: { title: 'dashboard.sidebar_history' },
           },
           {
-            path: 'pay',
+            path: 'dashboard/pay',
             element: (
               <LazyLoad>
                 <SubscriptionBuyPage />
