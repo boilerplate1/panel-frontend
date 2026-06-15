@@ -24,11 +24,11 @@ export const ResponsiveModal = ({ isOpen, onClose, title, children }: Responsive
   if (!isOpen) return null;
 
   return isMobile ? (
-    <Drawer isOpen={isOpen} onClose={onClose} title={title}>
+    <Drawer isOpen={isOpen} onClose={onClose} title={title || ''}>
       {children}
     </Drawer>
   ) : (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title || ''}>
       {children}
     </Modal>
   );
