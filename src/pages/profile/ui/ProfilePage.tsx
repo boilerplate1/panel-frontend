@@ -6,6 +6,7 @@ import { useDevicesQuery } from '@/entities/device';
 import { useSubscriptionsQuery } from '@/entities/subscription';
 import { copyToClipboard, useUIStore } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
+import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
 import { ROUTES } from '@/shared/config';
 import { SubscriptionCard } from './SubscriptionCard';
 import styles from './ProfilePage.module.css';
@@ -54,9 +55,7 @@ function ProfilePage() {
 
       <Card padding="medium" className={styles.card}>
         {subscriptionsLoading ? (
-          <div className={styles.emptyState}>
-            <Loader2 className={styles.spinner} />
-          </div>
+          <SubscriptionCardSkeleton />
         ) : activeSubscription ? (
           <>
             <SubscriptionCard
@@ -97,9 +96,10 @@ function ProfilePage() {
 
         <div className={styles.container}>
           {devicesLoading ? (
-            <div className={styles.emptyState}>
-              <Loader2 className={styles.spinner} />
-            </div>
+            <>
+              <DeviceCardSkeleton />
+              <DeviceCardSkeleton />
+            </>
           ) : devicePreview.length > 0 ? (
             devicePreview.map((device) => (
               <div 
