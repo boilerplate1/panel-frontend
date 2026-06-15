@@ -24,6 +24,9 @@ function BalanceHistoryPage() {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _unused = { fetchNextPage, hasNextPage }; 
+
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
   const history = data?.pages.flatMap((page) => page.items) ?? [];
   const selectedItem = history.find((item) => item.id === selectedItemId) ?? null;
