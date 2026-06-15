@@ -17,7 +17,7 @@ export function PairingSession() {
 
   useEffect(() => {
     if (statusQuery.data?.status === 'confirmed') {
-      navigate('/my/devices');
+      navigate('/dashboard/devices');
     }
   }, [navigate, statusQuery.data?.status]);
 
