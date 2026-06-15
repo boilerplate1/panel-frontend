@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Loader2, MonitorSmartphone, Smartphone, Monitor, Globe } from 'lucide-react';
+import { ChevronRight, MonitorSmartphone, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useDevicesQuery } from '@/entities/device';
 import { useSubscriptionsQuery } from '@/entities/subscription';

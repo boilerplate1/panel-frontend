@@ -1,0 +1,117 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--spacing-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  border: none;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-8);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--spacing-3);
+}
+
+.modalRow,
+.modalError {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-tertiary);
+  border: 1px solid var(--surface-tertiary);
+}
+
+.modalRow span,
+.modalError span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.modalRow strong,
+.modalError strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  word-break: break-word;
+}
+
+.modalProviderValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.modalProviderIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.modalError {
+  background: color-mix(in srgb, var(--status-error) 8%, transparent);
+  border-color: color-mix(in srgb, var(--status-error) 18%, transparent);
+}
+
+.modalLink {
+  width: 100%;
+  margin-top: var(--spacing-4);
+}
+
+.modalSupportBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--spacing-4);
+}
+
+.modalSupportText {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.45;
+  text-align: center;
+}
