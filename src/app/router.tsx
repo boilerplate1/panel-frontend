@@ -85,8 +85,17 @@ export const router = createBrowserRouter([
             ),
             handle: { title: 'dashboard.history_title' },
           },
+        ],
+      },
+      {
+        element: (
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
+        children: [
           {
-            path: 'dashboard/pay',
+            path: 'pay',
             element: (
               <LazyLoad>
                 <SubscriptionBuyPage />
