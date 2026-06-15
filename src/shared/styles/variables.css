@@ -15,11 +15,27 @@
   --spacing-16: 64px;
 
   --font-size-xs: 12px;
+  /* Existing variables ... */
   --font-size-sm: 14px;
   --font-size-base: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 20px;
   --font-size-2xl: 24px;
+  
+  /* ... */
+
+  /* Media query for smaller monitors */
+  @media (max-width: 1440px) {
+    :root {
+      --spacing-3: 10px;
+      --spacing-4: 14px;
+      --spacing-5: 18px;
+      --spacing-6: 22px;
+      --font-size-base: 15px;
+      --font-size-lg: 17px;
+      --font-size-xl: 19px;
+    }
+  }
   --font-h3: clamp(20px, 2vw, 24px);
   --font-h2: clamp(28px, 4vw, 40px);
   --font-h1: clamp(36px, 6vw, 56px);
