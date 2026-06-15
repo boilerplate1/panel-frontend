@@ -113,6 +113,7 @@ function DevicesPage() {
             autoFocus
             label={t('devices.name_label', 'Название устройства')}
             placeholder={t('devices.name_placeholder', 'Например: Мой второй рабочий телефон')}
+            hint={t('devices.name_hint', 'Пример: Мой второй рабочий телефон')}
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
             onKeyDown={(e) => {
