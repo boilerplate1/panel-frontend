@@ -36,6 +36,8 @@ function DevicesPage() {
     }
   };
 
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+
   const getDeviceIcon = (type: string) => {
     const t = type.toLowerCase();
     if (t.includes('ios') || t.includes('android') || t.includes('phone')) return <Smartphone size={18} />;
@@ -65,7 +67,7 @@ function DevicesPage() {
                     <div className={styles.itemName}>{device.name}</div>
                     <div className={`${styles.itemStatus} ${styles.deviceTypeStatus}`}>
                       <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
-                      <span>{device.type}</span>
+                      <span>{capitalize(device.type)}</span>
                       <span>•</span>
                       <span>{t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}</span>
                     </div>
