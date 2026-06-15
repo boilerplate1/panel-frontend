@@ -28,113 +28,116 @@ const LazyLoad = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<PageLoader />}>{children}</Suspense>
 );
 
-export const router = createBrowserRouter([
-  {
-    path: ROUTES.HOME,
-    element: <GlobalLayout />,
-    errorElement: (
-      <LazyLoad>
-        <NotFoundPage />
-      </LazyLoad>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Navigate to={ROUTES.DASHBOARD} replace />,
-      },
-      {
-        element: (
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        ),
-        children: [
-          {
-            path: 'dashboard',
-            element: (
-              <LazyLoad>
-                <ProfilePage />
-              </LazyLoad>
-            ),
-            handle: { title: 'dashboard.sidebar_profile' },
-          },
-          {
-            path: 'dashboard/devices',
-            element: (
-              <LazyLoad>
-                <DevicesPage />
-              </LazyLoad>
-            ),
-            handle: { title: 'dashboard.sidebar_devices' },
-          },
-          {
-            path: 'dashboard/history',
-            element: (
-              <LazyLoad>
-                <BalanceHistoryPage />
-              </LazyLoad>
-            ),
-            handle: { title: 'dashboard.sidebar_history' },
-          },
-          {
-            path: 'dashboard/history/:id',
-            element: (
-              <LazyLoad>
-                <BalanceHistoryDetailPage />
-              </LazyLoad>
-            ),
-            handle: { title: 'dashboard.history_title' },
-          },
-          {
-            path: 'dashboard/pay',
-            element: (
-              <LazyLoad>
-                <SubscriptionBuyPage />
-              </LazyLoad>
-            ),
-            handle: { hideSidebar: true, title: 'dashboard.buy_subscription_select' },
-          },
-        ],
-      },
-      {
-        path: 'dashboard/*',
-        element: <Navigate to={ROUTES.DASHBOARD} replace />,
-      },
-      {
-        element: (
-          <PublicRoute>
-            <AuthLayout />
-          </PublicRoute>
-        ),
-        children: [
-          {
-            path: 'login',
-            element: (
-              <LazyLoad>
-                <LoginPage />
-              </LazyLoad>
-            ),
-            handle: { title: 'auth.login' },
-          },
-          {
-            path: 'register',
-            element: (
-              <LazyLoad>
-                <RegisterPage />
-              </LazyLoad>
-            ),
-            handle: { title: 'auth.register' },
-          },
-        ],
-      },
-      {
-        path: '*',
-        element: (
-          <LazyLoad>
-            <NotFoundPage />
-          </LazyLoad>
-        ),
-      },
-    ],
-  },
-]);
+export const router = createBrowserRouter(
+  [
+    {
+      path: ROUTES.HOME,
+      element: <GlobalLayout />,
+      errorElement: (
+        <LazyLoad>
+          <NotFoundPage />
+        </LazyLoad>
+      ),
+      children: [
+        {
+          index: true,
+          element: <Navigate to={ROUTES.DASHBOARD} replace />,
+        },
+        {
+          element: (
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          ),
+          children: [
+            {
+              path: 'dashboard',
+              element: (
+                <LazyLoad>
+                  <ProfilePage />
+                </LazyLoad>
+              ),
+              handle: { title: 'dashboard.sidebar_profile' },
+            },
+            {
+              path: 'dashboard/devices',
+              element: (
+                <LazyLoad>
+                  <DevicesPage />
+                </LazyLoad>
+              ),
+              handle: { title: 'dashboard.sidebar_devices' },
+            },
+            {
+              path: 'dashboard/history',
+              element: (
+                <LazyLoad>
+                  <BalanceHistoryPage />
+                </LazyLoad>
+              ),
+              handle: { title: 'dashboard.sidebar_history' },
+            },
+            {
+              path: 'dashboard/history/:id',
+              element: (
+                <LazyLoad>
+                  <BalanceHistoryDetailPage />
+                </LazyLoad>
+              ),
+              handle: { title: 'dashboard.history_title' },
+            },
+            {
+              path: 'dashboard/pay',
+              element: (
+                <LazyLoad>
+                  <SubscriptionBuyPage />
+                </LazyLoad>
+              ),
+              handle: { hideSidebar: true, title: 'dashboard.buy_subscription_select' },
+            },
+          ],
+        },
+        {
+          path: 'dashboard/*',
+          element: <Navigate to={ROUTES.DASHBOARD} replace />,
+        },
+        {
+          element: (
+            <PublicRoute>
+              <AuthLayout />
+            </PublicRoute>
+          ),
+          children: [
+            {
+              path: 'login',
+              element: (
+                <LazyLoad>
+                  <LoginPage />
+                </LazyLoad>
+              ),
+              handle: { title: 'auth.login' },
+            },
+            {
+              path: 'register',
+              element: (
+                <LazyLoad>
+                  <RegisterPage />
+                </LazyLoad>
+              ),
+              handle: { title: 'auth.register' },
+            },
+          ],
+        },
+        {
+          path: '*',
+          element: (
+            <LazyLoad>
+              <NotFoundPage />
+            </LazyLoad>
+          ),
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL ?? '/' },
+);
