@@ -5,7 +5,7 @@ const path = require('path');
 // https://vite.dev/config/
 module.exports = defineConfig({
   plugins: [react()],
-  base: '/',
+  base: './',
   css: {
     modules: {
       generateScopedName: '[name]__[hash:base64:5]__[local]',
