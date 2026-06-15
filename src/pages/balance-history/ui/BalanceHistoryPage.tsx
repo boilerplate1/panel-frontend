@@ -1,6 +1,5 @@
-import { Loader2, X, ArrowLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth';
 import { usePaymentHistoryInfiniteQuery } from '@/features/payment-management';
@@ -13,7 +12,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { Card, Button, SectionHeader } from '@/shared/ui';
+import { Card, Button, SectionHeader, Modal } from '@/shared/ui';
 import styles from './BalanceHistoryPage.module.css';
 
 function BalanceHistoryPage() {
@@ -23,70 +22,20 @@ function BalanceHistoryPage() {
     usePaymentHistoryInfiniteQuery(!!user);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
   const history = data?.pages.flatMap((page) => page.items) ?? [];
   const selectedItem = history.find((item) => item.id === selectedItemId) ?? null;
-  const selectedItemStatus = selectedItem ? getPaymentStatusLabel(selectedItem.status, t) : '';
-  const selectedItemSubtitle = selectedItem
-    ? `${formatDate(selectedItem.expiresAt ?? selectedItem.createdAt)} • ${selectedItemStatus}`
-    : '';
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 992px)');
-    const update = () => setIsMobile(mediaQuery.matches);
-    update();
-    mediaQuery.addEventListener('change', update);
-    return () => mediaQuery.removeEventListener('change', update);
-  }, []);
-
-  useEffect(() => {
-    if (!hasNextPage || isFetchingNextPage) return;
-
-    const target = bottomRef.current;
-    if (!target) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      { rootMargin: '200px' },
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-  useEffect(() => {
-    if (!selectedItem) return;
-
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    const originalOverflow = document.body.style.overflow;
-    const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior;
-    const originalBodyOverscroll = document.body.style.overscrollBehavior;
-    document.documentElement.style.overflow = 'hidden';
-    document.documentElement.style.overscrollBehavior = 'none';
-    document.body.style.overflow = 'hidden';
-    document.body.style.overscrollBehavior = 'none';
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedItemId(null);
     };
 
     window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.documentElement.style.overflow = originalHtmlOverflow;
-      document.documentElement.style.overscrollBehavior = originalHtmlOverscroll;
-      document.body.style.overflow = originalOverflow;
-      document.body.style.overscrollBehavior = originalBodyOverscroll;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedItem]);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   if (!user) return null;
 
