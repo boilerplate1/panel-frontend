@@ -172,109 +172,83 @@ function BalanceHistoryPage() {
         )}
       </Card>
 
-      {selectedItem &&
-        createPortal(
-          <div
-            className={`${styles.modalOverlay} ${isMobile ? styles.fullScreen : ''}`}
-            onClick={closeModal}
-            role="presentation"
-          >
-            <div
-              className={`${styles.modal} ${isMobile ? styles.modalMobile : ''}`}
-              onClick={(event) => event.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-            >
-              <div className={styles.modalHeader}>
-                <div className={styles.modalTitleWrap}>
-                  <div className={styles.modalTitle}>
-                    {selectedItem.planName ?? t('dashboard.subscriptions')}
-                  </div>
-                  <div className={styles.modalSubtitle}>{selectedItemSubtitle}</div>
-                </div>
-                <button
-                  type="button"
-                  className={styles.closeButton}
-                  onClick={closeModal}
-                  aria-label={t('shared.close')}
-                >
-                  {isMobile ? <ArrowLeft size={22} /> : <X size={22} />}
-                </button>
-              </div>
-
-              <div className={styles.modalGrid}>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_provider')}</span>
-                  <strong className={styles.modalProviderValue}>
-                    {getPaymentProviderIcon(selectedItem.provider) ? (
-                      <img
-                        src={getPaymentProviderIcon(selectedItem.provider) as string}
-                        alt={getPaymentProviderLabel(selectedItem.provider)}
-                        className={styles.modalProviderIcon}
-                      />
-                    ) : null}
-                    <span>{getPaymentProviderLabel(selectedItem.provider)}</span>
-                  </strong>
-                </div>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_amount')}</span>
-                  <strong>
-                    {formatCurrency(selectedItem.amountCents, selectedItem.currency, locale)}
-                  </strong>
-                </div>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_status')}</span>
-                  <strong className={styles.modalStatusValue}>
-                    {getPaymentStatusLabel(selectedItem.status, t)}
-                  </strong>
-                </div>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_plan_id')}</span>
-                  <strong>{selectedItem.planId ?? '-'}</strong>
-                </div>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_payment_id')}</span>
-                  <strong>{selectedItem.providerPaymentId ?? '-'}</strong>
-                </div>
-                <div className={styles.modalRow}>
-                  <span>{t('dashboard.history_created')}</span>
-                  <strong>{formatDate(selectedItem.createdAt)}</strong>
-                </div>
-                <div className={`${styles.modalRow} ${styles.modalRowFullWide}`}>
-                  <span>{t('dashboard.history_updated')}</span>
-                  <strong>{formatDate(selectedItem.updatedAt)}</strong>
-                </div>
-                {selectedItem.lastError && (
-                  <div className={`${styles.modalError} ${styles.modalRowFullWide}`}>
-                    <span>{t('dashboard.history_error')}</span>
-                    <strong>{selectedItem.lastError}</strong>
-                  </div>
-                )}
-              </div>
-
-              {(selectedItem.providerInvoiceUrl || selectedItem.lastError) && (
-                <div className={styles.modalSupportBlock}>
-                  {selectedItem.providerInvoiceUrl && (
-                    <Button
-                      as="a"
-                      href={selectedItem.providerInvoiceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.modalLink}
-                      variant="secondary"
-                    >
-                      {t('dashboard.history_open_payment')}
-                    </Button>
-                  )}
-                  <div className={styles.modalSupportText}>
-                    {t('dashboard.history_payment_support_hint')}
-                  </div>
-                </div>
-              )}
+      <Modal
+        isOpen={!!selectedItem}
+        onClose={closeModal}
+        title={selectedItem?.planName ?? t('dashboard.subscriptions')}
+      >
+        {selectedItem && (
+          <div className={styles.modalGrid}>
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_provider')}</span>
+              <strong className={styles.modalProviderValue}>
+                {getPaymentProviderIcon(selectedItem.provider) ? (
+                  <img
+                    src={getPaymentProviderIcon(selectedItem.provider) as string}
+                    alt={getPaymentProviderLabel(selectedItem.provider)}
+                    className={styles.modalProviderIcon}
+                  />
+                ) : null}
+                <span>{getPaymentProviderLabel(selectedItem.provider)}</span>
+              </strong>
             </div>
-          </div>,
-          document.body,
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_amount')}</span>
+              <strong>
+                {formatCurrency(selectedItem.amountCents, selectedItem.currency, locale)}
+              </strong>
+            </div>
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_status')}</span>
+              <strong className={styles.modalStatusValue}>
+                {getPaymentStatusLabel(selectedItem.status, t)}
+              </strong>
+            </div>
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_plan_id')}</span>
+              <strong>{selectedItem.planId ?? '-'}</strong>
+            </div>
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_payment_id')}</span>
+              <strong>{selectedItem.providerPaymentId ?? '-'}</strong>
+            </div>
+            <div className={styles.modalRow}>
+              <span>{t('dashboard.history_created')}</span>
+              <strong>{formatDate(selectedItem.createdAt)}</strong>
+            </div>
+            <div className={`${styles.modalRow} ${styles.modalRowFullWide}`}>
+              <span>{t('dashboard.history_updated')}</span>
+              <strong>{formatDate(selectedItem.updatedAt)}</strong>
+            </div>
+            {selectedItem.lastError && (
+              <div className={`${styles.modalError} ${styles.modalRowFullWide}`}>
+                <span>{t('dashboard.history_error')}</span>
+                <strong>{selectedItem.lastError}</strong>
+              </div>
+            )}
+            
+            {(selectedItem.providerInvoiceUrl || selectedItem.lastError) && (
+              <div className={styles.modalSupportBlock}>
+                {selectedItem.providerInvoiceUrl && (
+                  <Button
+                    as="a"
+                    href={selectedItem.providerInvoiceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.modalLink}
+                    variant="secondary"
+                  >
+                    {t('dashboard.history_open_payment')}
+                  </Button>
+                )}
+                <div className={styles.modalSupportText}>
+                  {t('dashboard.history_payment_support_hint')}
+                </div>
+              </div>
+            )}
+          </div>
         )}
+      </Modal>
     </div>
   );
 }

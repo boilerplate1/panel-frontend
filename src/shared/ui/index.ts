@@ -18,3 +18,4 @@ export * from './Dropdown';
 export * from './SectionHeader';
 export * from './Skeleton';
 export * from './Modal';
+export * from './ResponsiveModal';
