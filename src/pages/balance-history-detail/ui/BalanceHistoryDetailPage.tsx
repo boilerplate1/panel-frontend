@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { usePaymentHistoryInfiniteQuery } from '@/features/payment-management';
 import {
@@ -9,7 +9,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { Button, Card, SectionHeader, ResponsiveModal } from '@/shared/ui';
+import { Button, ResponsiveModal } from '@/shared/ui';
 import { ROUTES } from '@/shared/config';
 import styles from './BalanceHistoryDetailPage.module.css';
 

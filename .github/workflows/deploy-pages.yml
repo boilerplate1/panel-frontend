@@ -48,8 +48,13 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           cd dist
+          # Create 404.html for SPA redirect
+          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><script>sessionStorage.redirect = location.href; location.href = location.pathname.replace(location.pathname.split("/").filter(Boolean)[0], "") + "/";</script></head></html>' > 404.html
+          
+          # Add redirect script to index.html
+          sed -i 's|<head>|<head><script>(function(){var redirect=sessionStorage.redirect;delete sessionStorage.redirect;if(redirect&&redirect!=location.href){history.replaceState(null,null,redirect);}})();</script>|' index.html
+          
           echo "my.hpxvpn.xyz" > CNAME
-          cp index.html 404.html
           touch .nojekyll
           git init
           git config user.name "shadowmind1337"
