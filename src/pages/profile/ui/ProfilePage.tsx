@@ -47,11 +47,6 @@ function ProfilePage() {
         <div className={styles.profileMeta}>
           <div className={styles.username}>
             {user.username}
-            {activeSubscription && (
-              <div className={styles.verifiedBadge} title={t('profile.active_subscription')}>
-                <CheckCircle size={20} fill="currentColor" fillOpacity={0.1} />
-              </div>
-            )}
           </div>
           <div className={styles.profileSubtitle}>{user.email || t('dashboard.email_not_set')}</div>
         </div>

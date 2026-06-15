@@ -20,8 +20,9 @@
   text-align: center;
   gap: var(--spacing-3);
   border: none;
-  background: var(--surface-card);
+  background: linear-gradient(176deg, #6568a3, #bd9e9e00);
   box-shadow: none;
+  padding: var(--spacing-6);
 }
 
 .avatar {
