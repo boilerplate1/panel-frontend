@@ -43,26 +43,15 @@ jobs:
           VITE_BASE_URL: https://my.hpxvpn.xyz
         run: npm run build
 
-      - name: Deploy to Public Repo
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
-        run: |
-          cd dist
-          
-          # Improved 404.html for SPA redirect
-          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><script>location.replace(location.origin + "/?p=" + encodeURIComponent(location.pathname));</script></head></html>' > 404.html
-          
-          # Add redirect script to index.html (before <body> or in <head>)
-          sed -i 's|<head>|<head><script>(function(){var p=new URLSearchParams(window.location.search).get("p");if(p){window.history.replaceState(null,null,p);}})();</script>|' index.html
-          
-          echo "my.hpxvpn.xyz" > CNAME
-          touch .nojekyll
-          git init
-          git config user.name "shadowmind1337"
-          git config user.email "shadowmind1337@gmail.com"
-          git add .
-          git commit -m "Deploy build to static repo with SPA fix"
-          git push --force https://x-access-token:${API_TOKEN_GITHUB}@github.com/boilerplate1/panel-static.git master:main
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist/*"
+          target: "/opt/hypex/frontend"
+          strip_components: 1
 
       - name: Notify Telegram (Success)
         if: success()
