@@ -9,13 +9,11 @@
   background: var(--surface-card);
   display: flex;
   flex-direction: column;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  max-height: 96%;
+  top: 0; /* Full screen */
   z-index: calc(var(--z-modal) + 1);
   outline: none;
 }
