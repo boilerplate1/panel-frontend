@@ -19,7 +19,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3);
+  gap: var(--spacing-4);
 }
 
 .item {
@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-4);
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: 20px 24px;
   background: var(--surface-secondary);
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
@@ -91,6 +91,19 @@
   margin-top: 0.15rem;
 }
 
+.deviceTypeStatus {
+  gap: 8px;
+}
+
+.deviceIcon {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: var(--surface-tertiary);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+}
+
 .emptyText {
   color: var(--text-secondary);
   text-align: center;
@@ -130,13 +143,13 @@
   }
 
   .container {
-    gap: 8px;
+    gap: 12px;
   }
 
   .item {
     align-items: flex-start;
-    padding: 12px 14px;
-    gap: 10px;
+    padding: 16px;
+    gap: 12px;
   }
 
   .itemName {

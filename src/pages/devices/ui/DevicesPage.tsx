@@ -63,8 +63,8 @@ function DevicesPage() {
                 <div key={device.id} className={styles.item}>
                   <div className={styles.itemInfo}>
                     <div className={styles.itemName}>{device.name}</div>
-                    <div className={styles.itemStatus}>
-                      {getDeviceIcon(device.type)}
+                    <div className={`${styles.itemStatus} ${styles.deviceTypeStatus}`}>
+                      <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
                       <span>{device.type}</span>
                       <span>•</span>
                       <span>{t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}</span>
