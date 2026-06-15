@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: 'my',
+            path: 'dashboard',
             element: (
               <LazyLoad>
                 <ProfilePage />
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
             handle: { title: 'dashboard.sidebar_profile' },
           },
           {
-            path: 'my/devices',
+            path: 'dashboard/devices',
             element: (
               <LazyLoad>
                 <DevicesPage />
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
             handle: { title: 'dashboard.sidebar_devices' },
           },
           {
-            path: 'my/history',
+            path: 'dashboard/history',
             element: (
               <LazyLoad>
                 <BalanceHistoryPage />
