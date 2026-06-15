@@ -28,13 +28,14 @@
   justify-content: space-between;
   gap: var(--spacing-4);
   padding: 20px 24px;
-  min-height: 80px; /* Fixed min-height for consistency */
+  min-height: 80px;
   background: var(--surface-secondary);
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
   text-align: left;
   border: none;
   color: inherit;
+  cursor: pointer;
 }
 
 .item:hover {
