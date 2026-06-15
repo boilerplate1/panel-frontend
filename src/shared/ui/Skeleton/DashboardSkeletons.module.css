@@ -3,29 +3,29 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-4);
-  padding: 20px 24px;
-  background: var(--surface-secondary);
-  border-radius: var(--radius-md);
+  padding: 20px 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 
 .meta {
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .subscriptionSkeleton {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
-  padding: var(--spacing-5);
-  background: var(--surface-secondary);
-  border-radius: var(--radius-md);
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .grid {
