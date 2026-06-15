@@ -31,23 +31,6 @@ export function SubscriptionCard({ subscription, onCopyLink }: SubscriptionCardP
             t('shared.unlimited'),
           )}
         />
-        {subscription.deviceAvailability && (
-          <div className={styles.subscriptionMetric}>
-            <span>{t('dashboard.buy_subscription_summary_devices')}</span>
-            <div className={styles.deviceProgress}>
-              <div
-                className={`${styles.deviceBar} ${subscription.deviceAvailability.isFull ? styles.deviceBarFull : ''}`}
-                style={{
-                  width: `${(subscription.deviceAvailability.used / subscription.deviceAvailability.limit) * 100}%`,
-                }}
-              />
-            </div>
-            <strong>
-              {subscription.deviceAvailability.used} / {subscription.deviceAvailability.limit}{' '}
-              {t('landing.devices_count')}
-            </strong>
-          </div>
-        )}
       </div>
 
       <Button type="button" variant="secondary" className={styles.devicesBtn} onClick={onCopyLink}>
