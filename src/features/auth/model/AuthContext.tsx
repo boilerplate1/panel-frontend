@@ -10,13 +10,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setLoading(meQuery.isLoading);
-  }, [meQuery.isLoading, setLoading]);
+  }, [meQuery.isLoading]);
 
   useEffect(() => {
     if (meQuery.data) {
       setUser(meQuery.data);
     }
-  }, [meQuery.data, setUser]);
+  }, [meQuery.data]);
 
   useEffect(() => {
     const handleLogout = () => logout();
