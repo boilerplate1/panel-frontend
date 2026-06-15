@@ -198,8 +198,8 @@
 
 .subscriptionGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Changed from repeat(3, ...) to repeat(2, ...) */
+  gap: 12px; /* Slightly increased gap for better balance */
 }
 
 .subscriptionMetric {
