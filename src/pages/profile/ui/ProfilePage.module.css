@@ -20,9 +20,8 @@
   text-align: center;
   gap: var(--spacing-3);
   border: none;
-  /* Cleaner, more vibrant gradient */
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); 
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  background: linear-gradient(135deg, #414141 0%, #92aac9 100%);
+  box-shadow: 0 4px 12px rgba(65, 65, 65, 0.2);
   padding: var(--spacing-6);
 }
 
