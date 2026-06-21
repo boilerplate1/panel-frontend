@@ -78,7 +78,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          key: |
+            ${{ secrets.SSH_KEY }}
           source: "docker-compose.yml"
           target: "/opt/hypex/frontend"
           strip_components: 0
@@ -88,7 +89,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          key: |
+            ${{ secrets.SSH_KEY }}
           script: |
             set -e
             mkdir -p /opt/hypex/frontend
