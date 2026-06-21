@@ -1,0 +1,14 @@
+.git
+.github
+.tmp
+.wrangler
+dist
+node_modules
+npm-debug.log
+Dockerfile
+docker-compose.yml
+DEPLOYMENT.md
+README.md
+*.tsbuildinfo
+.env
+.env.*

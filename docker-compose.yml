@@ -1,0 +1,11 @@
+services:
+  frontend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/hypex-frontend:latest
+    container_name: hypex-frontend
+    restart: always
+    networks:
+      - hypex-network
+
+networks:
+  hypex-network:
+    external: true

@@ -1,12 +1,20 @@
-name: Frontend CI/CD
+name: Frontend CI/CD (No Source on Server)
 
 on:
   push:
     branches: [ "main", "master" ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/hypex-frontend
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Notify Telegram (Build Started)
         uses: appleboy/telegram-action@master
@@ -14,39 +22,41 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            🏗 *Frontend Build Started*
-            
-            🏷 *Repo:* ${{ github.repository }}
-            👤 *Author:* ${{ github.actor }}
-            🔗 [View Progress](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Frontend Build Started
+
+            Repo: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Progress: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          node-version: 24
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install and Build
-        env:
-          VITE_API_URL: https://prod-v1-api.umbr.rest/api
-          VITE_TURNSTILE_SITE_KEY: 0x4AAAAAADksO24nf-9vXTAc
-          VITE_ANDROID_APK_URL: https://hpxvpn.xyz/downloads/hypexvpn.apk
-          VITE_BASE_URL: https://my.hpxvpn.xyz
-        run: |
-          npm install
-          npm run build
-
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
         with:
-          name: dist
-          path: dist/
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          build-args: |
+            VITE_API_URL=${{ vars.VITE_API_URL || 'https://prod-v1-api.umbr.rest/api' }}
+            VITE_TURNSTILE_SITE_KEY=${{ vars.VITE_TURNSTILE_SITE_KEY || '0x4AAAAAADksO24nf-9vXTAc' }}
+            VITE_ANDROID_APK_URL=${{ vars.VITE_ANDROID_APK_URL || 'https://hpxvpn.xyz/downloads/hypexvpn.apk' }}
+            VITE_BASE_URL=${{ vars.VITE_BASE_URL || 'https://my.hpxvpn.xyz' }}
 
   deploy:
-    needs: build
+    needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+
     steps:
       - name: Notify Telegram (Deployment Started)
         uses: appleboy/telegram-action@master
@@ -54,28 +64,42 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            🚀 *Frontend Deployment Started*
-            
-            🏷 *Repo:* ${{ github.repository }}
-            👤 *Author:* ${{ github.actor }}
-            🔗 [View Progress](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Frontend Deployment Started
 
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
+            Repo: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Progress: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-      - name: Deploy to Server via SCP
+      - name: Checkout code (for docker-compose file)
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose.yml to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: |
-            ${{ secrets.SSH_KEY }}
-          source: "dist/*"
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yml"
           target: "/opt/hypex/frontend"
-          strip_components: 1
+          strip_components: 0
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+            mkdir -p /opt/hypex/frontend
+            cd /opt/hypex/frontend
+
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
+
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
 
       - name: Notify Telegram (Success)
         if: success()
@@ -84,12 +108,12 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ *Frontend Deployed Successfully!*
-            
-            🏷 *Repo:* ${{ github.repository }}
-            👤 *Author:* ${{ github.actor }}
-            📝 *Commit:* ${{ github.event.head_commit.message }}
-            🔗 [View Workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Frontend Deployed Successfully
+
+            Repo: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Commit: ${{ github.event.head_commit.message }}
+            Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Notify Telegram (Failure)
         if: failure()
@@ -98,10 +122,10 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ❌ *Frontend Deployment Failed!*
-            
-            🏷 *Repo:* ${{ github.repository }}
-            👤 *Author:* ${{ github.actor }}
-            📝 *Commit:* ${{ github.event.head_commit.message }}
-            📉 *Status:* Build or Deploy step failed.
-            🔗 [Check Error Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Frontend Deployment Failed
+
+            Repo: ${{ github.repository }}
+            Author: ${{ github.actor }}
+            Commit: ${{ github.event.head_commit.message }}
+            Status: Build or deploy step failed.
+            Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
