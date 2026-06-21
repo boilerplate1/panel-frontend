@@ -6,6 +6,7 @@
 # Build output
 /dist
 /build
+*.tsbuildinfo
 
 # Environment variables
 .env

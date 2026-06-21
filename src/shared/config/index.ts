@@ -20,10 +20,10 @@ export const EXTERNAL_CONFIG = {
 
 export const APP_CONFIG = {
   BRAND_NAME: 'Hypex',
-  API_BASE_URL: import.meta.env.VITE_API_URL,
-  ANDROID_APK_URL: import.meta.env.VITE_ANDROID_APK_URL,
-  RECAPTCHA_SITE_KEY: '0x4AAAAAADksO24nf-9vXTAc',
-  BASE_URL: import.meta.env.VITE_BASE_URL,
+  API_BASE_URL: getRuntimeEnv('VITE_API_URL', import.meta.env.VITE_API_URL),
+  ANDROID_APK_URL: getRuntimeEnv('VITE_ANDROID_APK_URL', import.meta.env.VITE_ANDROID_APK_URL),
+  RECAPTCHA_SITE_KEY: getRuntimeEnv('VITE_TURNSTILE_SITE_KEY', import.meta.env.VITE_TURNSTILE_SITE_KEY),
+  BASE_URL: getRuntimeEnv('VITE_BASE_URL', import.meta.env.VITE_BASE_URL),
 } as const;
 
 export const SEO_CONFIG = {
@@ -42,3 +42,4 @@ export const SEO_CONFIG = {
     'vpn for windows',
   ].join(', '),
 } as const;
+import { getRuntimeEnv } from './runtimeEnv';

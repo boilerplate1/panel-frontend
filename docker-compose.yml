@@ -3,6 +3,8 @@ services:
     image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/hypex-frontend:latest
     container_name: hypex-frontend
     restart: always
+    env_file:
+      - .env
     networks:
       - hypex-network
 

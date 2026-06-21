@@ -12,3 +12,5 @@ README.md
 *.tsbuildinfo
 .env
 .env.*
+!docker-entrypoint.d
+!docker-entrypoint.d/*.sh
