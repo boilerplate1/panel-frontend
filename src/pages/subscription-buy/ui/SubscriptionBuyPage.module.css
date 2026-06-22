@@ -90,7 +90,7 @@
 .badge {
   font-size: var(--font-size-xs);
   font-weight: 600;
-  color: #000000;
+  color: var(--text-primary);
   background: var(--surface-secondary);
   padding: 1px 8px;
   border-radius: 6px;
@@ -99,8 +99,8 @@
 }
 
 .bestValueBadge {
-  background: rgba(34, 197, 94, 0.14);
-  color: #d5fbe0;
+  background: color-mix(in srgb, #22c55e 16%, transparent);
+  color: var(--text-primary);
   border: none;
   font-weight: 500;
 }
