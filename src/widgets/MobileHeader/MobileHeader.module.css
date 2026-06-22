@@ -77,6 +77,13 @@
   color: var(--text-primary);
 }
 
+@media (min-width: 993px) {
+  .backButton,
+  .pageTitle {
+    display: none;
+  }
+}
+
 .backButton:active,
 .menuButton:active {
   background-color: var(--surface-hover);
