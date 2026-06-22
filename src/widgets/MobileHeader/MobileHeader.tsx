@@ -21,25 +21,31 @@ export function MobileHeader() {
 
   return (
     <header className={styles.wrapper}>
-      <div className={styles.leftSlot}>
-        {isRoot ? (
-          <Logo className={styles.logo} />
-        ) : (
-          <button className={styles.backButton} onClick={() => navigate(-1)}>
-            <ChevronLeft size={28} />
+      <div className={styles.inner}>
+        <div className={styles.leftSlot}>
+          {isRoot ? (
+            <Logo className={styles.logo} />
+          ) : (
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
+              <ChevronLeft size={28} />
+            </button>
+          )}
+        </div>
+
+        <div className={styles.centerSlot}>
+          {!isRoot && <span className={styles.pageTitle}>{pageTitle}</span>}
+        </div>
+
+        <div className={styles.rightSlot}>
+          <ThemeToggle />
+          <button
+            className={styles.menuButton}
+            onClick={() => toggleSidebar(true)}
+            aria-label="Menu"
+          >
+            <Menu size={28} />
           </button>
-        )}
-      </div>
-
-      <div className={styles.centerSlot}>
-        {!isRoot && <span className={styles.pageTitle}>{pageTitle}</span>}
-      </div>
-
-      <div className={styles.rightSlot}>
-        <ThemeToggle />
-        <button className={styles.menuButton} onClick={() => toggleSidebar(true)} aria-label="Menu">
-          <Menu size={28} />
-        </button>
+        </div>
       </div>
     </header>
   );
