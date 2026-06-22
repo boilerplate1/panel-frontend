@@ -15,7 +15,9 @@ export function DashboardLayout() {
       <MobileHeader />
 
       <div className={styles.layoutContainer}>
-        {!hideSidebar && <DashboardSidebar />}
+        <div className={hideSidebar ? styles.sidebarHideDesktop : ''}>
+          <DashboardSidebar />
+        </div>
         <main className={`${styles.wrapper} ${hideSidebar ? styles.fullWidth : ''}`}>
           <div className={`${styles.content} ${hideSidebar ? styles.contentFull : ''}`}>
             <PageContainer>

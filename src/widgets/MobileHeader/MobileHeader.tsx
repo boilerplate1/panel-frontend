@@ -37,7 +37,9 @@ export function MobileHeader() {
         </div>
 
         <div className={styles.rightSlot}>
-          <ThemeToggle />
+          <div className={styles.themeDesktop}>
+            <ThemeToggle />
+          </div>
           <button
             className={styles.menuButton}
             onClick={() => toggleSidebar(true)}

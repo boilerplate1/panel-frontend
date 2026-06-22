@@ -87,6 +87,16 @@
   margin-right: -8px;
 }
 
+.themeDesktop {
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .themeDesktop {
+    display: none;
+  }
+}
+
 @media (min-width: 993px) {
   .menuButton {
     display: none;
