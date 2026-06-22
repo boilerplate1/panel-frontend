@@ -26,27 +26,27 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             onClick={onClose}
           />
 
-          <motion.div
-            className={styles.modal}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          >
-            <div className={styles.header}>
-              <h3 className={styles.title}>{title}</h3>
-              <button className={styles.closeBtn} onClick={onClose} type="button">
-                <X size={20} />
-              </button>
-            </div>
+          <div className={styles.modalCenterer}>
+            <motion.div
+              className={styles.modal}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <div className={styles.header}>
+                <h3 className={styles.title}>{title}</h3>
+                <button className={styles.closeBtn} onClick={onClose} type="button">
+                  <X size={20} />
+                </button>
+              </div>
 
-            <div className={styles.content}>
-              {children}
-            </div>
-          </motion.div>
+              <div className={styles.content}>{children}</div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }

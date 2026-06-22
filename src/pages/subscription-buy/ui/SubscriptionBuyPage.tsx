@@ -435,6 +435,10 @@ function SubscriptionBuyPage() {
       <div className={styles.cardStack}>
         <Card padding="medium" className={styles.card}>
           <div className={styles.header}>
+            <button className={styles.backBtn} onClick={handleGoBack}>
+              <ArrowLeft size={16} />
+              <span>{t('shared.back')}</span>
+            </button>
             <SectionHeader
               title={
                 isRenewal

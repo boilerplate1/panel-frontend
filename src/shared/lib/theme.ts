@@ -2,6 +2,7 @@ export type Theme = 'light' | 'dark';
 
 const THEME_ATTR = 'data-theme';
 const THEME_EVENT = 'themechange';
+const STORAGE_KEY = 'hypex-theme';
 
 export function getSystemTheme(): Theme {
   if (typeof window === 'undefined') {
@@ -13,27 +14,30 @@ export function getSystemTheme(): Theme {
 
 export function getCurrentTheme(): Theme {
   const value = document.documentElement.getAttribute(THEME_ATTR);
-  return value === 'light' || value === 'dark' ? value : getSystemTheme();
+  return value === 'light' || value === 'dark' ? value : 'dark';
 }
 
 export function applyTheme(theme: Theme) {
   document.documentElement.setAttribute(THEME_ATTR, theme);
   document.documentElement.style.colorScheme = theme;
+  try {
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch {}
   window.dispatchEvent(new CustomEvent(THEME_EVENT, { detail: { theme } }));
 }
 
 export function initSystemTheme() {
   if (typeof window === 'undefined') return () => {};
 
-  const media = window.matchMedia('(prefers-color-scheme: dark)');
-  const applySystemTheme = () => applyTheme(media.matches ? 'dark' : 'light');
+  let theme: Theme = 'dark';
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === 'light' || saved === 'dark') {
+      theme = saved;
+    }
+  } catch {}
 
-  applySystemTheme();
-  media.addEventListener('change', applySystemTheme);
-
-  return () => {
-    media.removeEventListener('change', applySystemTheme);
-  };
+  applyTheme(theme);
 }
 
 export function subscribeTheme(listener: (theme: Theme) => void) {
