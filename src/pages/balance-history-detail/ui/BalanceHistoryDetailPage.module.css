@@ -51,30 +51,43 @@
 .modalGrid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: var(--spacing-3);
+  gap: 6px;
+}
+
+@media (min-width: 640px) {
+  .modalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .modalRow,
 .modalError {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
   background: var(--surface-tertiary);
   border: 1px solid var(--surface-tertiary);
+}
+
+.modalRowFullWide {
+  grid-column: 1 / -1;
 }
 
 .modalRow span,
 .modalError span {
   color: var(--text-secondary);
-  font-size: var(--font-size-xs);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .modalRow strong,
 .modalError strong {
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   word-break: break-word;
 }
 
@@ -86,8 +99,8 @@
 }
 
 .modalProviderIcon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -99,19 +112,18 @@
 
 .modalLink {
   width: 100%;
-  margin-top: var(--spacing-4);
 }
 
 .modalSupportBlock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: var(--spacing-4);
+  gap: 6px;
+  grid-column: 1 / -1;
 }
 
 .modalSupportText {
   color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  line-height: 1.45;
+  font-size: 11px;
+  line-height: 1.4;
   text-align: center;
 }
