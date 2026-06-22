@@ -17,9 +17,18 @@ export function getCurrentTheme(): Theme {
   return value === 'light' || value === 'dark' ? value : 'dark';
 }
 
+const THEME_COLORS: Record<Theme, string> = {
+  dark: '#0f0f0f',
+  light: '#f5f5f7',
+};
+
 export function applyTheme(theme: Theme) {
   document.documentElement.setAttribute(THEME_ATTR, theme);
   document.documentElement.style.colorScheme = theme;
+
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+
   try {
     localStorage.setItem(STORAGE_KEY, theme);
   } catch {}
