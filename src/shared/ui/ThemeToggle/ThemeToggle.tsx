@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 
 interface ThemeToggleProps {
   variant?: 'default' | 'settings';
+  label?: string;
+  className?: string;
 }
 
-export function ThemeToggle({ variant = 'default' }: ThemeToggleProps) {
+export function ThemeToggle({ variant = 'default', label, className = '' }: ThemeToggleProps) {
   const [theme, setTheme] = useState<Theme>(getCurrentTheme());
   const { t } = useTranslation();
 
@@ -53,12 +55,13 @@ export function ThemeToggle({ variant = 'default' }: ThemeToggleProps) {
 
   return (
     <button
-      className={styles.root}
+      className={`${label ? styles.rootLabel : styles.root} ${className}`}
       onClick={toggleTheme}
       aria-label={t('shared.theme_toggle')}
       type="button"
     >
       {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
+      {label && <span>{label}</span>}
     </button>
   );
 }

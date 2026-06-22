@@ -72,7 +72,7 @@ export function DashboardSidebar() {
           </NavLink>
 
           <div className={styles.themeMobile}>
-            <ThemeToggle />
+            <ThemeToggle label={t('shared.theme_toggle')} />
           </div>
 
           <button
