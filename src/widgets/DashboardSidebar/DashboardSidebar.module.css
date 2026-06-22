@@ -116,11 +116,6 @@
   }
 }
 
-.themeToggleWrap {
-  margin-top: var(--spacing-4);
-  padding: 0 var(--spacing-5);
-}
-
 .logoutButton {
   background: none;
   border: none;

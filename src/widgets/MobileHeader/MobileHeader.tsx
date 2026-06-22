@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft } from 'lucide-react';
-import { Logo } from '@/shared/ui';
+import { Logo, ThemeToggle } from '@/shared/ui';
 import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
@@ -36,6 +36,7 @@ export function MobileHeader() {
       </div>
 
       <div className={styles.rightSlot}>
+        <ThemeToggle />
         <button className={styles.menuButton} onClick={() => toggleSidebar(true)} aria-label="Menu">
           <Menu size={28} />
         </button>

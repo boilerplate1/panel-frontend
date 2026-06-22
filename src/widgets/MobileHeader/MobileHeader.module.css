@@ -1,5 +1,5 @@
 .wrapper {
-  display: none;
+  display: flex;
   height: 64px;
   align-items: center;
   padding: 0 20px;
@@ -28,6 +28,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 4px;
 }
 
 .logo {
@@ -77,8 +78,8 @@
   margin-right: -8px;
 }
 
-@media (max-width: 992px) {
-  .wrapper {
-    display: flex;
+@media (min-width: 993px) {
+  .menuButton {
+    display: none;
   }
 }

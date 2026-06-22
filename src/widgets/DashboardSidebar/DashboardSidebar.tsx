@@ -5,7 +5,6 @@ import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
-import { ThemeToggle } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
 
 export function DashboardSidebar() {
@@ -70,10 +69,6 @@ export function DashboardSidebar() {
             <History size={22} />
             <span>{t('dashboard.sidebar_history')}</span>
           </NavLink>
-
-          <div className={styles.themeToggleWrap}>
-            <ThemeToggle />
-          </div>
 
           <button
             onClick={() => {
