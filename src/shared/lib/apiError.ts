@@ -16,6 +16,10 @@ export function getApiErrorMessage(error: unknown, fallback: string, t?: Transla
       return t ? t('shared.server_error') : 'Server error';
     }
 
+    if (error.response?.status === 429) {
+      return t ? t('shared.too_many_requests') : 'Too many requests. Please try again later.';
+    }
+
     const data = error.response?.data;
     const rawMessage = data?.message || data?.error;
 

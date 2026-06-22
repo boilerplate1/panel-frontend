@@ -46,7 +46,7 @@ const ru = {
     global: 'Глобальная сеть',
     global_desc: 'Десятки локаций по всему миру with высокой доступностью.',
     protocols: 'Современные протоколы',
-    global_protocols_desc: 'Поддержка WireGuard, VLESS и других производительных протоколов.',
+    global_protocols_desc: 'Поддержка VLESS для быстрых и стабильных подключений.',
   },
   pricing: {
     title: 'Простые тарифы',
@@ -448,6 +448,7 @@ const ru = {
     page_error_title: 'Упс! У нас проблемы',
     page_error_subtitle: 'Мы уже работаем над решением этой проблемы.',
     server_error: 'Ошибка сервера',
+    too_many_requests: 'Слишком много запросов. Пожалуйста, повторите позже.',
     back_to_home: 'На главную',
     back_to_dashboard: 'Вернуться в кабинет',
     brand_name: 'Hypex',

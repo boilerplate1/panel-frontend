@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth';
-import { Card, SectionHeader, Dropdown, Modal, Button, FormField } from '@/shared/ui';
+import { Card, SectionHeader, Dropdown, ResponsiveModal, Button, FormField } from '@/shared/ui';
 import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
@@ -105,7 +105,7 @@ function DevicesPage() {
         )}
       </Card>
 
-      <Modal
+      <ResponsiveModal
         isOpen={!!editingId}
         onClose={() => setEditingId(null)}
         title={t('common.rename')}
@@ -134,7 +134,7 @@ function DevicesPage() {
             </Button>
           </div>
         </div>
-      </Modal>
+      </ResponsiveModal>
     </div>
   );
 }

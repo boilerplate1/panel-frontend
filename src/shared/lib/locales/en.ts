@@ -45,7 +45,7 @@ const en = {
     global: 'Global Network',
     global_desc: 'Dozens of locations worldwide with high availability.',
     protocols: 'Modern Protocols',
-    global_protocols_desc: 'Supporting WireGuard, VLESS and other high-performance protocols.',
+    global_protocols_desc: 'VLESS support for fast and stable connections.',
   },
   pricing: {
     title: 'Simple Pricing',
@@ -428,6 +428,7 @@ const en = {
     page_error_title: 'Oops! Something went wrong',
     page_error_subtitle: 'We are already working on a fix.',
     server_error: 'Server error',
+    too_many_requests: 'Too many requests. Please try again later.',
     back_to_home: 'Back to home',
     back_to_dashboard: 'Back to dashboard',
     brand_name: 'Hypex',

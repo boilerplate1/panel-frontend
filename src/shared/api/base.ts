@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { APP_CONFIG } from '@/shared/config';
+import { useUIStore } from '@/shared/lib/store';
 
 export const api = axios.create({
   baseURL: APP_CONFIG.API_BASE_URL,
@@ -99,6 +100,13 @@ api.interceptors.response.use(
         }
         return Promise.reject(refreshError);
       }
+    }
+
+    if (error.response?.status === 429) {
+      useUIStore.getState().showToast(
+        'Too many requests. Please wait before retrying.',
+        'error',
+      );
     }
 
     throw error;
