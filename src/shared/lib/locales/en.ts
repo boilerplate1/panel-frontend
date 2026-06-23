@@ -333,6 +333,8 @@ const en = {
     paired: 'Paired device',
     last_seen: 'Last seen:',
     confirm_delete: 'Are you sure you want to delete this device? It will be logged out.',
+    name_example: 'e.g. My second phone',
+    emoji_label: 'Icon',
   },
   common: {
     rename: 'Rename',

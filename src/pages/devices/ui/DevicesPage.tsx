@@ -1,10 +1,23 @@
 import { useAuth } from '@/features/auth';
-import { Card, SectionHeader, Dropdown, ResponsiveModal, Button, FormField } from '@/shared/ui';
+import {
+  Card,
+  SectionHeader,
+  Dropdown,
+  ResponsiveModal,
+  Button,
+  FormField,
+  EmojiPicker,
+} from '@/shared/ui';
 import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
-import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/entities/device';
+import {
+  useDevicesQuery,
+  useUpdateDeviceMutation,
+  useRemoveDeviceMutation,
+} from '@/entities/device';
 import { useState } from 'react';
+import { useDeviceEmojiStore } from '@/shared/lib';
 
 function DevicesPage() {
   const { user } = useAuth();
@@ -12,20 +25,24 @@ function DevicesPage() {
   const { data: devices, isLoading } = useDevicesQuery(!!user);
   const updateDeviceMutation = useUpdateDeviceMutation();
   const removeDeviceMutation = useRemoveDeviceMutation();
+  const { emojiMap, setEmoji } = useDeviceEmojiStore();
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [editEmoji, setEditEmoji] = useState('');
 
   if (!user) return null;
 
   const handleStartEdit = (id: string, currentName: string) => {
     setEditingId(id);
     setEditName(currentName);
+    setEditEmoji(emojiMap[id] ?? '');
   };
 
   const handleSaveEdit = async () => {
     if (editingId && editName.trim()) {
       await updateDeviceMutation.mutateAsync({ id: editingId, name: editName.trim() });
+      if (editEmoji) setEmoji(editingId, editEmoji);
       setEditingId(null);
     }
   };
@@ -40,8 +57,10 @@ function DevicesPage() {
 
   const getDeviceIcon = (type: string) => {
     const t = type.toLowerCase();
-    if (t.includes('ios') || t.includes('android') || t.includes('phone')) return <Smartphone size={18} />;
-    if (t.includes('windows') || t.includes('macos') || t.includes('desktop')) return <Monitor size={18} />;
+    if (t.includes('ios') || t.includes('android') || t.includes('phone'))
+      return <Smartphone size={18} />;
+    if (t.includes('windows') || t.includes('macos') || t.includes('desktop'))
+      return <Monitor size={18} />;
     return <Globe size={18} />;
   };
 
@@ -61,43 +80,51 @@ function DevicesPage() {
         ) : (
           <div className={styles.container}>
             {devices && devices.length > 0 ? (
-              devices.map((device) => (
-                <div key={device.id} className={styles.item}>
-                  <div className={styles.itemInfo}>
-                    <div className={styles.itemName}>{device.name}</div>
-                    <div className={`${styles.itemStatus} ${styles.deviceTypeStatus}`}>
-                      <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
-                      <span>{capitalize(device.type)}</span>
-                      <span>•</span>
-                      <span>{t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}</span>
+              devices.map((device) => {
+                const deviceEmoji = emojiMap[device.id];
+                return (
+                  <div key={device.id} className={styles.item}>
+                    <div className={styles.itemInfo}>
+                      <div className={styles.itemName}>
+                        {deviceEmoji && <span className={styles.itemEmoji}>{deviceEmoji}</span>}
+                        {device.name}
+                      </div>
+                      <div className={`${styles.itemStatus} ${styles.deviceTypeStatus}`}>
+                        <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
+                        <span>{capitalize(device.type)}</span>
+                        <span>•</span>
+                        <span>
+                          {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className={styles.itemActions}>
+                      <Dropdown
+                        showChevron={false}
+                        trigger={
+                          <div className={styles.dropdownTrigger}>
+                            <MoreVertical size={20} />
+                          </div>
+                        }
+                        items={[
+                          {
+                            label: t('common.rename'),
+                            icon: <Edit2 size={16} />,
+                            onClick: () => handleStartEdit(device.id, device.name),
+                          },
+                          {
+                            label: t('common.delete'),
+                            icon: <Trash2 size={16} />,
+                            onClick: () => handleDelete(device.id),
+                            variant: 'danger',
+                          },
+                        ]}
+                      />
                     </div>
                   </div>
-
-                  <div className={styles.itemActions}>
-                    <Dropdown
-                      showChevron={false}
-                      trigger={
-                        <div className={styles.dropdownTrigger}>
-                          <MoreVertical size={20} />
-                        </div>
-                      }
-                      items={[
-                        {
-                          label: t('common.rename'),
-                          icon: <Edit2 size={16} />,
-                          onClick: () => handleStartEdit(device.id, device.name),
-                        },
-                        {
-                          label: t('common.delete'),
-                          icon: <Trash2 size={16} />,
-                          onClick: () => handleDelete(device.id),
-                          variant: 'danger',
-                        },
-                      ]}
-                    />
-                  </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <p className={styles.emptyText}>{t('devices.empty')}</p>
             )}
@@ -111,10 +138,14 @@ function DevicesPage() {
         title={t('common.rename')}
       >
         <div className={styles.modalContent}>
+          <label className={styles.emojiRow}>
+            <span className={styles.emojiLabel}>{t('devices.emoji_label')}</span>
+            <EmojiPicker selected={editEmoji} onSelect={setEditEmoji} />
+          </label>
           <FormField
             autoFocus
-            label={t('devices.name_label', 'Название устройства')}
-            placeholder={t('devices.name_placeholder', 'Например: Мой второй рабочий телефон')}
+            label={t('devices.title')}
+            placeholder={t('devices.name_example')}
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
             onKeyDown={(e) => {
@@ -126,11 +157,15 @@ function DevicesPage() {
             <Button variant="outline" onClick={() => setEditingId(null)}>
               {t('common.cancel')}
             </Button>
-            <Button 
+            <Button
               onClick={handleSaveEdit}
               disabled={!editName.trim() || updateDeviceMutation.isPending}
             >
-              {updateDeviceMutation.isPending ? <Loader2 className={styles.spinner} size={18} /> : t('common.save')}
+              {updateDeviceMutation.isPending ? (
+                <Loader2 className={styles.spinner} size={18} />
+              ) : (
+                t('common.save')
+              )}
             </Button>
           </div>
         </div>
