@@ -50,7 +50,7 @@
 
 @media (max-width: 992px) {
   .layoutContainer {
-    padding: 12px 0 32px;
+    padding: 12px 0 calc(32px + 64px + env(safe-area-inset-bottom, 0));
     gap: 0;
   }
 

@@ -1,6 +1,7 @@
 import { useMatches, Outlet } from 'react-router-dom';
 import { DashboardSidebar } from '@/widgets/DashboardSidebar';
 import { MobileHeader } from '@/widgets/MobileHeader';
+import { BottomNav } from '@/widgets/BottomNav';
 import { PageContainer } from '@/shared/ui';
 import styles from './DashboardLayout.module.css';
 
@@ -26,6 +27,8 @@ export function DashboardLayout() {
           </div>
         </main>
       </div>
+
+      <BottomNav />
     </div>
   );
 }
