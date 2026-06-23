@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth';
-import { Card, SectionHeader, ResponsiveModal, Button, Pagination } from '@/shared/ui';
+import { Card, SectionHeader, Pagination } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 
 import { DeviceItem } from './DeviceItem';
-import { RenameDeviceModal } from './DeviceRename';
+import { DeviceRenameModal } from './DeviceRenameModal';
+import { DeviceDeleteModal } from './DeviceDeleteModal';
 import styles from './DevicesPage.module.css';
 
 function DevicesPage() {
@@ -74,19 +75,14 @@ function DevicesPage() {
         {totalPages > 1 && <Pagination page={page} totalPages={totalPages} onChange={setPage} />}
       </Card>
 
-      <ResponsiveModal isOpen={!!deleteTargetId} onClose={() => setDeleteTargetId(null)} title={t('devices.confirm_delete_title', 'Delete device')}>
-        <div className={styles.modalContent}>
-          <p>{t('devices.confirm_delete')}</p>
-          <div className={styles.modalActions}>
-            <Button variant="outline" onClick={() => setDeleteTargetId(null)}>{t('common.cancel')}</Button>
-            <Button variant="danger" onClick={handleDeleteConfirm} disabled={removeDeviceMutation.isPending}>
-              {removeDeviceMutation.isPending ? <Loader2 className={styles.spinner} size={18} /> : t('common.delete')}
-            </Button>
-          </div>
-        </div>
-      </ResponsiveModal>
+      <DeviceDeleteModal
+        isOpen={!!deleteTargetId}
+        onClose={() => setDeleteTargetId(null)}
+        onConfirm={handleDeleteConfirm}
+        isPending={removeDeviceMutation.isPending}
+      />
 
-      <RenameDeviceModal
+      <DeviceRenameModal
         isOpen={!!editingDevice}
         onClose={() => setEditingDevice(null)}
         currentName={editingDevice?.name ?? ''}

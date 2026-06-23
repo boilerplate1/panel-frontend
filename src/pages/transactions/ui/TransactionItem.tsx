@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { usePaymentHistoryPageQuery } from '@/features/payment-management'; // Импортируем хук страницы
+import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import {
   formatCurrency,
   formatDate,
@@ -9,41 +9,41 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import styles from './BalanceHistoryPage.module.css';
+import styles from './TransactionItem.module.css';
 
-type PaymentHistoryItemType = NonNullable<
+type TransactionItemType = NonNullable<
   ReturnType<typeof usePaymentHistoryPageQuery>['data']
 >['items'][number];
 
-interface PaymentHistoryItemProps {
-  item: PaymentHistoryItemType; 
+interface TransactionItemProps {
+  transaction: TransactionItemType;
   locale: 'ru-RU' | 'en-US';
   onOpenDetail: (id: string) => void;
 }
 
-export function PaymentHistoryItem({ item, locale, onOpenDetail }: PaymentHistoryItemProps) {
+export function TransactionItem({ transaction, locale, onOpenDetail }: TransactionItemProps) {
   const { t } = useTranslation();
 
-  const providerIcon = getPaymentProviderIcon(item.provider);
-  const providerLabel = getPaymentProviderLabel(item.provider);
-  const statusLabel = getPaymentStatusLabel(item.status, t);
-  const amountClass = getPaymentAmountClass(item.status, styles);
-  const amountPrefix = getPaymentAmountPrefix(item.status);
+  const providerIcon = getPaymentProviderIcon(transaction.provider);
+  const providerLabel = getPaymentProviderLabel(transaction.provider);
+  const statusLabel = getPaymentStatusLabel(transaction.status, t);
+  const amountClass = getPaymentAmountClass(transaction.status, styles);
+  const amountPrefix = getPaymentAmountPrefix(transaction.status);
 
   return (
     <button
       type="button"
       className={`${styles.item} stagger-item`}
-      onClick={() => onOpenDetail(item.id)}
+      onClick={() => onOpenDetail(transaction.id)}
     >
       <div className={styles.itemInfo}>
         <div className={styles.itemTopRow}>
           <div className={styles.itemName}>
-            {item.planName ?? t('dashboard.subscriptions')}
+            {transaction.planName ?? t('dashboard.subscriptions')}
           </div>
           <span className={`${styles.itemAmount} ${amountClass}`}>
             {amountPrefix}
-            {formatCurrency(item.amountCents, item.currency, locale)}
+            {formatCurrency(transaction.amountCents, transaction.currency, locale)}
           </span>
         </div>
         <div className={styles.itemBottomRow}>
@@ -60,7 +60,7 @@ export function PaymentHistoryItem({ item, locale, onOpenDetail }: PaymentHistor
               </span>
             )}
           </div>
-          <span className={styles.itemDate}>{formatDate(item.createdAt)}</span>
+          <span className={styles.itemDate}>{formatDate(transaction.createdAt)}</span>
         </div>
       </div>
     </button>

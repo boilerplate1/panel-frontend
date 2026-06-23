@@ -1,0 +1,45 @@
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.modalActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-2);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 992px) {
+  .modalActions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-2);
+  }
+
+  .modalActions button {
+    width: 100%;
+    padding: var(--spacing-4);
+    font-size: var(--font-size-base);
+  }
+
+  .modalContent {
+    gap: var(--spacing-4);
+    padding-bottom: var(--spacing-2);
+  }
+}

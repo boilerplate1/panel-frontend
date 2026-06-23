@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ResponsiveModal, Button, FormField } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
-import styles from './DevicesPage.module.css';
+import styles from './DeviceModal.module.css';
 
-interface RenameDeviceModalProps {
+interface DeviceRenameModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentName: string;
@@ -12,7 +12,7 @@ interface RenameDeviceModalProps {
   onSave: (name: string) => Promise<void>;
 }
 
-export function RenameDeviceModal({ isOpen, onClose, currentName, isPending, onSave }: RenameDeviceModalProps) {
+export function DeviceRenameModal({ isOpen, onClose, currentName, isPending, onSave }: DeviceRenameModalProps) {
   const { t } = useTranslation();
   const [editName, setEditName] = useState('');
 

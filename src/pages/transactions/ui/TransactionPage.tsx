@@ -5,27 +5,27 @@ import { useAuth } from '@/features/auth';
 import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import { Card, Pagination, SectionHeader } from '@/shared/ui';
 
-import { PaymentHistoryItem } from './PaymentHistoryItem';
-import { PaymentDetailModal } from './PaymentDetailModal';
-import styles from './BalanceHistoryPage.module.css';
+import { TransactionItem } from './TransactionItem';
+import { TransactionDetailModal } from './TransactionDetailModal';
+import styles from './TransactionPage.module.css';
 
-function BalanceHistoryPage() {
+function TransactionPage() {
   const { user } = useAuth();
   const { i18n, t } = useTranslation();
   const [page, setPage] = useState(1);
   const { data, isLoading } = usePaymentHistoryPageQuery(!!user, page);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
 
   if (!user) return null;
 
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-  const history = data?.items ?? [];
+  const transactions = data?.items ?? [];
   const totalPages = data?.totalPages ?? 0;
-  const selectedItem = history.find((item) => item.id === selectedItemId) ?? null;
+  const selectedTransaction = transactions.find((item) => item.id === selectedTransactionId) ?? null;
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-    setSelectedItemId(null);
+    setSelectedTransactionId(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -42,14 +42,14 @@ function BalanceHistoryPage() {
           <div className={styles.loading}>
             <Loader2 className={styles.spinner} />
           </div>
-        ) : history.length > 0 ? (
+        ) : transactions.length > 0 ? (
           <div className={styles.container}>
-            {history.map((item) => (
-              <PaymentHistoryItem
+            {transactions.map((item) => (
+              <TransactionItem
                 key={item.id}
-                item={item}
+                transaction={item}
                 locale={locale}
-                onOpenDetail={(id) => setSelectedItemId(id)}
+                onOpenDetail={(id) => setSelectedTransactionId(id)}
               />
             ))}
 
@@ -64,14 +64,14 @@ function BalanceHistoryPage() {
         )}
       </Card>
 
-      <PaymentDetailModal
-        isOpen={!!selectedItemId}
-        onClose={() => setSelectedItemId(null)}
-        selectedItem={selectedItem}
+      <TransactionDetailModal
+        isOpen={!!selectedTransactionId}
+        onClose={() => setSelectedTransactionId(null)}
+        transaction={selectedTransaction}
         locale={locale}
       />
     </div>
   );
 }
 
-export default BalanceHistoryPage;
+export default TransactionPage;

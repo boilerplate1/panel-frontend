@@ -14,7 +14,7 @@ const RegisterPage = lazy(() => import('@/pages/register/ui/RegisterPage'));
 const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));
 const ProfilePage = lazy(() => import('@/pages/profile/ui/ProfilePage'));
 const DevicesPage = lazy(() => import('@/pages/devices/ui/DevicesPage'));
-const BalanceHistoryPage = lazy(() => import('@/pages/balance-history/ui/BalanceHistoryPage'));
+const TransactionPage = lazy(() => import('@/pages/transactions/ui/TransactionPage'));
 
 const SubscriptionBuyPage = lazy(() => import('@/pages/subscription-buy/ui/SubscriptionBuyPage'));
 const PaymentStatusPage = lazy(() => import('@/pages/payment-status/ui/PaymentStatusPage'));
@@ -72,7 +72,7 @@ export const router = createBrowserRouter(
             },
             {
               path: 'dashboard/history',
-              element: <BalanceHistoryPage />,
+              element: <TransactionPage />,
               handle: {
                 title: 'dashboard.sidebar_history',
                 description: 'dashboard.history_subtitle',
