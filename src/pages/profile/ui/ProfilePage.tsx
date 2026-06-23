@@ -36,19 +36,19 @@ function ProfilePage() {
 
   const getDeviceIcon = (type: string) => {
     const t = type.toLowerCase();
-    if (t.includes('ios') || t.includes('android') || t.includes('phone')) return <Smartphone size={18} />;
-    if (t.includes('windows') || t.includes('macos') || t.includes('desktop')) return <Monitor size={18} />;
+    if (t.includes('ios') || t.includes('android') || t.includes('phone'))
+      return <Smartphone size={18} />;
+    if (t.includes('windows') || t.includes('macos') || t.includes('desktop'))
+      return <Monitor size={18} />;
     return <Globe size={18} />;
   };
 
   return (
-    <div className={`${styles.wrapper} container`}>
+    <div className={styles.wrapper}>
       <Card padding="medium" className={styles.heroCard}>
         <div className={styles.avatar}>{user.username.charAt(0).toUpperCase()}</div>
         <div className={styles.profileMeta}>
-          <div className={styles.username}>
-            {user.username}
-          </div>
+          <div className={styles.username}>{user.username}</div>
           <div className={styles.profileSubtitle}>{user.email || t('dashboard.email_not_set')}</div>
         </div>
       </Card>
@@ -73,13 +73,14 @@ function ProfilePage() {
           </>
         ) : (
           <>
-            <SectionHeader
-              title={t('dashboard.subscriptions')}
-              className={styles.header}
-            />
+            <SectionHeader title={t('dashboard.subscriptions')} className={styles.header} />
             <div className={styles.subscriptionEmpty}>
               <div className={styles.emptyState}>{t('dashboard.no_subscriptions')}</div>
-              <Button type="button" className={styles.devicesBtn} onClick={() => navigate(ROUTES.PAY)}>
+              <Button
+                type="button"
+                className={styles.devicesBtn}
+                onClick={() => navigate(ROUTES.PAY)}
+              >
                 {t('dashboard.purchase_subscription')}
               </Button>
             </div>
@@ -102,15 +103,13 @@ function ProfilePage() {
             </>
           ) : devicePreview.length > 0 ? (
             devicePreview.map((device) => (
-              <div 
-                key={device.id} 
+              <div
+                key={device.id}
                 className={styles.item}
                 onClick={() => navigate(ROUTES.DEVICES)}
                 style={{ cursor: 'pointer' }}
               >
-                <div className={styles.itemIconWrapper}>
-                  {getDeviceIcon(device.type)}
-                </div>
+                <div className={styles.itemIconWrapper}>{getDeviceIcon(device.type)}</div>
                 <div className={styles.itemContent}>
                   <div className={styles.itemName}>{device.name}</div>
                   <div className={styles.itemStatus}>
