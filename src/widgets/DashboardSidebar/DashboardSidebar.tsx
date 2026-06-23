@@ -1,9 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
 import { useAuth } from '@/features/auth';
-import { useUIStore } from '@/shared/lib';
+import { useUIStore, getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import { ThemeToggle } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
@@ -13,6 +13,11 @@ export function DashboardSidebar() {
   const location = useLocation();
   const { logout } = useAuth();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
+  const [currentTheme, setCurrentTheme] = useState<Theme>(getCurrentTheme);
+
+  useEffect(() => {
+    return subscribeTheme(setCurrentTheme);
+  }, []);
 
   useEffect(() => {
     toggleSidebar(false);
@@ -76,10 +81,8 @@ export function DashboardSidebar() {
           <div className={styles.divider} />
 
           <div className={styles.themeRow}>
-            <ThemeToggle label={t('shared.theme_toggle')} />
+            <ThemeToggle label={currentTheme === 'dark' ? t('shared.dark') : t('shared.light')} />
           </div>
-
-          <div className={styles.bottomDivider} />
 
           <button
             onClick={() => {
