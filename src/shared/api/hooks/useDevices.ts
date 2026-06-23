@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { devicesApi } from '@/shared/api';
-import type { Device } from '../model/types';
+import { devicesService } from '../services';
+import type { DeviceResponse } from '../generated';
 
 export const deviceKeys = {
   all: ['devices'] as const,
 };
 
 export function useDevicesQuery(enabled: boolean) {
-  return useQuery<Device[]>({
+  return useQuery<DeviceResponse[]>({
     queryKey: deviceKeys.all,
-    queryFn: devicesApi.getAll,
+    queryFn: devicesService.getAll,
     enabled,
     staleTime: 30_000,
   });
@@ -18,7 +18,7 @@ export function useDevicesQuery(enabled: boolean) {
 export function useUpdateDeviceMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, name }: { id: string; name: string }) => devicesApi.update(id, name),
+    mutationFn: ({ id, name }: { id: string; name: string }) => devicesService.update(id, { name }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: deviceKeys.all });
     },
@@ -28,7 +28,7 @@ export function useUpdateDeviceMutation() {
 export function useRemoveDeviceMutation() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => devicesApi.remove(id),
+    mutationFn: (id: string) => devicesService.remove(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: deviceKeys.all });
     },

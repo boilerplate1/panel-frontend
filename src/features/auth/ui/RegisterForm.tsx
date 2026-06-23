@@ -6,7 +6,7 @@ import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
-import { authApi } from '@/shared/api';
+import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
 import styles from './AuthForm.module.css';
 
@@ -39,7 +39,9 @@ export function RegisterForm() {
     }
 
     if (!captchaToken) {
-      setError(t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'));
+      setError(
+        t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'),
+      );
       return;
     }
 
@@ -50,11 +52,11 @@ export function RegisterForm() {
     setError(null);
 
     try {
-      const data = await authApi.register({ 
-        username, 
-        password, 
-        confirmPassword, 
-        captchaToken: currentToken 
+      const data = await authService.register({
+        username,
+        password,
+        confirmPassword,
+        captchaToken: currentToken,
       });
       login(data.accessToken, data.user);
       showToast(t('auth.register_success'), 'success');
@@ -135,11 +137,7 @@ export function RegisterForm() {
         />
 
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
-          {isLoading ? (
-            <Loader2 className={styles.spinner} size={22} />
-          ) : (
-            t('auth.register_btn')
-          )}
+          {isLoading ? <Loader2 className={styles.spinner} size={22} /> : t('auth.register_btn')}
         </Button>
       </form>
 

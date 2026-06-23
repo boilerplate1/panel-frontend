@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { useAuthStore, useAuthActions } from './authStore';
-import { useAuthMeQuery } from '@/entities/user';
+import { useAuthMeQuery } from '@/shared/api';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const accessToken = useAuthStore((s) => s.accessToken);

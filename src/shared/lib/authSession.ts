@@ -1,4 +1,4 @@
-import type { User } from '@/entities/user';
+import type { User } from '@/shared/api';
 
 const TOKEN_KEY = 'hypex_token';
 const USER_KEY = 'hypex_user';

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft } from 'lucide-react';
-import { Logo, ThemeToggle } from '@/shared/ui';
+import { Logo, ThemeToggle, Container } from '@/shared/ui';
 import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
@@ -25,10 +25,13 @@ export function MobileHeader() {
 
   return (
     <header className={styles.wrapper}>
-      <div className={styles.inner}>
+      <Container className={styles.inner}>
         <div className={styles.leftSlot}>
-          {isRoot ? (
+          <div className={styles.logoDesktop}>
             <Logo className={styles.logo} />
+          </div>
+          {isRoot ? (
+            <Logo className={styles.logoMobile} />
           ) : (
             <button
               className={`${styles.backButton} ${isPayPage ? styles.backDesktop : ''}`}
@@ -60,7 +63,7 @@ export function MobileHeader() {
             <Menu size={28} />
           </button>
         </div>
-      </div>
+      </Container>
     </header>
   );
 }

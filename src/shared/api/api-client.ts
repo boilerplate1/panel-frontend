@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { APP_CONFIG } from '@/shared/config';
-import { useUIStore } from '@/shared/lib/store';
 
-export const api = axios.create({
+export const apiClient = axios.create({
   baseURL: APP_CONFIG.API_BASE_URL,
   withCredentials: true,
   timeout: 7000,
@@ -53,7 +52,7 @@ async function refreshAccessToken() {
   return refreshPromise;
 }
 
-api.interceptors.request.use((config) => {
+apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('hypex_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -61,7 +60,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -85,28 +84,16 @@ api.interceptors.response.use(
       originalRequest._isRetry = true;
 
       try {
-        console.log('[Auth] Access token expired, attempting refresh...');
         const newToken = await refreshAccessToken();
-
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return api.request(originalRequest);
+        return apiClient.request(originalRequest);
       } catch (refreshError) {
-        console.error('[Auth] Refresh failed permanently:', refreshError);
-
         if (hasToken && isAuthRejected(refreshError)) {
-          console.warn('[Auth] Session lost. Logging out...');
           clearAccessToken();
           window.dispatchEvent(new Event('logout'));
         }
         return Promise.reject(refreshError);
       }
-    }
-
-    if (error.response?.status === 429) {
-      useUIStore.getState().showToast(
-        'Too many requests. Please wait before retrying.',
-        'error',
-      );
     }
 
     throw error;

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { subscriptionApi } from '@/shared/api';
-import type { Subscription, SubscriptionPlan } from '../model/types';
+import { billingService } from '../services';
+import type { SubscriptionResponse, SubscriptionPlanResponse } from '../generated';
 
 export const subscriptionKeys = {
   all: ['subscriptions'] as const,
@@ -8,18 +8,18 @@ export const subscriptionKeys = {
 };
 
 export function useSubscriptionsQuery(enabled: boolean) {
-  return useQuery<Subscription[]>({
+  return useQuery<SubscriptionResponse[]>({
     queryKey: subscriptionKeys.all,
-    queryFn: subscriptionApi.getAll,
+    queryFn: billingService.getSubscriptions,
     enabled,
     staleTime: 30_000,
   });
 }
 
 export function useSubscriptionPlansQuery(enabled = true) {
-  return useQuery<SubscriptionPlan[]>({
+  return useQuery<SubscriptionPlanResponse[]>({
     queryKey: subscriptionKeys.plans,
-    queryFn: subscriptionApi.getPlans,
+    queryFn: billingService.getPlans,
     enabled,
     staleTime: 60_000,
   });

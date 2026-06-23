@@ -7,4 +7,5 @@ export interface SubscriptionPlanResponse {
   trafficLimitGb: number;
   maxDevices: number;
   isActive: boolean;
+  currency?: string;
 }

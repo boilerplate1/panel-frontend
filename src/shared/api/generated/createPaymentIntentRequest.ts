@@ -1,5 +1,5 @@
 export interface CreatePaymentIntentRequest {
-  provider: 'yookassa' | 'cryptopay';
+  provider: string;
   planId: number;
-  paymentMethod?: 'bank_card' | 'sbp' | 'yoo_money';
+  paymentMethod?: string | null;
 }

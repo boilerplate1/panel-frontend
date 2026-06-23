@@ -11,11 +11,7 @@ import {
 import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
-import {
-  useDevicesQuery,
-  useUpdateDeviceMutation,
-  useRemoveDeviceMutation,
-} from '@/entities/device';
+import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 import { useState } from 'react';
 import { useDeviceEmojiStore } from '@/shared/lib';
 

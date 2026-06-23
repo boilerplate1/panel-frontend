@@ -1,18 +1,6 @@
-export const ROUTES = {
-  HOME: '/',
-  DASHBOARD: '/dashboard',
-  DEVICES: '/dashboard/devices',
-  HISTORY: '/dashboard/history',
-  PAY: '/dashboard/pay',
-  LOGIN: '/login',
-  REGISTER: '/register',
-} as const;
-
-export const SOCIAL_LINKS = {
-  TG_CHANNEL: 'https://t.me/hypex_vpn',
-  TG_JOB: 'https://t.me/hypex_team_job',
-  SUPPORT_EMAIL: 'support@hypex.web',
-} as const;
+import { env } from './env';
+export { getRuntimeEnv } from './runtimeEnv';
+export { ROUTES, APP, SOCIAL_LINKS, SEO } from '@/constants';
 
 export const EXTERNAL_CONFIG = {
   FLAG_CDN: 'https://flagcdn.com/w40',
@@ -20,26 +8,8 @@ export const EXTERNAL_CONFIG = {
 
 export const APP_CONFIG = {
   BRAND_NAME: 'Hypex',
-  API_BASE_URL: getRuntimeEnv('VITE_API_URL', import.meta.env.VITE_API_URL),
-  ANDROID_APK_URL: getRuntimeEnv('VITE_ANDROID_APK_URL', import.meta.env.VITE_ANDROID_APK_URL),
-  RECAPTCHA_SITE_KEY: getRuntimeEnv('VITE_TURNSTILE_SITE_KEY', import.meta.env.VITE_TURNSTILE_SITE_KEY),
-  BASE_URL: getRuntimeEnv('VITE_BASE_URL', import.meta.env.VITE_BASE_URL),
+  API_BASE_URL: env.API_URL,
+  ANDROID_APK_URL: env.ANDROID_APK_URL,
+  RECAPTCHA_SITE_KEY: env.TURNSTILE_SITE_KEY,
+  BASE_URL: env.BASE_URL,
 } as const;
-
-export const SEO_CONFIG = {
-  KEYWORDS: [
-    'купить впн',
-    'впн россия',
-    'бесплатно впн',
-    'впн для андроид',
-    'впн для айос',
-    'впн для пк',
-    'впн для тв',
-    'fast vpn russia',
-    'secure vpn for android',
-    'vpn for iphone',
-    'vpn for macos',
-    'vpn for windows',
-  ].join(', '),
-} as const;
-import { getRuntimeEnv } from './runtimeEnv';

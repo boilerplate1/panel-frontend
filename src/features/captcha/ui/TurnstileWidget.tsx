@@ -47,13 +47,13 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
           onLoad={() => setIsLoaded(true)}
           options={{
             theme: 'dark',
-            size: 'normal',
+            size: 'flexible',
             action,
           }}
         />
       </div>
     );
-  }
+  },
 );
 
 TurnstileWidget.displayName = 'TurnstileWidget';

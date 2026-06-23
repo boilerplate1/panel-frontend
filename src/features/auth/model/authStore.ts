@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { User } from '@/entities/user/model/types';
+import type { User } from '@/shared/api';
 import {
   clearAuthSession,
   saveAuthSession,

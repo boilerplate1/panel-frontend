@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 import {
   Loader2,
   ArrowLeft,
-  CreditCard,
-  Bitcoin,
   ChevronRight,
   CheckCircle2,
   XCircle,
@@ -14,7 +12,7 @@ import {
   Flame,
 } from 'lucide-react';
 import { useAuth } from '@/features/auth';
-import { useSubscriptionPlansQuery, useSubscriptionsQuery } from '@/entities/subscription';
+import { useSubscriptionPlansQuery, useSubscriptionsQuery } from '@/shared/api';
 import {
   usePaymentStore,
   useCreatePaymentIntentMutation,
@@ -32,7 +30,7 @@ import {
   formatDate,
   getApiErrorMessage,
 } from '@/shared/lib';
-import { ROUTES } from '@/shared/config';
+import { ROUTES, PAYMENT_METHOD_ICONS, YOOKASSA_PAYMENT_METHODS } from '@/constants';
 import styles from './SubscriptionBuyPage.module.css';
 
 function SubscriptionBuyPage() {
@@ -301,26 +299,22 @@ function SubscriptionBuyPage() {
   }
 
   if (stage === 'selecting_sub_method') {
-    const yookassaMethods = [
-      {
-        id: 'bank_card',
-        icon: MirIcon,
-        label: t('dashboard.buy_subscription_method_bank_card'),
-        desc: t('dashboard.buy_subscription_method_bank_card_desc'),
-      },
-      {
-        id: 'sbp',
-        icon: SbpIcon,
-        label: t('dashboard.buy_subscription_method_sbp'),
-        desc: t('dashboard.buy_subscription_method_sbp_desc'),
-      },
-      {
-        id: 'yoo_money',
-        icon: YookassaIcon,
-        label: t('dashboard.buy_subscription_method_yoomoney'),
-        desc: t('dashboard.buy_subscription_method_yoomoney_desc'),
-      },
-    ];
+    const yookassaMethods = YOOKASSA_PAYMENT_METHODS.map((id) => ({
+      id,
+      icon: id === 'bank_card' ? MirIcon : id === 'sbp' ? SbpIcon : YookassaIcon,
+      label:
+        id === 'bank_card'
+          ? t('dashboard.buy_subscription_method_bank_card')
+          : id === 'sbp'
+            ? t('dashboard.buy_subscription_method_sbp')
+            : t('dashboard.buy_subscription_method_yoomoney'),
+      desc:
+        id === 'bank_card'
+          ? t('dashboard.buy_subscription_method_bank_card_desc')
+          : id === 'sbp'
+            ? t('dashboard.buy_subscription_method_sbp_desc')
+            : t('dashboard.buy_subscription_method_yoomoney_desc'),
+    }));
 
     return (
       <div className={styles.wrapper}>
@@ -384,9 +378,10 @@ function SubscriptionBuyPage() {
                   <Skeleton key={i} height={74} borderRadius={12} />
                 ))
               : providers.map((p) => {
-                  const isCrypto = p.toLowerCase().includes('crypto');
-                  const isYookassa = p.toLowerCase() === 'yookassa';
-                  const Icon = isCrypto ? Bitcoin : CreditCard;
+                  const providerKey = p.toLowerCase();
+                  const isYookassa = providerKey === 'yookassa';
+                  const isCrypto = providerKey.includes('crypto');
+                  const Icon = PAYMENT_METHOD_ICONS[providerKey] ?? PAYMENT_METHOD_ICONS.default;
 
                   const label = isYookassa
                     ? t('dashboard.buy_subscription_method_yookassa')

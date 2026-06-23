@@ -1,13 +1,11 @@
 .wrapper {
-  display: flex;
-  justify-content: center;
   width: 100%;
-  margin: 1rem 0;
-  padding: 8px;
-  background: var(--surface-secondary, rgba(255, 255, 255, 0.05));
-  border-radius: 12px;
   min-height: 65px;
   position: relative;
+}
+
+.wrapper iframe {
+  width: 100% !important;
 }
 
 .loaderWrapper {

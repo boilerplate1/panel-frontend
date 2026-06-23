@@ -1,6 +1,4 @@
-export * from './base';
-export * from './types';
-export * from './domains/auth';
-export * from './domains/billing';
-export * from './domains/devices';
-export * from './domains/system';
+export { apiClient, unwrapArray, unwrapObject } from './api-client';
+export * from './generated';
+export * from './services';
+export * from './hooks';

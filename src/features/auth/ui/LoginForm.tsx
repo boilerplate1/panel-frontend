@@ -6,7 +6,7 @@ import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../model/useAuth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
-import { authApi } from '@/shared/api';
+import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
 import styles from './AuthForm.module.css';
 
@@ -28,7 +28,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     if (isLoading || isSubmitting.current) return;
 
     const formData = new FormData(event.currentTarget);
@@ -41,7 +41,9 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
     }
 
     if (!captchaToken) {
-      setError(t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'));
+      setError(
+        t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'),
+      );
       return;
     }
 
@@ -52,10 +54,10 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
     setError(null);
 
     try {
-      const data = await authApi.loginWeb({ 
+      const data = await authService.loginWeb({
         username,
         password,
-        captchaToken: currentToken 
+        captchaToken: currentToken,
       });
 
       authLogin(data.accessToken, data.user);
@@ -63,14 +65,14 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       navigate(ROUTES.DASHBOARD);
     } catch (err: any) {
       let msg = getApiErrorMessage(err, t('auth.login_error'), t);
-      
+
       const errorMsg = err.response?.data?.message || '';
       if (typeof errorMsg === 'string' && errorMsg.startsWith('LOCKOUT_ACTIVE:')) {
         const minutes = errorMsg.split(':')[1] || '5';
         msg = t('auth.lockout_message', { minutes });
         showToast(t('auth.too_many_attempts'), 'error');
       }
-      
+
       setError(msg);
       turnstileRef.current?.reset();
     } finally {
@@ -117,11 +119,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
         />
 
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
-          {isLoading ? (
-            <Loader2 className={styles.spinner} size={22} />
-          ) : (
-            t('auth.login')
-          )}
+          {isLoading ? <Loader2 className={styles.spinner} size={22} /> : t('auth.login')}
         </Button>
       </form>
 
