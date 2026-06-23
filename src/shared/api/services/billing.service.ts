@@ -83,7 +83,7 @@ export class BillingService {
     return apiClient.post(`/payments/intents/${intentId}/cancel`).then((r) => r.data);
   }
 
-  getHistory(cursor?: string | null, take = 20): Promise<PaymentHistoryResponse> {
+  getHistory(cursor?: string | null, take = 8): Promise<PaymentHistoryResponse> {
     return apiClient
       .get('/payments/history', {
         params: {
@@ -94,7 +94,7 @@ export class BillingService {
       .then((r) => unwrapObject(r.data, { items: [], nextCursor: null }));
   }
 
-  getHistoryPage(page = 1, take = 20): Promise<PaymentHistoryResponse> {
+  getHistoryPage(page = 1, take = 8): Promise<PaymentHistoryResponse> {
     return apiClient
       .get('/payments/history', {
         params: { page, take },
