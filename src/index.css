@@ -1,19 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import './shared/styles/variables.css';
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   color-scheme: dark;
   width: 100%;
   max-width: 100%;
+  background: var(--overscroll-bg);
+  overflow-x: clip;
 }
 
-html[data-theme='light'] {
-  color-scheme: light;
-}
-
-html[data-theme='dark'] {
-  color-scheme: dark;
-}
+html[data-theme='light'] { color-scheme: light; }
+html[data-theme='dark'] { color-scheme: dark; }
 
 * {
   margin: 0;
@@ -22,29 +25,23 @@ html[data-theme='dark'] {
   font-family: var(--text-font-family);
 }
 
-button,
-input,
-textarea,
-select {
+button, input, textarea, select {
   font: inherit;
 }
 
-html {
-  min-height: 100%;
-  background: var(--overscroll-bg);
-  overflow-x: clip;
-}
-
 body {
-  min-height: 100%;
   background: var(--overscroll-bg);
-  font-family: var(--text-font-family);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  margin: 0;
-  padding: 0;
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .grecaptcha-badge {
@@ -53,7 +50,7 @@ body {
 
 #root {
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100%;
   background: var(--page-bg);
   max-width: 100%;
   overflow-x: clip;
@@ -82,40 +79,15 @@ body {
 }
 
 @keyframes slideUpFade {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.page-transition {
-  animation: slideUpFade 0.3s ease-out forwards;
-}
-
-.stagger-item {
-  opacity: 0;
-  animation: slideUpFade 0.3s ease-out forwards;
-}
-
-.stagger-item:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.stagger-item:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.stagger-item:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.stagger-item:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.stagger-item:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.stagger-item:nth-child(n + 6) {
-  animation-delay: 0.3s;
-}
+.page-transition { animation: slideUpFade 0.3s ease-out forwards; }
+.stagger-item { opacity: 0; animation: slideUpFade 0.3s ease-out forwards; }
+.stagger-item:nth-child(1) { animation-delay: 0.05s; }
+.stagger-item:nth-child(2) { animation-delay: 0.1s; }
+.stagger-item:nth-child(3) { animation-delay: 0.15s; }
+.stagger-item:nth-child(4) { animation-delay: 0.2s; }
+.stagger-item:nth-child(5) { animation-delay: 0.25s; }
+.stagger-item:nth-child(n + 6) { animation-delay: 0.3s; }

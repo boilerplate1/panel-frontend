@@ -6,6 +6,40 @@ import styles from './DevicesPage.module.css';
 import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 import { useState } from 'react';
 
+
+  const getDeviceIcon = (type: string) => {
+    const t = type.toLowerCase();
+    if (t.includes('ios') || t.includes('android') || t.includes('phone'))
+      return <Smartphone size={18} />;
+    if (
+      t.includes('windows') ||
+      t.includes('macos') ||
+      t.includes('desktop') ||
+      t.includes('laptop') ||
+      t.includes('computer')
+    )
+      return <Monitor size={18} />;
+    if (t.includes('tv') || t.includes('television') || t.includes('smarttv'))
+      return <Tv size={18} />;
+    return <Globe size={18} />;
+  };
+
+  const getDeviceTypeLabel = (type: string) => {
+    const t = type.toLowerCase();
+    if (t.includes('ios')) return 'iOS';
+    if (t.includes('android')) return 'Android';
+    if (t.includes('windows')) return 'Windows';
+    if (t.includes('macos')) return 'macOS';
+    if (t.includes('linux')) return 'Linux';
+    if (t.includes('desktop') || t.includes('computer')) return 'Desktop';
+    if (t.includes('laptop')) return 'Laptop';
+    if (t.includes('tv')) return 'TV';
+    if (t.includes('phone')) return 'Phone';
+    if (t.includes('tablet')) return 'Tablet';
+    return type;
+  };
+
+  
 function DevicesPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
@@ -39,38 +73,6 @@ function DevicesPage() {
       await removeDeviceMutation.mutateAsync(deleteTargetId);
       setDeleteTargetId(null);
     }
-  };
-
-  const getDeviceIcon = (type: string) => {
-    const t = type.toLowerCase();
-    if (t.includes('ios') || t.includes('android') || t.includes('phone'))
-      return <Smartphone size={18} />;
-    if (
-      t.includes('windows') ||
-      t.includes('macos') ||
-      t.includes('desktop') ||
-      t.includes('laptop') ||
-      t.includes('computer')
-    )
-      return <Monitor size={18} />;
-    if (t.includes('tv') || t.includes('television') || t.includes('smarttv'))
-      return <Tv size={18} />;
-    return <Globe size={18} />;
-  };
-
-  const getDeviceTypeLabel = (type: string) => {
-    const t = type.toLowerCase();
-    if (t.includes('ios')) return 'iOS';
-    if (t.includes('android')) return 'Android';
-    if (t.includes('windows')) return 'Windows';
-    if (t.includes('macos')) return 'macOS';
-    if (t.includes('linux')) return 'Linux';
-    if (t.includes('desktop') || t.includes('computer')) return 'Desktop';
-    if (t.includes('laptop')) return 'Laptop';
-    if (t.includes('tv')) return 'TV';
-    if (t.includes('phone')) return 'Phone';
-    if (t.includes('tablet')) return 'Tablet';
-    return type;
   };
 
   const isDeviceOnline = (device: { status: string; lastSeen: string }) => {
