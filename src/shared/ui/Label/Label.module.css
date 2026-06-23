@@ -2,7 +2,7 @@
   display: block;
   font-size: var(--font-size-base);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-muted);
   margin-bottom: 10px;
   letter-spacing: 0.02em;
 }

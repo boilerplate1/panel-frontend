@@ -1,7 +1,7 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
 import { Turnstile as ReactTurnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
-import { Loader2 } from 'lucide-react';
 import { APP_CONFIG } from '@/shared/config';
+import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
 import styles from './TurnstileWidget.module.css';
 
 interface TurnstileWidgetProps {
@@ -17,8 +17,15 @@ export interface TurnstileWidgetRef {
 
 export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetProps>(
   ({ onSuccess, onExpire, onError, action = 'login' }, ref) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const themeRef = useRef<Theme>(getCurrentTheme());
     const turnstileRef = useRef<TurnstileInstance>(null);
+
+    useEffect(() => {
+      return subscribeTheme((t) => {
+        themeRef.current = t;
+        turnstileRef.current?.reset();
+      });
+    }, []);
 
     useImperativeHandle(ref, () => ({
       reset: () => turnstileRef.current?.reset(),
@@ -26,27 +33,14 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
 
     return (
       <div className={styles.wrapper}>
-        {!isLoaded && (
-          <div className={styles.loaderWrapper}>
-            <Loader2 className={styles.spinner} size={20} />
-          </div>
-        )}
         <ReactTurnstile
           ref={turnstileRef}
           siteKey={APP_CONFIG.RECAPTCHA_SITE_KEY}
-          onSuccess={(token) => {
-            setIsLoaded(true);
-            onSuccess(token);
-          }}
-          onExpire={() => {
-            onExpire?.();
-          }}
-          onError={() => {
-            onError?.();
-          }}
-          onLoad={() => setIsLoaded(true)}
+          onSuccess={onSuccess}
+          onExpire={onExpire}
+          onError={onError}
           options={{
-            theme: 'dark',
+            theme: themeRef.current,
             size: 'flexible',
             action,
           }}

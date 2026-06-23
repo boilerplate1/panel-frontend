@@ -1,15 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { devicesService } from '../services';
-import type { DeviceResponse } from '../generated';
+import type { PaginatedDeviceResponse } from '../generated';
+import { useState } from 'react';
 
 export const deviceKeys = {
   all: ['devices'] as const,
+  page: (page: number) => ['devices', 'page', page] as const,
 };
 
-export function useDevicesQuery(enabled: boolean) {
-  return useQuery<DeviceResponse[]>({
-    queryKey: deviceKeys.all,
-    queryFn: devicesService.getAll,
+export function useDevicesQuery(enabled: boolean, page = 1) {
+  return useQuery<PaginatedDeviceResponse>({
+    queryKey: deviceKeys.page(page),
+    queryFn: () => devicesService.getAll(page),
     enabled,
     staleTime: 30_000,
   });

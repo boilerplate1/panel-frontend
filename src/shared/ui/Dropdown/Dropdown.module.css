@@ -76,11 +76,11 @@
 }
 
 .item.danger {
-  color: #ef4444;
+  color: var(--color-danger);
 }
 
 .item.danger:hover {
-  background: color-mix(in srgb, #ef4444 10%, transparent);
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
 }
 
 .chevron {

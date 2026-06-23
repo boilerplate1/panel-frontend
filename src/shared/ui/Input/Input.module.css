@@ -8,6 +8,7 @@
   transition: all var(--transition-fast);
   border: 1px solid var(--input-border);
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .root:focus {
@@ -16,18 +17,19 @@
 }
 
 .root::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-  opacity: 1;
+  color: var(--text-muted);
+  opacity: 0.5;
 }
 
 .root:-webkit-autofill,
-.root:-webkit-autofill:hover, 
-.root:-webkit-autofill:focus, 
+.root:-webkit-autofill:hover,
+.root:-webkit-autofill:focus,
 .root:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #0f0f0f inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--surface-input) inset !important;
   -webkit-text-fill-color: var(--text-primary) !important;
   transition: background-color 5000s ease-in-out 0s;
   background-clip: content-box !important;
+  caret-color: var(--text-primary);
 }
 
 .wrapper {
@@ -40,8 +42,7 @@
 }
 
 .passwordDots {
-  font-size: var(--font-size-sm);
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .toggle {

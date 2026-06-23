@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import { TurnstileWidget, type TurnstileWidgetRef } from '@/features/captcha';
 import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
-import { useAuth } from '../model/useAuth';
+import { useAuth } from '@/features/auth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
 import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
@@ -63,10 +64,10 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       authLogin(data.accessToken, data.user);
       showToast(t('auth.login_success'), 'success');
       navigate(ROUTES.DASHBOARD);
-    } catch (err: any) {
+    } catch (err: unknown) {
       let msg = getApiErrorMessage(err, t('auth.login_error'), t);
 
-      const errorMsg = err.response?.data?.message || '';
+      const errorMsg = axios.isAxiosError(err) ? err.response?.data?.message || '' : '';
       if (typeof errorMsg === 'string' && errorMsg.startsWith('LOCKOUT_ACTIVE:')) {
         const minutes = errorMsg.split(':')[1] || '5';
         msg = t('auth.lockout_message', { minutes });

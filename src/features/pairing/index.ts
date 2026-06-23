@@ -1,2 +1,2 @@
 export * from './ui/PairingSession';
-export * from './api/query';
+export { pairingKeys, usePairingInitQuery, usePairingStatusQuery } from '@/shared/api/hooks';

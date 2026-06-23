@@ -53,8 +53,8 @@
 }
 
 .pageTitle {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -62,7 +62,7 @@
 }
 
 .pageDescription {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -111,17 +111,53 @@
   margin-right: -8px;
 }
 
-.themeDesktop {
-  display: block;
+.userDesktop {
+  display: none;
 }
 
-@media (max-width: 992px) {
-  .themeDesktop {
-    display: none;
-  }
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  padding: 4px 12px 4px 4px;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast);
+  background: var(--surface-secondary);
+}
+
+.userCard:hover {
+  background: var(--surface-tertiary);
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--avatar-bg);
+  color: var(--avatar-foreground);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.userName {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (min-width: 993px) {
+  .userDesktop {
+    display: block;
+  }
   .logoDesktop {
     display: block;
   }
@@ -131,12 +167,14 @@
   }
 
   .backButton,
-  .pageTitle {
+  .pageTitle,
+  .pageDescription {
     display: none;
   }
 
   .backDesktop.backButton,
-  .backDesktop.pageTitle {
+  .backDesktop.pageTitle,
+  .backDesktop.pageDescription {
     display: flex;
   }
 

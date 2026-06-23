@@ -2,29 +2,12 @@
   width: 100%;
   min-height: 65px;
   position: relative;
+  overflow: hidden;
+  margin-top: var(--spacing-4);
 }
 
 .wrapper iframe {
-  width: 100% !important;
-}
-
-.loaderWrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.3;
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  width: calc(100% + 4px) !important;
+  margin: -2px;
+  border: none;
 }

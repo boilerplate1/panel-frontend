@@ -77,7 +77,7 @@
 .modalRow span,
 .modalError span {
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
 }
 
@@ -106,6 +106,8 @@
 .modalError {
   background: color-mix(in srgb, var(--status-error) 8%, transparent);
   border: 1px solid color-mix(in srgb, var(--status-error) 18%, transparent);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .modalLink {
@@ -121,7 +123,7 @@
 
 .modalSupportText {
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: var(--font-size-xs);
   line-height: 1.4;
   text-align: center;
 }

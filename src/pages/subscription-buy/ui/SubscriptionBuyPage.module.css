@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100%;
   padding-bottom: var(--spacing-4);
+  position: relative;
   --buy-card-radius: 18px;
 }
 
@@ -52,15 +53,6 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-.itemBestValue {
-  border-color: rgba(34, 197, 94, 0.22);
-  background: rgba(34, 197, 94, 0.06);
-  box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.08);
-}
-
-.itemHot {
-}
-
 .itemSelected {
   border-color: var(--border-color) !important;
   background: rgba(255, 255, 255, 0.03);
@@ -105,15 +97,16 @@
   font-weight: 500;
 }
 
-.hotIcon {
-  color: #ef4444;
-  margin-left: 2px;
-  flex-shrink: 0;
+.hotBadge {
+  background: color-mix(in srgb, var(--color-danger) 16%, transparent);
+  color: var(--text-primary);
+  border: none;
+  font-weight: 500;
 }
 
 .itemName {
   font-weight: var(--font-weight-semibold);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   color: var(--text-primary);
 }
 
@@ -121,7 +114,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
 }
 
@@ -154,7 +147,7 @@
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .summaryText {
@@ -166,12 +159,12 @@
 
 .summaryMinimal span {
   color: var(--text-secondary);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
 }
 
 .summaryMinimal strong {
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
 }
 
@@ -221,6 +214,12 @@
   transform: translateY(-1px);
 }
 
+.providerBtn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
 .providerContent {
   display: flex;
   align-items: center;
@@ -255,130 +254,17 @@
 }
 
 .providerLabel {
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.2;
 }
 
 .providerDesc {
-  font-size: 13px;
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
   font-weight: 400;
   line-height: 1.4;
-}
-
-.statusCard {
-  text-align: center;
-  padding: var(--spacing-8) var(--spacing-4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-6);
-  border-radius: var(--buy-card-radius);
-}
-
-.statusIcon {
-  margin-bottom: var(--spacing-2);
-}
-
-.statusSuccess {
-  color: #10b981;
-}
-
-.statusError {
-  color: var(--status-error);
-}
-
-.statusPending {
-  color: var(--text-secondary);
-}
-
-.statusVisual {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--spacing-4);
-}
-
-.timerCircle {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  display: grid;
-  place-items: center;
-}
-
-.circularChart {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.circleBg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.05);
-  stroke-width: 2.8;
-}
-
-.circle {
-  fill: none;
-  stroke: var(--surface-secondary);
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  transition: stroke-dasharray 0.3s ease;
-}
-
-.timerCount {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-
-.statusHeader {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  margin-bottom: var(--spacing-8);
-}
-
-.statusTitle {
-  font-size: var(--font-h3);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
-}
-
-.statusText {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-.statusActions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  width: 100%;
-  max-width: 280px;
-}
-
-.cancelLink {
-  background: transparent;
-  border: none;
-  color: var(--status-error);
-  font-size: var(--font-size-xs);
-  text-decoration: underline;
-  cursor: pointer;
-  padding: var(--spacing-2);
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.cancelLink:hover {
-  opacity: 1;
 }
 
 .loading {
@@ -393,6 +279,20 @@
 
 .spinner {
   animation: spin 1s linear infinite;
+}
+
+.creatingState {
+  width: 100%;
+  min-height: min(420px, calc(100dvh - 160px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
 }
 
 @keyframes spin {
@@ -423,10 +323,6 @@
   }
 
   .backBtn {
-    display: flex;
-  }
-
-  .backBtn svg {
     display: none;
   }
 
@@ -454,7 +350,7 @@
   }
 
   .itemName {
-    font-size: 15px;
+    font-size: var(--font-size-sm);
   }
 
   .itemTop {
@@ -467,13 +363,13 @@
   }
 
   .itemMeta {
-    font-size: 13px;
+    font-size: var(--font-size-xs);
     gap: 6px;
   }
 
   .bestValueBadge {
     padding: 2px 7px;
-    font-size: 13px;
+    font-size: var(--font-size-xs);
   }
 
   .modalLink {

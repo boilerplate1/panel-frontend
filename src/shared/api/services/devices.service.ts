@@ -1,9 +1,9 @@
 import { apiClient } from '../api-client';
-import type { DeviceResponse, DeviceUpdateRequest } from '../generated';
+import type { DeviceResponse, DeviceUpdateRequest, PaginatedDeviceResponse } from '../generated';
 
 export class DevicesService {
-  getAll(): Promise<DeviceResponse[]> {
-    return apiClient.get('/devices').then((r) => r.data);
+  getAll(page = 1, limit = 20): Promise<PaginatedDeviceResponse> {
+    return apiClient.get('/devices', { params: { page, limit } }).then((r) => r.data);
   }
 
   update(id: string, data: DeviceUpdateRequest): Promise<{ success: boolean }> {

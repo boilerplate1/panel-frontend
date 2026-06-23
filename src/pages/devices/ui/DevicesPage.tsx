@@ -1,63 +1,84 @@
 import { useAuth } from '@/features/auth';
-import {
-  Card,
-  SectionHeader,
-  Dropdown,
-  ResponsiveModal,
-  Button,
-  FormField,
-  EmojiPicker,
-} from '@/shared/ui';
-import { Loader2, MoreVertical, Edit2, Trash2, Smartphone, Monitor, Globe } from 'lucide-react';
+import { Card, SectionHeader, ResponsiveModal, Button, FormField, Pagination } from '@/shared/ui';
+import { Loader2, Edit2, Trash2, Smartphone, Monitor, Globe, Tv } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from './DevicesPage.module.css';
 import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 import { useState } from 'react';
-import { useDeviceEmojiStore } from '@/shared/lib';
+
+const DEVICES_PER_PAGE = 20;
 
 function DevicesPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const { data: devices, isLoading } = useDevicesQuery(!!user);
+  const [page, setPage] = useState(1);
+  const { data: paginated, isLoading, dataUpdatedAt } = useDevicesQuery(!!user, page);
   const updateDeviceMutation = useUpdateDeviceMutation();
   const removeDeviceMutation = useRemoveDeviceMutation();
-  const { emojiMap, setEmoji } = useDeviceEmojiStore();
-
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
-  const [editEmoji, setEditEmoji] = useState('');
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+
+  const devices = paginated?.items ?? [];
+  const totalPages = paginated?.totalPages ?? 0;
 
   if (!user) return null;
 
   const handleStartEdit = (id: string, currentName: string) => {
     setEditingId(id);
     setEditName(currentName);
-    setEditEmoji(emojiMap[id] ?? '');
   };
 
   const handleSaveEdit = async () => {
     if (editingId && editName.trim()) {
       await updateDeviceMutation.mutateAsync({ id: editingId, name: editName.trim() });
-      if (editEmoji) setEmoji(editingId, editEmoji);
       setEditingId(null);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm(t('devices.confirm_delete'))) {
-      await removeDeviceMutation.mutateAsync(id);
+  const handleDeleteConfirm = async () => {
+    if (deleteTargetId) {
+      await removeDeviceMutation.mutateAsync(deleteTargetId);
+      setDeleteTargetId(null);
     }
   };
-
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
   const getDeviceIcon = (type: string) => {
     const t = type.toLowerCase();
     if (t.includes('ios') || t.includes('android') || t.includes('phone'))
       return <Smartphone size={18} />;
-    if (t.includes('windows') || t.includes('macos') || t.includes('desktop'))
+    if (
+      t.includes('windows') ||
+      t.includes('macos') ||
+      t.includes('desktop') ||
+      t.includes('laptop') ||
+      t.includes('computer')
+    )
       return <Monitor size={18} />;
+    if (t.includes('tv') || t.includes('television') || t.includes('smarttv'))
+      return <Tv size={18} />;
     return <Globe size={18} />;
+  };
+
+  const getDeviceTypeLabel = (type: string) => {
+    const t = type.toLowerCase();
+    if (t.includes('ios')) return 'iOS';
+    if (t.includes('android')) return 'Android';
+    if (t.includes('windows')) return 'Windows';
+    if (t.includes('macos')) return 'macOS';
+    if (t.includes('linux')) return 'Linux';
+    if (t.includes('desktop') || t.includes('computer')) return 'Desktop';
+    if (t.includes('laptop')) return 'Laptop';
+    if (t.includes('tv')) return 'TV';
+    if (t.includes('phone')) return 'Phone';
+    if (t.includes('tablet')) return 'Tablet';
+    return type;
+  };
+
+  const isDeviceOnline = (device: { status: string; lastSeen: string }) => {
+    if (device.status === 'active') return true;
+    const diff = dataUpdatedAt - new Date(device.lastSeen).getTime();
+    return diff < 5 * 60 * 1000;
   };
 
   return (
@@ -75,58 +96,93 @@ function DevicesPage() {
           </div>
         ) : (
           <div className={styles.container}>
-            {devices && devices.length > 0 ? (
-              devices.map((device) => {
-                const deviceEmoji = emojiMap[device.id];
-                return (
-                  <div key={device.id} className={styles.item}>
-                    <div className={styles.itemInfo}>
-                      <div className={styles.itemName}>
-                        {deviceEmoji && <span className={styles.itemEmoji}>{deviceEmoji}</span>}
-                        {device.name}
-                      </div>
-                      <div className={`${styles.itemStatus} ${styles.deviceTypeStatus}`}>
-                        <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
-                        <span>{capitalize(device.type)}</span>
-                        <span>•</span>
-                        <span>
-                          {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className={styles.itemActions}>
-                      <Dropdown
-                        showChevron={false}
-                        trigger={
-                          <div className={styles.dropdownTrigger}>
-                            <MoreVertical size={20} />
-                          </div>
-                        }
-                        items={[
-                          {
-                            label: t('common.rename'),
-                            icon: <Edit2 size={16} />,
-                            onClick: () => handleStartEdit(device.id, device.name),
-                          },
-                          {
-                            label: t('common.delete'),
-                            icon: <Trash2 size={16} />,
-                            onClick: () => handleDelete(device.id),
-                            variant: 'danger',
-                          },
-                        ]}
+            {devices.length > 0 ? (
+              devices.map((device) => (
+                <div key={device.id} className={styles.item}>
+                  <div className={styles.itemInfo}>
+                    <div className={styles.itemName}>{getDeviceTypeLabel(device.type)}</div>
+                    <div className={styles.itemStatus}>
+                      <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
+                      {device.name.toLowerCase() !== device.type.toLowerCase() &&
+                        device.name !== getDeviceTypeLabel(device.type) && (
+                          <span className={styles.rawName}>{device.name}</span>
+                        )}
+                      <span
+                        className={`${styles.onlineDot} ${isDeviceOnline(device) ? styles.online : styles.offline}`}
                       />
+                      <span
+                        className={isDeviceOnline(device) ? styles.onlineText : styles.offlineText}
+                      >
+                        {isDeviceOnline(device) ? t('devices.online') : t('devices.offline')}
+                      </span>
+                      <span className={styles.lastSeen}>
+                        {!isDeviceOnline(device) && (
+                          <>
+                            {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
+                          </>
+                        )}
+                      </span>
                     </div>
                   </div>
-                );
-              })
+
+                  <div className={styles.itemActions}>
+                    <button
+                      className={styles.actionBtn}
+                      onClick={() => handleStartEdit(device.id, device.name)}
+                      type="button"
+                      title={t('common.rename')}
+                    >
+                      <Edit2 size={18} />
+                    </button>
+                    <button
+                      className={`${styles.actionBtn} ${styles.actionDanger}`}
+                      onClick={() => setDeleteTargetId(device.id)}
+                      type="button"
+                      title={t('common.delete')}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                </div>
+              ))
             ) : (
               <p className={styles.emptyText}>{t('devices.empty')}</p>
             )}
           </div>
         )}
+
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onChange={setPage}
+        />
       </Card>
+
+      <ResponsiveModal
+        isOpen={!!deleteTargetId}
+        onClose={() => setDeleteTargetId(null)}
+        title={t('devices.confirm_delete_title', 'Delete device')}
+      >
+        <div className={styles.modalContent}>
+          <p>{t('devices.confirm_delete')}</p>
+          <div className={styles.modalActions}>
+            <Button variant="outline" onClick={() => setDeleteTargetId(null)}>
+              {t('common.cancel')}
+            </Button>
+            <Button
+              variant="danger"
+              onClick={handleDeleteConfirm}
+              disabled={removeDeviceMutation.isPending}
+            >
+              {removeDeviceMutation.isPending ? (
+                <Loader2 className={styles.spinner} size={18} />
+              ) : (
+                t('common.delete')
+              )}
+            </Button>
+          </div>
+        </div>
+      </ResponsiveModal>
 
       <ResponsiveModal
         isOpen={!!editingId}
@@ -134,16 +190,13 @@ function DevicesPage() {
         title={t('common.rename')}
       >
         <div className={styles.modalContent}>
-          <label className={styles.emojiRow}>
-            <span className={styles.emojiLabel}>{t('devices.emoji_label')}</span>
-            <EmojiPicker selected={editEmoji} onSelect={setEditEmoji} />
-          </label>
           <FormField
             autoFocus
-            label={t('devices.title')}
-            placeholder={t('devices.name_example')}
+            label={t('devices.name_label')}
+            hint={t('devices.name_example')}
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
+            maxLength={50}
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleSaveEdit();
               if (e.key === 'Escape') setEditingId(null);

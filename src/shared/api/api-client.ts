@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { APP_CONFIG } from '@/shared/config';
+import { clearAccessToken, getStoredToken, saveAccessToken } from '@/shared/lib/authSession';
 
 export const apiClient = axios.create({
   baseURL: APP_CONFIG.API_BASE_URL,
@@ -8,25 +9,6 @@ export const apiClient = axios.create({
 });
 
 let refreshPromise: Promise<string> | null = null;
-
-function saveAccessToken(token: string) {
-  localStorage.setItem('hypex_token', token);
-  const rawStore = localStorage.getItem('auth-storage');
-  if (!rawStore) return;
-  try {
-    const parsed = JSON.parse(rawStore);
-    if (parsed.state) {
-      parsed.state.accessToken = token;
-      localStorage.setItem('auth-storage', JSON.stringify(parsed));
-    }
-  } catch {
-    localStorage.removeItem('auth-storage');
-  }
-}
-
-function clearAccessToken() {
-  localStorage.removeItem('hypex_token');
-}
 
 function isAuthRejected(error: unknown) {
   return axios.isAxiosError(error) && [401, 403].includes(error.response?.status ?? 0);
@@ -53,7 +35,7 @@ async function refreshAccessToken() {
 }
 
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('hypex_token');
+  const token = getStoredToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -72,7 +54,7 @@ apiClient.interceptors.response.use(
       requestUrl.includes('/auth/refresh') ||
       requestUrl.includes('/auth/client/login');
 
-    const hasToken = !!localStorage.getItem('hypex_token');
+    const hasToken = !!getStoredToken();
 
     if (
       error.response?.status === 401 &&

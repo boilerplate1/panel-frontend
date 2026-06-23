@@ -34,7 +34,7 @@
   justify-content: center;
   background: var(--avatar-bg);
   color: var(--avatar-foreground);
-  font-size: 1.45rem;
+  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   border: none;
 }
@@ -50,7 +50,7 @@
 }
 
 .verifiedBadge {
-  color: #34c759;
+  color: var(--color-success);
   flex-shrink: 0;
   display: flex;
 }
@@ -199,7 +199,10 @@
 
 .subscriptionGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Changed from repeat(3, ...) to repeat(2, ...) */
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  ); /* Changed from repeat(3, ...) to repeat(2, ...) */
   gap: 12px; /* Slightly increased gap for better balance */
 }
 

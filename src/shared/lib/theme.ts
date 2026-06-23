@@ -31,7 +31,9 @@ export function applyTheme(theme: Theme) {
 
   try {
     localStorage.setItem(STORAGE_KEY, theme);
-  } catch {}
+  } catch {
+    // Persisting theme is optional when storage is unavailable.
+  }
   window.dispatchEvent(new CustomEvent(THEME_EVENT, { detail: { theme } }));
 }
 
@@ -44,7 +46,9 @@ export function initSystemTheme() {
     if (saved === 'light' || saved === 'dark') {
       theme = saved;
     }
-  } catch {}
+  } catch {
+    // Keep the default theme when storage is unavailable.
+  }
 
   applyTheme(theme);
 }

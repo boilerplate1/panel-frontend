@@ -3,11 +3,11 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth';
 import { Loader } from '@/shared/ui';
 
-interface ProtectedRouteProps {
+interface RequireAuthProps {
   children: ReactNode;
 }
 
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
+export function RequireAuth({ children }: RequireAuthProps) {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <Loader fullPage />;

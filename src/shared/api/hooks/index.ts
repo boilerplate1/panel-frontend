@@ -24,4 +24,5 @@ export {
   useCheckPaymentIntentQuery,
   useCancelPaymentIntentMutation,
   usePaymentHistoryInfiniteQuery,
+  usePaymentHistoryPageQuery,
 } from './usePayments';

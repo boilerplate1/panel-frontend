@@ -54,6 +54,7 @@ export function DashboardSidebar() {
         <nav className={styles.nav}>
           <NavLink
             to={ROUTES.DASHBOARD}
+            end
             className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
           >
             <User size={22} />

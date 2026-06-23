@@ -27,6 +27,14 @@ export function saveAuthSession(token: string, user: User) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
+export function saveAccessToken(token: string) {
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+export function clearAccessToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
 export function clearAuthSession() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);

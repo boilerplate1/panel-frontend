@@ -6,8 +6,8 @@
   padding: var(--spacing-3);
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: var(--radius-md);
-  background: #ef44441a;
-  color: #ef4444;
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  color: var(--color-danger);
   text-align: center;
 }
 

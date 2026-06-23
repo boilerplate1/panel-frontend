@@ -8,9 +8,5 @@ interface LabelProps {
 }
 
 export function Label({ children, className = '' }: LabelProps) {
-  return (
-    <label className={`${styles.root} ${className}`}>
-      {children}
-    </label>
-  );
+  return <label className={`${styles.root} ${className}`}>{children}</label>;
 }

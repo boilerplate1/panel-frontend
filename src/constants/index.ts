@@ -1,4 +1,4 @@
-export { ROUTES } from './routes';
+export { buildPayMethodRoute, buildPayProviderRoute, buildPayStatusRoute, ROUTE_PATTERNS, ROUTES } from './routes';
 export { APP } from './app';
 export { SOCIAL_LINKS } from './social';
 export { SEO } from './seo';

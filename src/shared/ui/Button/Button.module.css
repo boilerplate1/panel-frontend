@@ -65,6 +65,24 @@
   background-color: var(--surface-hover);
 }
 
+.danger {
+  background: var(--surface-secondary);
+  color: var(--color-danger);
+}
+
+.danger:hover {
+  background: var(--surface-hover);
+}
+
+.success {
+  background: var(--surface-secondary);
+  color: var(--color-success);
+}
+
+.success:hover {
+  background: var(--surface-hover);
+}
+
 .root:disabled {
   opacity: 0.55;
   cursor: not-allowed;

@@ -23,8 +23,42 @@ export class BillingService {
 
   getProviders(): Promise<PaymentProvidersResponse> {
     return apiClient.get('/payments/providers').then((r) => {
-      const providers = unwrapArray<string>(r.data, ['providers', 'items', 'data']);
-      return { providers };
+      const rawProviders = unwrapArray<string | { id?: string; name?: string; methods?: string[] }>(
+        r.data,
+        ['providers', 'items', 'data'],
+      );
+      const providers: string[] = [];
+      const methods: Record<string, string[]> = {};
+
+      rawProviders.forEach((provider) => {
+        if (typeof provider === 'string') {
+          providers.push(provider);
+          return;
+        }
+
+        const id = provider.id ?? provider.name;
+        if (!id) return;
+
+        providers.push(id);
+        if (Array.isArray(provider.methods)) {
+          methods[id.toLowerCase()] = provider.methods;
+        }
+      });
+
+      const responseMethods =
+        r.data && typeof r.data === 'object' && 'methods' in r.data ? r.data.methods : undefined;
+
+      if (responseMethods && typeof responseMethods === 'object') {
+        Object.entries(responseMethods as Record<string, unknown>).forEach(([provider, value]) => {
+          if (Array.isArray(value)) {
+            methods[provider.toLowerCase()] = value.filter(
+              (method): method is string => typeof method === 'string',
+            );
+          }
+        });
+      }
+
+      return { providers, methods };
     });
   }
 
@@ -58,5 +92,13 @@ export class BillingService {
         },
       })
       .then((r) => unwrapObject(r.data, { items: [], nextCursor: null }));
+  }
+
+  getHistoryPage(page = 1, take = 20): Promise<PaymentHistoryResponse> {
+    return apiClient
+      .get('/payments/history', {
+        params: { page, take },
+      })
+      .then((r) => unwrapObject(r.data, { items: [], total: 0, page: 1, totalPages: 0 }));
   }
 }

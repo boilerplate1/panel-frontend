@@ -31,7 +31,7 @@
   max-width: 360px;
   margin: 0 0 var(--spacing-3);
   color: var(--text-primary);
-  font-size: clamp(1.35rem, 5vw, 1.8rem);
+  font-size: var(--font-h2);
   font-weight: var(--font-weight-bold);
   line-height: 1.18;
   letter-spacing: 0;
@@ -39,7 +39,7 @@
 
 .text {
   color: var(--text-secondary);
-  font-size: clamp(0.95rem, 4vw, 1.1rem);
+  font-size: var(--font-size-base);
   line-height: 1.55;
   margin-bottom: var(--spacing-10);
   font-weight: 500;

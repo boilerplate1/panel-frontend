@@ -1,10 +1,32 @@
 const { defineConfig } = require('vite');
 const react = require('@vitejs/plugin-react');
+const { VitePWA } = require('vite-plugin-pwa');
 const path = require('path');
 
 // https://vite.dev/config/
 module.exports = defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'icons/*.png'],
+      manifest: false,
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https?:\/\/.*\/api\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   base: '/',
   css: {
     modules: {
@@ -15,6 +37,16 @@ module.exports = defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@api': path.resolve(__dirname, './src/shared/api'),
+      '@app': path.resolve(__dirname, './src/app'),
+      '@components': path.resolve(__dirname, './src/shared/ui'),
+      '@config': path.resolve(__dirname, './src/shared/config'),
+      '@constants': path.resolve(__dirname, './src/constants'),
+      '@hooks': path.resolve(__dirname, './src/shared/hooks'),
+      '@lib': path.resolve(__dirname, './src/shared/lib'),
+      '@features': path.resolve(__dirname, './src/features'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@widgets': path.resolve(__dirname, './src/widgets'),
     },
   },
   build: {

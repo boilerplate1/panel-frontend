@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
-import { useAuthStore, useAuthActions } from './authStore';
+import { useAuthStore, useAuthActions } from '@/stores/authStore';
 import { useAuthMeQuery } from '@/shared/api';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -10,13 +10,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setLoading(meQuery.isLoading);
-  }, [meQuery.isLoading]);
+  }, [meQuery.isLoading, setLoading]);
 
   useEffect(() => {
     if (meQuery.data) {
       setUser(meQuery.data);
     }
-  }, [meQuery.data]);
+  }, [meQuery.data, setUser]);
 
   useEffect(() => {
     const handleLogout = () => logout();

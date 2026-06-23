@@ -1,10 +1,8 @@
 .wrapper {
   position: fixed;
-  top: var(--spacing-6);
-  left: 0;
-  width: 100%;
+  right: var(--spacing-6);
+  bottom: var(--spacing-8);
   display: flex;
-  justify-content: center;
   pointer-events: none;
   z-index: var(--z-toast);
   transition: all 0.3s ease;
@@ -12,9 +10,11 @@
 
 @media (max-width: 768px) {
   .wrapper {
-    top: auto;
+    left: 0;
     bottom: var(--spacing-8);
     padding: 0 var(--spacing-4);
+    width: 100%;
+    justify-content: center;
   }
 
   .root {
@@ -30,12 +30,13 @@
   gap: var(--spacing-3);
   padding: var(--spacing-3) var(--spacing-5);
   border-radius: var(--radius-lg);
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  color: #000000;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+html[data-theme='light'] .root {
+  background: var(--color-black);
+  color: var(--color-white);
 }
 
 .iconWrapper {
@@ -44,30 +45,35 @@
 }
 
 .success .iconWrapper {
-  color: #000000;
+  color: var(--color-success);
 }
 .error .iconWrapper {
   color: var(--status-error);
 }
 .info .iconWrapper {
-  color: #666666;
+  color: var(--text-secondary);
 }
 
 .message {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0;
-  color: #000000;
+  color: inherit;
+}
+
+html[data-theme='light'] .message {
+  color: inherit;
 }
 
 .close {
-  color: #666666;
+  color: inherit;
+  opacity: 0.6;
   cursor: pointer;
-  padding: var(--spacing-1);
+  padding: 10px;
+  margin: -10px;
   display: flex;
   transition: all 0.2s ease;
   margin-left: var(--spacing-1);
-  opacity: 0.6;
   background: transparent;
   border: none;
   outline: none;
@@ -76,7 +82,6 @@
 
 .close:hover {
   opacity: 1;
-  color: #000000;
 }
 
 .close:focus,

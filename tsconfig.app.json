@@ -17,7 +17,17 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@api/*": ["src/shared/api/*"],
+      "@app/*": ["src/app/*"],
+      "@components/*": ["src/shared/ui/*"],
+      "@config/*": ["src/shared/config/*"],
+      "@constants/*": ["src/constants/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@lib/*": ["src/shared/lib/*"],
+      "@features/*": ["src/features/*"],
+      "@pages/*": ["src/pages/*"],
+      "@widgets/*": ["src/widgets/*"]
     },
 
     /* Linting */

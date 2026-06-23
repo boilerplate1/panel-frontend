@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { TurnstileWidget, type TurnstileWidgetRef } from '@/features/captcha';
 import { Button, FormField, FormError } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
-import { useAuth } from '../model/useAuth';
+import { useAuth } from '@/features/auth';
 import { useUIStore, getApiErrorMessage } from '@/shared/lib';
 import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';

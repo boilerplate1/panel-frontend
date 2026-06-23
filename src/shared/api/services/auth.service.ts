@@ -1,7 +1,6 @@
 import { apiClient } from '../api-client';
-import type { LoginRequest, RegisterRequest } from '../generated';
+import type { LoginRequest, RegisterRequest, User } from '../generated';
 import type { AuthResponse, PairingInitResponse, PairingStatusResponse } from '../generated';
-import type { User } from '@/shared/api/types';
 
 export class AuthService {
   register(data: RegisterRequest): Promise<AuthResponse> {

@@ -41,6 +41,7 @@ function BalanceHistoryDetailPage() {
       isOpen={true}
       onClose={handleClose}
       title={selectedItem?.planName ?? t('dashboard.subscriptions')}
+      width="min(92vw, 520px)"
     >
       {selectedItem ? (
         <div className={styles.modalGrid}>
@@ -93,7 +94,7 @@ function BalanceHistoryDetailPage() {
               <strong>{selectedItem.lastError}</strong>
             </div>
           )}
-          
+
           {(selectedItem.providerInvoiceUrl || selectedItem.lastError) && (
             <div className={styles.modalSupportBlock}>
               {selectedItem.providerInvoiceUrl && (

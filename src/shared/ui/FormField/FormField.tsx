@@ -6,6 +6,7 @@ import styles from './FormField.module.css';
 interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
+  hint?: string;
   containerClassName?: string;
   showPasswordToggle?: boolean;
 }
@@ -13,6 +14,7 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export function FormField({
   label,
   error,
+  hint,
   required,
   containerClassName = '',
   showPasswordToggle,
@@ -24,6 +26,7 @@ export function FormField({
         {label}
       </Label>
       <Input required={required} showPasswordToggle={showPasswordToggle} {...props} />
+      {hint && <div className={styles.hint}>{hint}</div>}
       {error && <div className={styles.error}>{error}</div>}
     </div>
   );

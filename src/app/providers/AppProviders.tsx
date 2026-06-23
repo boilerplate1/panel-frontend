@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { AuthProvider } from '@/features/auth';
+import { AuthProvider } from './AuthProvider';
 import { queryClient } from '@/shared/lib';
 
 interface AppProvidersProps {

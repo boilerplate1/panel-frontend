@@ -1,4 +1,5 @@
 import { MirIcon, SbpIcon, YookassaIcon } from '@/shared/assets/icons';
+import type { TFunction } from 'i18next';
 
 export function getPaymentProviderLabel(provider: string) {
   if (provider === 'YOOKASSA') return 'YooKassa';
@@ -16,7 +17,7 @@ export function getPaymentProviderIcon(provider: string) {
   return null;
 }
 
-export function getPaymentStatusLabel(status: string, t: any) {
+export function getPaymentStatusLabel(status: string, t: TFunction) {
   const normalized = status.toUpperCase();
   switch (normalized) {
     case 'PAID':

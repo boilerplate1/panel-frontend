@@ -80,11 +80,10 @@
   --accent-gradient: linear-gradient(135deg, #ffffff, #f5f5f7);
   --color-primary: var(--accent-color);
   --color-primary-hover: var(--accent-hover);
-  --color-success: #34c759;
-  --color-danger: #ff3b30;
+  --color-success: rgb(16 185 129);
+  --color-danger: rgb(248 113 113);
   --color-warning: #ffcc00;
-  --status-error: #ff3b30;
-  --status-info: #1d1d1f;
+  --status-error: rgb(248 113 113);
 
   --overscroll-bg: #0f0f0f;
   --bg-app: #0f0f0f;
@@ -151,10 +150,10 @@ html[data-theme='light'] {
   --accent-gradient: linear-gradient(135deg, #1d1d1f, #2c2c2e);
   --color-primary: var(--accent-color);
   --color-primary-hover: var(--accent-hover);
-  --color-success: #34c759;
-  --color-danger: #ff3b30;
+  --color-success: rgb(16 185 129);
+  --color-danger: rgb(248 113 113);
   --color-warning: #ffcc00;
-  --status-error: #ff3b30;
+  --status-error: rgb(248 113 113);
   --status-info: #1d1d1f;
 
   --overscroll-bg: #f5f5f7;
@@ -162,8 +161,8 @@ html[data-theme='light'] {
   --bg-page: #f5f5f7;
   --surface-app: #ffffff;
   --surface-card: #ffffff;
-  --surface-secondary: #f5f5f7;
-  --surface-tertiary: #e5e5ea;
+  --surface-secondary: #f0f0f2;
+  --surface-tertiary: #e0e0e4;
   --surface-input: #ffffff;
   --surface-input-hover: #f5f5f7;
   --surface-navbar: rgba(255, 255, 255, 0.8);
@@ -189,13 +188,13 @@ html[data-theme='light'] {
   --text-on-accent: #ffffff;
   --avatar-bg: #1d1d1f;
   --avatar-foreground: #ffffff;
-  --text-primary: #1d1d1f;
-  --text-main: #1d1d1f;
-  --text-secondary: rgba(60, 60, 67, 0.72);
-  --text-dimmed: rgba(60, 60, 67, 0.56);
-  --text-muted: rgba(60, 60, 67, 0.44);
-  --text-placeholder: rgba(60, 60, 67, 0.36);
-  --input-border: rgba(0, 0, 0, 0.12);
+  --text-primary: #000000;
+  --text-main: #000000;
+  --text-secondary: rgba(60, 60, 67, 0.85);
+  --text-dimmed: rgba(60, 60, 67, 0.65);
+  --text-muted: rgba(60, 60, 67, 0.55);
+  --text-placeholder: rgba(60, 60, 67, 0.45);
+  --input-border: rgba(0, 0, 0, 0.2);
 
   --page-bg: var(--bg-page);
   --page-surface: var(--surface-card);

@@ -1,12 +1,11 @@
-import type { ButtonHTMLAttributes, ReactNode, ElementType } from 'react';
+import type { ButtonHTMLAttributes, ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 import styles from './Button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success';
   size?: 'small' | 'medium' | 'large';
   children: ReactNode;
   as?: ElementType;
-  [key: string]: any;
 }
 
 export function Button({
@@ -16,7 +15,7 @@ export function Button({
   className = '',
   as: Component = 'button',
   ...props
-}: ButtonProps) {
+}: ButtonProps & ComponentPropsWithoutRef<ElementType>) {
   return (
     <Component
       className={`${styles.root} ${styles[variant]} ${styles[size]} ${className}`}

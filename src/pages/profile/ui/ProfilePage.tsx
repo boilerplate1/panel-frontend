@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, MonitorSmartphone, Smartphone, Monitor, Globe } from 'lucide-react';
+import { ChevronRight, MonitorSmartphone, Smartphone, Monitor, Globe, Tv } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
 import { copyToClipboard, useUIStore } from '@/shared/lib';
@@ -37,8 +37,16 @@ function ProfilePage() {
     const t = type.toLowerCase();
     if (t.includes('ios') || t.includes('android') || t.includes('phone'))
       return <Smartphone size={18} />;
-    if (t.includes('windows') || t.includes('macos') || t.includes('desktop'))
+    if (
+      t.includes('windows') ||
+      t.includes('macos') ||
+      t.includes('desktop') ||
+      t.includes('laptop') ||
+      t.includes('computer')
+    )
       return <Monitor size={18} />;
+    if (t.includes('tv') || t.includes('television') || t.includes('smarttv'))
+      return <Tv size={18} />;
     return <Globe size={18} />;
   };
 

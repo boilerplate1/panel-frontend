@@ -18,4 +18,7 @@ export interface PaymentHistoryItem {
 export interface PaymentHistoryResponse {
   items: PaymentHistoryItem[];
   nextCursor?: string | null;
+  total?: number;
+  page?: number;
+  totalPages?: number;
 }

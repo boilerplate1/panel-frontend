@@ -1,6 +1,6 @@
 import { env } from './env';
 export { getRuntimeEnv } from './runtimeEnv';
-export { ROUTES, APP, SOCIAL_LINKS, SEO } from '@/constants';
+export { ROUTE_PATTERNS, ROUTES, APP, SOCIAL_LINKS, SEO } from '@/constants';
 
 export const EXTERNAL_CONFIG = {
   FLAG_CDN: 'https://flagcdn.com/w40',

@@ -20,10 +20,9 @@
 
 .modal {
   pointer-events: auto;
-  width: min(92vw, 420px);
+  width: min(92vw, 480px);
   max-height: min(90dvh, 720px);
   background: var(--surface-secondary);
-  border: 1px solid var(--surface-tertiary);
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   z-index: 1001;
@@ -35,7 +34,6 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-4) var(--spacing-5);
-  border-bottom: 1px solid var(--surface-tertiary);
 }
 
 .title {
@@ -61,7 +59,7 @@
 
 .closeBtn:hover {
   background: var(--status-error);
-  color: white;
+  color: var(--color-white);
 }
 
 .content {
@@ -72,7 +70,7 @@
 
 @media (max-width: 768px) {
   .modal {
-    width: min(92vw, 420px);
+    width: calc(100vw - 24px);
     max-height: calc(100dvh - 24px);
   }
 

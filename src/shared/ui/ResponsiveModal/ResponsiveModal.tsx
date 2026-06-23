@@ -8,6 +8,7 @@ interface ResponsiveModalProps {
   title?: string;
   description?: string;
   children: React.ReactNode;
+  width?: string;
 }
 
 export function ResponsiveModal({
@@ -16,6 +17,7 @@ export function ResponsiveModal({
   title,
   description,
   children,
+  width,
 }: ResponsiveModalProps) {
   const isMobile = useIsMobile();
 
@@ -28,7 +30,7 @@ export function ResponsiveModal({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title ?? ''}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title ?? ''} width={width}>
       {children}
     </Modal>
   );

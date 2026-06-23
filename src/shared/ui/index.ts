@@ -1,3 +1,4 @@
+export * from './Pagination/Pagination';
 export * from './Button';
 export * from './Card';
 export * from './Input';
@@ -19,5 +20,4 @@ export * from './SectionHeader';
 export * from './Skeleton';
 export * from './Modal';
 export * from './ResponsiveModal';
-export * from './EmojiPicker';
 export * from './Container';

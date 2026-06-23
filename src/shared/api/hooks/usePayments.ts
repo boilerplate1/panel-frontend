@@ -10,6 +10,7 @@ import type {
 export const paymentKeys = {
   providers: ['payments', 'providers'] as const,
   history: ['payments', 'history'] as const,
+  historyPage: (page: number) => ['payments', 'history', 'page', page] as const,
   intent: (id: string) => ['payments', 'intent', id] as const,
 };
 
@@ -27,11 +28,11 @@ export function useCreatePaymentIntentMutation() {
   });
 }
 
-export function useCheckPaymentIntentQuery(intentId: string | null) {
+export function useCheckPaymentIntentQuery(intentId: string | null, enabled = true) {
   return useQuery<PaymentIntentResponse>({
     queryKey: paymentKeys.intent(intentId as string),
     queryFn: () => billingService.checkIntent(intentId as string),
-    enabled: !!intentId,
+    enabled: enabled && !!intentId,
     staleTime: 0,
     retry: false,
   });
@@ -49,6 +50,15 @@ export function usePaymentHistoryInfiniteQuery(enabled: boolean) {
     queryFn: ({ pageParam }) => billingService.getHistory(pageParam as string | undefined),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: undefined,
+    enabled,
+    staleTime: 30_000,
+  });
+}
+
+export function usePaymentHistoryPageQuery(enabled: boolean, page: number) {
+  return useQuery<PaymentHistoryResponse>({
+    queryKey: paymentKeys.historyPage(page),
+    queryFn: () => billingService.getHistoryPage(page),
     enabled,
     staleTime: 30_000,
   });

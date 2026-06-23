@@ -9,9 +9,10 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
+  width?: string;
 }
 
-export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, width }: ModalProps) {
   if (typeof document === 'undefined') return null;
 
   return createPortal(
@@ -29,6 +30,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
           <div className={styles.modalCenterer}>
             <motion.div
               className={styles.modal}
+              style={width ? { width } : undefined}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}

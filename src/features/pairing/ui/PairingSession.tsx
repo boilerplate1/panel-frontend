@@ -4,7 +4,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/shared/ui';
 import { APP_CONFIG } from '@/shared/config';
-import { usePairingInitQuery, usePairingStatusQuery } from '../api/query';
+import { usePairingInitQuery, usePairingStatusQuery } from '@/shared/api';
 import styles from './PairingSession.module.css';
 
 export function PairingSession() {

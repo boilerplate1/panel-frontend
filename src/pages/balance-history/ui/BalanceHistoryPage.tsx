@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth';
-import { usePaymentHistoryInfiniteQuery } from '@/features/payment-management';
+import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import {
   formatCurrency,
   formatDate,
@@ -12,46 +12,32 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { Button, Card, ResponsiveModal, SectionHeader } from '@/shared/ui';
+import { Button, Card, Pagination, ResponsiveModal, SectionHeader } from '@/shared/ui';
 import styles from './BalanceHistoryPage.module.css';
 import detailStyles from '../../balance-history-detail/ui/BalanceHistoryDetailPage.module.css';
 
 function BalanceHistoryPage() {
   const { user } = useAuth();
   const { i18n, t } = useTranslation();
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    usePaymentHistoryInfiniteQuery(!!user);
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = usePaymentHistoryPageQuery(!!user, page);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 
-  const bottomRef = useRef<HTMLDivElement | null>(null);
-
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-  const history = data?.pages.flatMap((page) => page.items) ?? [];
+  const history = data?.items ?? [];
+  const totalPages = data?.totalPages ?? 0;
   const selectedItem = history.find((item) => item.id === selectedItemId) ?? null;
-
-  useEffect(() => {
-    if (!hasNextPage || isFetchingNextPage) return;
-
-    const target = bottomRef.current;
-    if (!target) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      { rootMargin: '200px' },
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (!user) return null;
 
   const handleOpenDetail = (id: string) => setSelectedItemId(id);
   const handleCloseDetail = () => setSelectedItemId(null);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    setSelectedItemId(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -82,51 +68,42 @@ function BalanceHistoryPage() {
                   className={`${styles.item} stagger-item`}
                   onClick={() => handleOpenDetail(item.id)}
                 >
-                  <div className={styles.itemMain}>
-                    <div className={styles.itemTop}>
-                      <div className={styles.itemLeft}>
-                        <div className={styles.itemName}>
-                          {item.planName ?? t('dashboard.subscriptions')}
-                        </div>
-                        <div className={styles.itemStatusText}>
-                          <span>{statusLabel}</span>
-                        </div>
+                  <div className={styles.itemInfo}>
+                    <div className={styles.itemTopRow}>
+                      <div className={styles.itemName}>
+                        {item.planName ?? t('dashboard.subscriptions')}
                       </div>
-                      <div className={`${styles.itemAmount} ${amountClass}`}>
-                        <span className={styles.itemAmountPrefix}>{amountPrefix}</span>
-                        <span>{formatCurrency(item.amountCents, item.currency, locale)}</span>
-                      </div>
+                      <span className={`${styles.itemAmount} ${amountClass}`}>
+                        {amountPrefix}
+                        {formatCurrency(item.amountCents, item.currency, locale)}
+                      </span>
                     </div>
-
-                    <div className={styles.itemMeta}>
-                      <span className={styles.providerAmountRow}>
-                        <span className={styles.providerIconRow}>
-                          {providerIcon ? (
+                    <div className={styles.itemBottomRow}>
+                      <div className={styles.itemLeft}>
+                        <span className={styles.statusLabel}>{statusLabel}</span>
+                        {providerIcon ? (
+                          <span className={styles.providerRow}>
                             <img
                               src={providerIcon as string}
                               alt={providerLabel}
                               className={styles.providerIcon}
                             />
-                          ) : null}
-                          <span>{providerLabel}</span>
-                        </span>
-                        <span className={`${styles.mobileAmount} ${amountClass}`}>
-                          <span className={styles.itemAmountPrefix}>{amountPrefix}</span>
-                          <span>{formatCurrency(item.amountCents, item.currency, locale)}</span>
-                        </span>
-                      </span>
-                      <span>
-                        {t('dashboard.history_date')}: {formatDate(item.createdAt)}
-                      </span>
+                            <span className={styles.providerText}>{providerLabel}</span>
+                          </span>
+                        ) : null}
+                      </div>
+                      <span className={styles.itemDate}>{formatDate(item.createdAt)}</span>
                     </div>
                   </div>
                 </button>
               );
             })}
 
-            <div ref={bottomRef} className={styles.loaderTarget}>
-              {isFetchingNextPage && <Loader2 className={styles.spinner} />}
-            </div>
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onChange={handlePageChange}
+            />
           </div>
         ) : (
           <div className={styles.emptyText}>{t('dashboard.history_empty')}</div>

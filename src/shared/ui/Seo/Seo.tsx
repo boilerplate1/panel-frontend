@@ -62,7 +62,7 @@ export function Seo() {
     document.documentElement.lang = i18n.language.startsWith('ru') ? 'ru' : 'en';
 
     const currentPath = location.pathname.replace(/\/+$/, '') || '/';
-    
+
     const entryFactory = seoByPath[currentPath] || seoByPath[ROUTES.HOME];
     const entry = entryFactory(t);
 

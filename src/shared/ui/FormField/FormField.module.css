@@ -9,6 +9,12 @@
   font-size: var(--font-size-sm);
   color: var(--text-main);
 }
+.hint {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
 .error {
   margin-top: 6px;
   font-size: var(--font-size-xs);
