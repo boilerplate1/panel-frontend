@@ -104,7 +104,7 @@ function BalanceHistoryDetailPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalLink}
-                  variant="secondary"
+                  variant="outline"
                 >
                   {t('dashboard.history_open_payment')}
                 </Button>

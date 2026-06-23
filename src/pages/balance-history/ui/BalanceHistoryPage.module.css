@@ -29,11 +29,11 @@
   gap: var(--spacing-4);
   padding: 20px 24px;
   height: 80px;
-  background: var(--surface-secondary);
+  background: transparent;
+  border: 1px solid var(--surface-secondary);
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
   text-align: left;
-  border: none;
   color: inherit;
   cursor: pointer;
   width: 100%;
@@ -41,7 +41,7 @@
 
 .item:hover {
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--surface-secondary) 94%, white 6%);
+  background: color-mix(in srgb, var(--surface-secondary) 0%, white 2%);
 }
 
 .itemInfo {
