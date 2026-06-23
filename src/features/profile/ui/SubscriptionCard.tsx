@@ -7,6 +7,7 @@ import type { SubscriptionState } from '../lib/profileSummary';
 import styles from './SubscriptionCard.module.css';
 
 interface SubscriptionCardProps {
+  username: string;
   subscription: Subscription | null;
   daysLeft: number | null;
   state: SubscriptionState;
@@ -15,6 +16,7 @@ interface SubscriptionCardProps {
 }
 
 export function SubscriptionCard({
+  username,
   subscription,
   daysLeft,
   state,
@@ -32,7 +34,12 @@ export function SubscriptionCard({
   return (
     <div className={styles.subscriptionCard}>
       <div className={styles.subscriptionTop}>
-        <strong className={styles.subscriptionTitle}>{t('profile.my_subscription')}</strong>
+        <div className={styles.subscriptionHeading}>
+          <strong className={styles.subscriptionTitle}>
+            {t('profile.greeting', { username })}
+          </strong>
+          <span className={styles.subscriptionUser}>{t('profile.my_subscription')}</span>
+        </div>
         <span className={`${styles.statusBadge} ${styles[state]}`}>{stateLabel}</span>
       </div>
 

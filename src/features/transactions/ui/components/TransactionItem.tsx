@@ -4,8 +4,6 @@ import {
   formatDate,
   getPaymentAmountClass,
   getPaymentAmountPrefix,
-  getPaymentProviderIcon,
-  getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
 import type { PaymentHistoryItem } from '@/shared/api/generated';
@@ -20,8 +18,6 @@ interface TransactionItemProps {
 export function TransactionItem({ transaction, locale, onOpenDetail }: TransactionItemProps) {
   const { t } = useTranslation();
 
-  const providerIcon = getPaymentProviderIcon(transaction.provider);
-  const providerLabel = getPaymentProviderLabel(transaction.provider);
   const statusLabel = getPaymentStatusLabel(transaction.status, t);
   const amountClass = getPaymentAmountClass(transaction.status, styles);
   const amountPrefix = getPaymentAmountPrefix(transaction.status);
@@ -45,12 +41,6 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
         <div className={styles.itemBottomRow}>
           <div className={styles.itemLeft}>
             <span className={`${styles.statusLabel} ${amountClass}`}>{statusLabel}</span>
-            {providerIcon && (
-              <span className={styles.providerRow}>
-                <img src={providerIcon} alt={providerLabel} className={styles.providerIcon} />
-                <span className={styles.providerText}>{providerLabel}</span>
-              </span>
-            )}
           </div>
           <span className={styles.itemDate}>{formatDate(transaction.createdAt)}</span>
         </div>

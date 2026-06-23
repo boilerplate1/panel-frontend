@@ -52,7 +52,7 @@
 @media (max-width: 992px) {
   .wrapper {
     padding: 0;
-    gap: 8px;
+    gap: 12px;
   }
 
   .header {
@@ -63,12 +63,12 @@
     width: 100%;
     max-width: 100%;
     margin-top: 0;
-    padding: 14px;
+    padding: 16px;
     border-radius: 22px;
     gap: var(--spacing-4);
   }
 
   .container {
-    gap: 10px;
+    gap: 12px;
   }
 }

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, MonitorSmartphone } from 'lucide-react';
+import { ChevronRight, MessageCircle, MonitorSmartphone, ArrowUpRight } from 'lucide-react';
 import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
 import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
@@ -10,43 +10,43 @@ import styles from './ProfilePage.module.css';
 function ProfilePage() {
   const { t } = useTranslation();
   const profile = useProfilePage();
+  const devicesSubtitle =
+    profile.deviceAvailability?.remaining !== null &&
+    profile.deviceAvailability?.remaining !== undefined
+      ? t('profile.devices_available_count', { count: profile.deviceAvailability.remaining })
+      : t('devices.subtitle');
 
   if (!profile.user) return null;
 
   return (
     <div className={styles.wrapper}>
       {profile.dashboardBanner ? (
-        <Card padding="medium" className={styles.banner}>
-          <div className={styles.bannerText}>
-            <strong>{profile.dashboardBanner.title}</strong>
-            <span>{profile.dashboardBanner.description}</span>
-          </div>
-          {profile.dashboardBanner.actionLabel && profile.dashboardBanner.onAction ? (
-            <Button type="button" variant="secondary" onClick={profile.dashboardBanner.onAction}>
-              {profile.dashboardBanner.actionLabel}
-            </Button>
-          ) : null}
-        </Card>
+        <a
+          className={styles.bannerLink}
+          href={profile.dashboardBanner.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Card padding="medium" className={styles.banner}>
+            <div className={styles.bannerIcon}>
+              <MessageCircle size={18} />
+            </div>
+            <div className={styles.bannerText}>
+              <strong>{profile.dashboardBanner.title}</strong>
+              <span>{profile.dashboardBanner.description}</span>
+            </div>
+            <ArrowUpRight size={18} className={styles.bannerArrow} />
+          </Card>
+        </a>
       ) : null}
 
       <div className={styles.overviewGrid}>
-        <Card padding="medium" className={styles.identityCard}>
-          <div className={styles.accountHeader}>
-            <div className={styles.avatar}>{profile.user.username.charAt(0).toUpperCase()}</div>
-            <div className={styles.accountIdentity}>
-              <div className={styles.username}>{profile.user.username}</div>
-              <div className={styles.profileSubtitle}>
-                {profile.user.email || t('dashboard.email_not_set')}
-              </div>
-            </div>
-          </div>
-        </Card>
-
         <Card padding="medium" className={styles.subscriptionCard}>
           {profile.subscriptionsLoading ? (
             <SubscriptionCardSkeleton />
           ) : (
             <SubscriptionCard
+              username={profile.user.username}
               subscription={profile.activeSubscription}
               daysLeft={profile.subscriptionDaysLeft}
               state={profile.subscriptionState}
@@ -60,7 +60,7 @@ function ProfilePage() {
       <Card padding="medium" className={styles.card}>
         <SectionHeader
           title={t('devices.title')}
-          subtitle={t('devices.subtitle')}
+          subtitle={devicesSubtitle}
           className={styles.header}
         />
 
@@ -97,6 +97,7 @@ function ProfilePage() {
         <Button
           type="button"
           variant="secondary"
+          size="small"
           className={styles.devicesBtn}
           onClick={profile.goToDevices}
         >

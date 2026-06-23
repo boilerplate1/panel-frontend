@@ -5,9 +5,9 @@
   gap: var(--spacing-4);
   padding: 16px 18px;
   min-height: 76px;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius-xl);
-  background: var(--surface-card);
+  background: color-mix(in srgb, var(--surface-secondary) 72%, var(--surface-card));
   color: inherit;
   cursor: default;
   text-align: left;
@@ -19,8 +19,7 @@
 }
 
 .item:hover {
-  border-color: var(--border-color);
-  background: var(--surface-card);
+  background: color-mix(in srgb, var(--surface-secondary) 54%, var(--surface-card));
   transform: translateY(-1px);
 }
 
@@ -29,13 +28,7 @@
   flex: 1;
   min-width: 0;
   flex-direction: column;
-  gap: 5px;
-}
-
-.itemInfo {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
+  gap: 6px;
 }
 
 .itemName {
@@ -50,30 +43,9 @@
 .itemStatus {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
   flex-wrap: wrap;
-}
-
-.deviceIcon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-secondary);
-  color: var(--text-primary);
-}
-
-.rawName {
-  overflow: hidden;
-  max-width: 150px;
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .statusPill {
@@ -86,6 +58,12 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.typeLabel {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
 .statusOnline {
   background: color-mix(in srgb, var(--color-success) 12%, transparent);
   color: var(--color-success);
@@ -94,28 +72,6 @@
 .statusOffline {
   background: color-mix(in srgb, var(--text-muted) 12%, transparent);
   color: var(--text-secondary);
-}
-
-.onlineDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-.online {
-  background: var(--color-success);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 16%, transparent);
-}
-
-.offline {
-  background: var(--text-muted);
-}
-
-.lastSeen {
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
 }
 
 .itemActions {
@@ -156,12 +112,12 @@
 @media (max-width: 992px) {
   .item {
     align-items: flex-start;
-    padding: 14px;
+    padding: 16px;
     min-height: 0;
   }
 
   .itemMain {
-    gap: 6px;
+    gap: 8px;
   }
 
   .itemName {
@@ -169,16 +125,10 @@
   }
 
   .itemStatus {
-    gap: 5px;
+    gap: 6px;
   }
 
-  .deviceIcon {
-    width: 26px;
-    height: 26px;
-  }
-
-  .rawName,
-  .lastSeen {
+  .typeLabel {
     font-size: 11px;
   }
 

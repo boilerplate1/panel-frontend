@@ -6,9 +6,9 @@
   width: 100%;
   padding: 16px 18px;
   min-height: 84px;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius-xl);
-  background: var(--surface-card);
+  background: color-mix(in srgb, var(--surface-secondary) 72%, var(--surface-card));
   color: inherit;
   cursor: pointer;
   text-align: left;
@@ -19,7 +19,7 @@
 }
 
 .item:hover {
-  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--surface-secondary) 54%, var(--surface-card));
   transform: translateY(-1px);
 }
 
@@ -132,7 +132,7 @@
 @media (max-width: 992px) {
   .item {
     align-items: flex-start;
-    padding: 14px;
+    padding: 16px;
     min-height: 0;
   }
 

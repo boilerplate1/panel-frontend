@@ -1,7 +1,12 @@
+.bannerLink {
+  display: block;
+  text-decoration: none;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
   padding-bottom: calc(92px + env(safe-area-inset-bottom));
 }
@@ -16,11 +21,30 @@
 .banner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-4);
+  gap: var(--spacing-3);
   border: none;
-  background: var(--surface-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #229ed9 16%, var(--surface-card)), var(--surface-card));
   box-shadow: none;
+  transition:
+    transform var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.banner:hover {
+  transform: translateY(-1px);
+}
+
+.bannerIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: color-mix(in srgb, #229ed9 18%, transparent);
+  color: #229ed9;
 }
 
 .bannerText {
@@ -32,78 +56,34 @@
 
 .bannerText strong {
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
 }
 
 .bannerText span {
   color: var(--text-secondary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+}
+
+.bannerArrow {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #229ed9;
 }
 
 .overviewGrid {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  align-items: stretch;
 }
 
-.identityCard,
 .subscriptionCard {
   display: flex;
   flex-direction: column;
   border: none;
   background: var(--surface-card);
   box-shadow: none;
-}
-
-.identityCard {
-  justify-content: center;
-  min-height: 164px;
-}
-
-.accountHeader {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3);
-}
-
-.avatar {
-  display: flex;
-  width: 56px;
-  height: 56px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--avatar-bg);
-  color: var(--avatar-foreground);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-}
-
-.accountIdentity {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.username {
-  overflow: hidden;
-  color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.profileSubtitle {
-  overflow: hidden;
-  color: var(--text-dimmed);
-  font-size: var(--font-size-sm);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .header {
@@ -171,22 +151,22 @@
   width: 100%;
   justify-content: center;
   margin-top: var(--spacing-4);
+  font-size: var(--font-size-xs);
 }
 
 @media (max-width: 992px) {
   .wrapper {
-    gap: 8px;
+    gap: 12px;
     padding: 0;
   }
 
-  .overviewGrid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .banner {
+    padding: 14px 16px;
   }
 
-  .banner {
-    flex-direction: column;
-    align-items: stretch;
+  .bannerIcon {
+    width: 34px;
+    height: 34px;
   }
 
   .bannerText strong {
@@ -197,41 +177,17 @@
     font-size: var(--font-size-xs);
   }
 
-  .banner button {
-    width: 100%;
-    justify-content: center;
+  .bannerArrow {
+    width: 16px;
+    height: 16px;
   }
 
-  .identityCard,
   .subscriptionCard,
   .card {
     width: 100%;
     margin-top: 0;
-    padding: 14px;
-    border-radius: 22px;
-  }
-
-  .identityCard {
-    min-height: auto;
     padding: 16px;
-  }
-
-  .accountHeader {
-    gap: 10px;
-  }
-
-  .avatar {
-    width: 48px;
-    height: 48px;
-    font-size: var(--font-size-xl);
-  }
-
-  .username {
-    font-size: var(--font-size-base);
-  }
-
-  .profileSubtitle {
-    font-size: var(--font-size-xs);
+    border-radius: 22px;
   }
 
   .itemName {
@@ -243,6 +199,6 @@
   }
 
   .devicesBtn {
-    min-height: 48px;
+    min-height: 40px;
   }
 }

@@ -11,10 +11,26 @@
   gap: var(--spacing-3);
 }
 
+.subscriptionHeading {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .subscriptionTitle,
 .progressHeader span {
   color: var(--text-secondary);
   font-size: var(--font-size-xs);
+}
+
+.subscriptionUser {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progressHeader strong {
@@ -117,6 +133,10 @@
 }
 
 @media (max-width: 992px) {
+  .subscriptionHeading {
+    gap: 1px;
+  }
+
   .subscriptionTitle {
     font-size: var(--font-size-base);
   }

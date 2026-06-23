@@ -336,6 +336,7 @@ const en = {
   profile: {
     title: 'Profile',
     my_subscription: 'My subscription',
+    greeting: 'Hi, {{username}}',
     email_not_set: 'Email not set',
     copied: 'Copied to clipboard',
     subscription_status: 'Subscription status',
@@ -344,6 +345,7 @@ const en = {
     subscription_inactive: 'Inactive',
     days_left: 'Days left',
     days_count: '{{count}} days',
+    devices_available_count: '{{count}} devices available',
   },
   devices: {
     title: 'My devices',

@@ -10,12 +10,15 @@ import { getSubscriptionDaysLeft, getSubscriptionState } from '../lib/profileSum
 interface DashboardBanner {
   title: string;
   description: string;
-  actionLabel?: string;
-  onAction?: () => void;
+  href: string;
 }
 
 function getDashboardBanner(): DashboardBanner | null {
-  return null;
+  return {
+    title: 'Telegram-канал HypexVPN',
+    description: 'Подпишись на канал, чтобы видеть новости, обновления и важные объявления.',
+    href: 'https://t.me/hypexvpn',
+  };
 }
 
 export function useProfilePage() {
@@ -29,6 +32,7 @@ export function useProfilePage() {
   const devicePreview = devices?.items?.slice(0, 3) ?? [];
   const activeSubscription =
     subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
+  const deviceAvailability = activeSubscription?.deviceAvailability ?? null;
   const subscriptionState = getSubscriptionState(activeSubscription);
   const subscriptionDaysLeft = getSubscriptionDaysLeft(activeSubscription);
   const dashboardBanner = getDashboardBanner();
@@ -48,6 +52,7 @@ export function useProfilePage() {
     devicesLoading,
     subscriptionsLoading,
     activeSubscription,
+    deviceAvailability,
     subscriptionState,
     subscriptionDaysLeft,
     dashboardBanner,

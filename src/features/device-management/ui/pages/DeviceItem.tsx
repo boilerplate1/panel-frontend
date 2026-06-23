@@ -1,6 +1,6 @@
 import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
+import { getDeviceTypeLabel } from '@/shared/lib';
 import styles from './DeviceItem.module.css';
 
 interface DeviceItemProps {
@@ -26,19 +26,12 @@ export function DeviceItem({ device, dataUpdatedAt, onEdit, onDelete }: DeviceIt
       <div className={styles.itemMain}>
         <div className={styles.itemName}>{hasCustomName ? device.name : label}</div>
         <div className={styles.itemStatus}>
-          <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
-          {hasCustomName && <span className={styles.rawName}>{label}</span>}
-          <span className={`${styles.onlineDot} ${isOnline ? styles.online : styles.offline}`} />
           <span
             className={`${styles.statusPill} ${isOnline ? styles.statusOnline : styles.statusOffline}`}
           >
             {isOnline ? t('devices.online') : t('devices.offline')}
           </span>
-          {!isOnline && (
-            <span className={styles.lastSeen}>
-              {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
-            </span>
-          )}
+          {!hasCustomName && <span className={styles.typeLabel}>{label}</span>}
         </div>
       </div>
 

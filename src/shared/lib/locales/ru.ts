@@ -356,6 +356,7 @@ const ru = {
   profile: {
     title: 'Профиль',
     my_subscription: 'Моя подписка',
+    greeting: 'Привет, {{username}}',
     email_not_set: 'Email не указан',
     copied: 'Скопировано в буфер обмена',
     subscription_status: 'Статус подписки',
@@ -364,6 +365,7 @@ const ru = {
     subscription_inactive: 'Не активна',
     days_left: 'Осталось',
     days_count: '{{count}} дн.',
+    devices_available_count: 'Доступно {{count}} устройств',
   },
   devices: {
     title: 'Мои устройства',

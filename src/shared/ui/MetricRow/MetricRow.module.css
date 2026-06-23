@@ -24,7 +24,7 @@
 
 .value {
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   line-height: 1.25;
   overflow-wrap: anywhere;
