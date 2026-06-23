@@ -4,27 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/features/auth';
 import { useCheckPaymentIntentQuery } from '@/features/payment-management';
 import { useSubscriptionPlansQuery } from '@/shared/api';
-import { formatDate, formatPlanDurationLabel, queryClient } from '@/shared/lib';
+import { formatDate, formatPlanDurationLabel, getMonthLabels, getIntentId, getQueryValue, queryClient } from '@/shared/lib';
 import { Button, Card, Logo } from '@/shared/ui';
 import { ROUTES } from '@/shared/config';
 import { usePaymentStore } from '@/stores/paymentStore';
 import styles from './PaymentResultPage.module.css';
 
 type ResultState = 'success' | 'pending' | 'failed';
-
-function getIntentId(search: string) {
-  const params = new URLSearchParams(search);
-  return params.get('intentId') ?? params.get('paymentId') ?? params.get('id');
-}
-
-function getQueryValue(search: string, keys: string[]) {
-  const params = new URLSearchParams(search);
-  for (const key of keys) {
-    const value = params.get(key);
-    if (value) return value;
-  }
-  return null;
-}
 
 function PaymentResultPage() {
   const location = useLocation();
@@ -77,11 +63,7 @@ function PaymentResultPage() {
       : isChecking
         ? t('dashboard.payment_result_checking_subtitle')
         : t('dashboard.payment_result_pending_subtitle');
-  const monthLabels = {
-    singular: t('shared.month_1'),
-    plural1: t('shared.month_2'),
-    plural2: t('shared.month_5'),
-  };
+  const monthLabels = getMonthLabels(t);
   const queryDuration = getQueryValue(location.search, ['durationDays', 'days', 'termDays']);
   const queryExpiresAt = getQueryValue(location.search, ['expiresAt', 'subscriptionExpiresAt']);
   const queryError = getQueryValue(location.search, ['error', 'message', 'reason']);

@@ -8,12 +8,12 @@ import {
   usePaymentStore,
 } from '@/features/payment-management';
 import { useSubscriptionPlansQuery, useSubscriptionsQuery } from '@/shared/api';
-import { useUIStore } from '@/shared/lib';
+import { getMonthLabels, useUIStore } from '@/shared/lib';
 import { buildPayMethodRoute, buildPayProviderRoute, buildPayStatusRoute, ROUTES } from '@/constants';
-import { CreatingPaymentState } from './CreatingPaymentState';
-import { PaymentMethodStep } from './PaymentMethodStep';
-import { PaymentProviderStep } from './PaymentProviderStep';
-import { PlanSelectionStep } from './PlanSelectionStep';
+import { CreatingPaymentState } from './steps/CreatingPaymentState';
+import { PaymentMethodStep } from './steps/PaymentMethodStep';
+import { PaymentProviderStep } from './steps/PaymentProviderStep';
+import { PlanSelectionStep } from './steps/PlanSelectionStep';
 
 function waitForCreatingState() {
   return new Promise((resolve) => {
@@ -41,11 +41,7 @@ function SubscriptionBuyPage() {
   const selectedProvider = (params.provider ?? searchParams.get('provider') ?? 'yookassa').toLowerCase();
 
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-  const monthLabels = {
-    singular: t('shared.month_1'),
-    plural1: t('shared.month_2'),
-    plural2: t('shared.month_5'),
-  };
+  const monthLabels = getMonthLabels(t);
 
   const effectiveSelectedPlanId =
     selectedPlanId ?? routePlanId ?? activePayment?.planId ?? plans?.[0]?.id ?? null;

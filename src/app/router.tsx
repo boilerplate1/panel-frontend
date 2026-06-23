@@ -12,13 +12,13 @@ import { ROUTE_PATTERNS, ROUTES } from '@/shared/config';
 const LoginPage = lazy(() => import('@/pages/login/ui/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/register/ui/RegisterPage'));
 const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));
-const ProfilePage = lazy(() => import('@/pages/profile/ui/ProfilePage'));
-const DevicesPage = lazy(() => import('@/pages/devices/ui/DevicesPage'));
-const TransactionPage = lazy(() => import('@/pages/transactions/ui/TransactionPage'));
+const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));
+const DevicesPage = lazy(() => import('@/pages/devices/DevicesPage'));
+const TransactionPage = lazy(() => import('@/pages/transactions/TransactionPage'));
 
-const SubscriptionBuyPage = lazy(() => import('@/pages/subscription-buy/ui/SubscriptionBuyPage'));
-const PaymentStatusPage = lazy(() => import('@/pages/payment-status/ui/PaymentStatusPage'));
-const PaymentResultPage = lazy(() => import('@/pages/payment-result/ui/PaymentResultPage'));
+const SubscriptionBuyPage = lazy(() => import('@/pages/payment/SubscriptionBuyPage'));
+const PaymentStatusPage = lazy(() => import('@/pages/payment/PaymentStatusPage'));
+const PaymentResultPage = lazy(() => import('@/pages/payment/PaymentResultPage'));
 
 export const router = createBrowserRouter(
   [
@@ -32,7 +32,7 @@ export const router = createBrowserRouter(
           element: <Navigate to={ROUTES.DASHBOARD} replace />,
         },
         {
-          path: 'payment/success',
+          path: ROUTES.PAYMENT_SUCCESS,
           element: (
             <LazyLoad>
               <PaymentResultPage />
@@ -40,7 +40,7 @@ export const router = createBrowserRouter(
           ),
         },
         {
-          path: 'payment/failed',
+          path: ROUTES.PAYMENT_FAILED,
           element: (
             <LazyLoad>
               <PaymentResultPage />
@@ -55,7 +55,7 @@ export const router = createBrowserRouter(
           ),
           children: [
             {
-              path: 'dashboard',
+              path: ROUTES.DASHBOARD,
               element: <ProfilePage />,
               handle: {
                 title: 'dashboard.sidebar_profile',
@@ -63,7 +63,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: 'dashboard/devices',
+              path: ROUTES.DEVICES,
               element: <DevicesPage />,
               handle: {
                 title: 'dashboard.sidebar_devices',
@@ -71,16 +71,15 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: 'dashboard/history',
+              path: ROUTES.HISTORY,
               element: <TransactionPage />,
               handle: {
                 title: 'dashboard.sidebar_history',
                 description: 'dashboard.history_subtitle',
               },
             },
-            
             {
-              path: 'dashboard/pay',
+              path: ROUTES.PAY,
               element: (
                 <LazyLoad>
                   <SubscriptionBuyPage />
@@ -117,7 +116,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: 'dashboard/pay/status',
+              path: ROUTES.PAY_STATUS,
               element: (
                 <LazyLoad>
                   <PaymentStatusPage />
@@ -141,7 +140,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: 'dashboard/payment/success',
+              path: ROUTES.DASHBOARD_PAYMENT_SUCCESS,
               element: (
                 <LazyLoad>
                   <PaymentResultPage />
@@ -153,7 +152,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: 'dashboard/payment/failed',
+              path: ROUTES.DASHBOARD_PAYMENT_FAILED,
               element: (
                 <LazyLoad>
                   <PaymentResultPage />
@@ -167,7 +166,7 @@ export const router = createBrowserRouter(
           ],
         },
         {
-          path: 'dashboard/*',
+          path: ROUTE_PATTERNS.DASHBOARD_REDIRECT,
           element: <Navigate to={ROUTES.DASHBOARD} replace />,
         },
         {
@@ -178,7 +177,7 @@ export const router = createBrowserRouter(
           ),
           children: [
             {
-              path: 'login',
+              path: ROUTES.LOGIN,
               element: (
                 <LazyLoad>
                   <LoginPage />
@@ -187,7 +186,7 @@ export const router = createBrowserRouter(
               handle: { title: 'auth.login' },
             },
             {
-              path: 'register',
+              path: ROUTES.REGISTER,
               element: (
                 <LazyLoad>
                   <RegisterPage />

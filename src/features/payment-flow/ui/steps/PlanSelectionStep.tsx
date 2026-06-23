@@ -7,14 +7,9 @@ import {
   formatDate,
   formatPerMonthLabel,
   formatPlanDurationLabel,
+  type MonthLabels,
 } from '@/shared/lib';
-import styles from './SubscriptionBuyPage.module.css';
-
-interface MonthLabels {
-  singular: string;
-  plural1: string;
-  plural2: string;
-}
+import styles from './PlanSelectionStep.module.css';
 
 interface PlanSelectionStepProps {
   plans?: SubscriptionPlanResponse[];

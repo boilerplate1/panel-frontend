@@ -1,0 +1,124 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  padding: 0;
+}
+
+.backBtn:hover {
+  color: var(--text-primary);
+}
+
+.providerList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.providerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-6);
+  background: var(--surface-primary);
+  border: 1px solid var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  color: inherit;
+  width: 100%;
+}
+
+.providerBtn:hover {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 5%, transparent);
+}
+
+.providerContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.providerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--surface-secondary);
+  flex-shrink: 0;
+}
+
+.providerImage {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.providerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  min-width: 0;
+}
+
+.providerLabel {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+}
+
+.providerDesc {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.providerChevron {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+@media (max-width: 992px) {
+  .card {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .providerBtn {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .providerIcon {
+    width: 36px;
+    height: 36px;
+  }
+}

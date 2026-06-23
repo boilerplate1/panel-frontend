@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, MetricRow } from '@/shared/ui';
 import { formatDate, formatTraffic } from '@/shared/lib';
 import type { SubscriptionResponse as Subscription } from '@/shared/api';
-import styles from './ProfilePage.module.css';
+import styles from './SubscriptionCard.module.css';
 
 interface SubscriptionCardProps {
   subscription: Subscription;

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { ResponsiveModal, Button } from '@/shared/ui';
-import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import {
   formatCurrency,
   formatDate,
@@ -8,16 +7,13 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
+import type { PaymentHistoryItem } from '@/shared/api/generated';
 import styles from './TransactionDetailModal.module.css';
-
-type TransactionDetailModalType = NonNullable<
-  ReturnType<typeof usePaymentHistoryPageQuery>['data']
->['items'][number];
 
 interface TransactionDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  transaction: TransactionDetailModalType | null;
+  transaction: PaymentHistoryItem | null;
   locale: 'ru-RU' | 'en-US';
 }
 
@@ -37,7 +33,7 @@ export function TransactionDetailModal({ isOpen, onClose, transaction, locale }:
             <strong className={styles.modalProviderValue}>
               {getPaymentProviderIcon(transaction.provider) ? (
                 <img
-                  src={getPaymentProviderIcon(transaction.provider) as string}
+                  src={getPaymentProviderIcon(transaction.provider)}
                   alt={getPaymentProviderLabel(transaction.provider)}
                   className={styles.modalProviderIcon}
                 />

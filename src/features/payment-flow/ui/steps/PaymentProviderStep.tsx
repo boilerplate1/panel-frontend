@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PAYMENT_METHOD_ICONS } from '@/constants';
 import { YookassaIcon } from '@/shared/assets/icons';
 import { Card, SectionHeader, Skeleton } from '@/shared/ui';
-import styles from './SubscriptionBuyPage.module.css';
+import styles from './PaymentProviderStep.module.css';
 
 interface PaymentProviderStepProps {
   providers: string[];

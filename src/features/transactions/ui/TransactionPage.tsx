@@ -4,9 +4,8 @@ import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import { Card, Pagination, SectionHeader } from '@/shared/ui';
-
 import { TransactionItem } from './TransactionItem';
-import { TransactionDetailModal } from './TransactionDetailModal';
+import { TransactionDetailModal } from './modals/TransactionDetailModal';
 import styles from './TransactionPage.module.css';
 
 function TransactionPage() {

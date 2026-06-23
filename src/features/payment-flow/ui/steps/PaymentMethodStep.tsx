@@ -2,7 +2,7 @@ import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { MirIcon, SbpIcon, YookassaIcon } from '@/shared/assets/icons';
 import { Card, SectionHeader, Skeleton } from '@/shared/ui';
-import styles from './SubscriptionBuyPage.module.css';
+import styles from './PaymentMethodStep.module.css';
 
 interface PaymentMethodStepProps {
   methods: string[];

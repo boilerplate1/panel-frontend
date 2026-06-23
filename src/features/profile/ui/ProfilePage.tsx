@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, MonitorSmartphone, Smartphone, Monitor, Globe, Tv } from 'lucide-react';
+import { ChevronRight, MonitorSmartphone } from 'lucide-react';
 import { useAuth } from '@/features/auth';
 import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
 import { copyToClipboard, useUIStore } from '@/shared/lib';
+import { getDeviceIcon, getDeviceTypeLabel } from '@/features/device-management/ui/pages/DevicePage.utils';
 import { Button, Card, SectionHeader } from '@/shared/ui';
 import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
 import { ROUTES } from '@/shared/config';
-import { SubscriptionCard } from './SubscriptionCard';
+import { SubscriptionCard } from '@/features/profile/ui/SubscriptionCard';
 import styles from './ProfilePage.module.css';
 
 function ProfilePage() {
@@ -31,23 +32,6 @@ function ProfilePage() {
     if (success) {
       showToast(t('profile.copied'), 'success');
     }
-  };
-
-  const getDeviceIcon = (type: string) => {
-    const t = type.toLowerCase();
-    if (t.includes('ios') || t.includes('android') || t.includes('phone'))
-      return <Smartphone size={18} />;
-    if (
-      t.includes('windows') ||
-      t.includes('macos') ||
-      t.includes('desktop') ||
-      t.includes('laptop') ||
-      t.includes('computer')
-    )
-      return <Monitor size={18} />;
-    if (t.includes('tv') || t.includes('television') || t.includes('smarttv'))
-      return <Tv size={18} />;
-    return <Globe size={18} />;
   };
 
   return (
@@ -109,7 +93,7 @@ function ProfilePage() {
               <DeviceCardSkeleton />
             </>
           ) : devicePreview.length > 0 ? (
-            devicePreview.map((device: { id: string; name: string; type: string; lastSeen: string }) => (
+            devicePreview.map((device) => (
               <div
                 key={device.id}
                 className={styles.item}
@@ -120,7 +104,8 @@ function ProfilePage() {
                 <div className={styles.itemContent}>
                   <div className={styles.itemName}>{device.name}</div>
                   <div className={styles.itemStatus}>
-                    {t('devices.last_seen')} {new Date(device.lastSeen).toLocaleString()}
+                    {getDeviceTypeLabel(device.type)} · {t('devices.last_seen')}{' '}
+                    {new Date(device.lastSeen).toLocaleString()}
                   </div>
                 </div>
                 <ChevronRight size={22} className={styles.itemChevron} />

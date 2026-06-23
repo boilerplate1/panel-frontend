@@ -9,14 +9,11 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
+import type { PaymentHistoryItem } from '@/shared/api/generated';
 import styles from './TransactionItem.module.css';
 
-type TransactionItemType = NonNullable<
-  ReturnType<typeof usePaymentHistoryPageQuery>['data']
->['items'][number];
-
 interface TransactionItemProps {
-  transaction: TransactionItemType;
+  transaction: PaymentHistoryItem;
   locale: 'ru-RU' | 'en-US';
   onOpenDetail: (id: string) => void;
 }
@@ -52,7 +49,7 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
             {providerIcon && (
               <span className={styles.providerRow}>
                 <img
-                  src={providerIcon as string}
+                  src={providerIcon}
                   alt={providerLabel}
                   className={styles.providerIcon}
                 />

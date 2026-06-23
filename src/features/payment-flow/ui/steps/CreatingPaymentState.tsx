@@ -1,6 +1,6 @@
 import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import styles from './SubscriptionBuyPage.module.css';
+import styles from './CreatingPaymentState.module.css';
 
 export function CreatingPaymentState() {
   const { t } = useTranslation();

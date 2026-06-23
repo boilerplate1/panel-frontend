@@ -6,8 +6,8 @@ import { Loader2 } from 'lucide-react';
 import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 
 import { DeviceItem } from './DeviceItem';
-import { DeviceRenameModal } from './DeviceRenameModal';
-import { DeviceDeleteModal } from './DeviceDeleteModal';
+import { DeviceRenameModal } from '../modals/DeviceRenameModal';
+import { DeviceDeleteModal } from '../modals/DeviceDeleteModal';
 import styles from './DevicesPage.module.css';
 
 function DevicesPage() {

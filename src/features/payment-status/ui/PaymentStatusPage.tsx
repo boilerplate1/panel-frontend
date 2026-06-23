@@ -13,6 +13,7 @@ import {
   formatCurrency,
   formatPlanDurationLabel,
   getApiErrorMessage,
+  getMonthLabels,
   getPaymentProviderLabel,
   useUIStore,
 } from '@/shared/lib';
@@ -43,11 +44,7 @@ function PaymentStatusPage() {
   const paymentProvider = currentIntent?.provider ?? activePayment?.provider ?? null;
   const paymentPlan = plans?.find((plan) => plan.id === paymentPlanId) ?? null;
   const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-  const monthLabels = {
-    singular: t('shared.month_1'),
-    plural1: t('shared.month_2'),
-    plural2: t('shared.month_5'),
-  };
+  const monthLabels = getMonthLabels(t);
   const paymentAmount = currentIntent
     ? formatCurrency(currentIntent.amountCents, currentIntent.currency, locale)
     : null;

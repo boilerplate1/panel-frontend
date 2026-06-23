@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-bottom: var(--spacing-4);
-  position: relative;
-  --buy-card-radius: 18px;
 }
 
 .cardStack {
@@ -137,7 +134,7 @@
   align-items: center;
   gap: var(--spacing-3);
   padding: 14px 16px;
-  border-radius: var(--buy-card-radius);
+  border-radius: var(--radius-md);
   background: var(--surface-card);
 }
 
@@ -187,128 +184,13 @@
   color: var(--text-primary);
 }
 
-.providerList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  width: 100%;
-}
-
-.providerBtn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  background: transparent;
-  border: 1px solid var(--surface-secondary);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-weight: 500;
-  transition: all 0.2s ease;
-  width: 100%;
-  cursor: pointer;
-}
-
-.providerBtn:hover {
-  background: rgba(255, 255, 255, 0.02);
-  transform: translateY(-1px);
-}
-
-.providerBtn:disabled {
-  cursor: wait;
-  opacity: 0.7;
-  transform: none;
-}
-
-.providerContent {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  flex: 1;
-}
-
-.providerIcon {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
+.emptyText {
   color: var(--text-secondary);
-}
-
-.providerImage {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.providerChevron {
-  opacity: 0.5;
-}
-
-.providerText {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  text-align: left;
-}
-
-.providerLabel {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-
-.providerDesc {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  font-weight: 400;
-  line-height: 1.4;
-}
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  gap: var(--spacing-4);
-  color: var(--text-secondary);
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-.creatingState {
-  width: 100%;
-  min-height: min(420px, calc(100dvh - 160px));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-4);
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
   text-align: center;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  padding: var(--spacing-8);
 }
 
 @media (max-width: 992px) {
-  .wrapper {
-    padding: 0;
-  }
-
   .card {
     width: 100%;
     max-width: 100%;
@@ -323,14 +205,6 @@
   }
 
   .backBtn {
-    display: none;
-  }
-
-  .title {
-    font-size: var(--font-size-base);
-  }
-
-  .subtitle {
     display: none;
   }
 
