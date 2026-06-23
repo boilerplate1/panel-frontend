@@ -14,6 +14,7 @@ export function MobileHeader() {
   const { toggleSidebar } = useUIStore();
 
   const isRoot = location.pathname === ROUTES.DASHBOARD;
+  const isPayPage = location.pathname === ROUTES.PAY;
 
   const currentMatch = matches[matches.length - 1];
   const titleKey = (currentMatch?.handle as { title?: string })?.title;
@@ -26,14 +27,21 @@ export function MobileHeader() {
           {isRoot ? (
             <Logo className={styles.logo} />
           ) : (
-            <button className={styles.backButton} onClick={() => navigate(-1)}>
+            <button
+              className={`${styles.backButton} ${isPayPage ? styles.backDesktop : ''}`}
+              onClick={() => navigate(-1)}
+            >
               <ChevronLeft size={28} />
             </button>
           )}
         </div>
 
         <div className={styles.centerSlot}>
-          {!isRoot && <span className={styles.pageTitle}>{pageTitle}</span>}
+          {!isRoot && (
+            <span className={`${styles.pageTitle} ${isPayPage ? styles.backDesktop : ''}`}>
+              {pageTitle}
+            </span>
+          )}
         </div>
 
         <div className={styles.rightSlot}>

@@ -70,22 +70,24 @@ export function DashboardSidebar() {
             <History size={22} />
             <span>{t('dashboard.sidebar_history')}</span>
           </NavLink>
+        </nav>
 
-          <div className={styles.themeMobile}>
-            <ThemeToggle label={t('shared.theme_toggle')} />
-          </div>
+        <div className={styles.mobileBottom}>
+          <div className={styles.divider} />
+
+          <ThemeToggle label={t('shared.theme_toggle')} />
 
           <button
             onClick={() => {
               logout();
               toggleSidebar(false);
             }}
-            className={`${styles.link} ${styles.logoutButton}`}
+            className={styles.logoutBtn}
           >
             <LogOut size={22} />
             <span>{t('dashboard.sidebar_logout')}</span>
           </button>
-        </nav>
+        </div>
       </aside>
     </>
   );

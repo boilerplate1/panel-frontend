@@ -77,13 +77,6 @@
   color: var(--text-primary);
 }
 
-@media (min-width: 993px) {
-  .backButton,
-  .pageTitle {
-    display: none;
-  }
-}
-
 .backButton:active,
 .menuButton:active {
   background-color: var(--surface-hover);
@@ -94,18 +87,28 @@
   margin-right: -8px;
 }
 
+@media (min-width: 993px) {
+  .backButton,
+  .pageTitle {
+    display: none;
+  }
+
+  .backDesktop.backButton,
+  .backDesktop.pageTitle {
+    display: flex;
+  }
+
+  .menuButton {
+    display: none;
+  }
+}
+
 .themeDesktop {
   display: block;
 }
 
 @media (max-width: 992px) {
   .themeDesktop {
-    display: none;
-  }
-}
-
-@media (min-width: 993px) {
-  .menuButton {
     display: none;
   }
 }
