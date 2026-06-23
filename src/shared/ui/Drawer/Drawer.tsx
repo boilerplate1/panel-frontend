@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { Drawer as VaulDrawer } from 'vaul';
 import styles from './Drawer.module.css';
 
@@ -11,11 +11,39 @@ interface DrawerProps {
 }
 
 export function Drawer({ isOpen, onClose, title, children, description }: DrawerProps) {
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollRef.current = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollRef.current}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      const y = scrollRef.current;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, y);
+    }
+    return () => {
+      const y = scrollRef.current;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, y);
+    };
+  }, [isOpen]);
+
   return (
-    <VaulDrawer.Root 
-      open={isOpen} 
+    <VaulDrawer.Root
+      open={isOpen}
       onOpenChange={(open) => !open && onClose()}
       shouldScaleBackground={false}
+      noBodyStyles
     >
       <VaulDrawer.Portal>
         <VaulDrawer.Overlay className={styles.overlay} />

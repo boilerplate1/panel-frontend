@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
 import { Modal } from '../Modal';
 import { Drawer } from '../Drawer';
-
-const MOBILE_BREAKPOINT = 768;
+import { useIsMobile } from '@/shared/lib';
 
 interface ResponsiveModalProps {
   isOpen: boolean;
@@ -12,18 +10,14 @@ interface ResponsiveModalProps {
   children: React.ReactNode;
 }
 
-export function ResponsiveModal({ isOpen, onClose, title, description, children }: ResponsiveModalProps) {
-  const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth < MOBILE_BREAKPOINT : false,
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const handler = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
-    handler(mql);
-    mql.addEventListener('change', handler);
-    return () => mql.removeEventListener('change', handler);
-  }, []);
+export function ResponsiveModal({
+  isOpen,
+  onClose,
+  title,
+  description,
+  children,
+}: ResponsiveModalProps) {
+  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (

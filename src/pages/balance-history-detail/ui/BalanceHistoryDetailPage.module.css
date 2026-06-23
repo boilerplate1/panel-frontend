@@ -68,7 +68,6 @@
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   background: var(--surface-tertiary);
-  border: 1px solid var(--surface-tertiary);
 }
 
 .modalRowFullWide {
@@ -89,6 +88,7 @@
   color: var(--text-primary);
   font-size: var(--font-size-sm);
   word-break: break-word;
+  font-weight: 400;
 }
 
 .modalProviderValue {
@@ -107,7 +107,7 @@
 
 .modalError {
   background: color-mix(in srgb, var(--status-error) 8%, transparent);
-  border-color: color-mix(in srgb, var(--status-error) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--status-error) 18%, transparent);
 }
 
 .modalLink {

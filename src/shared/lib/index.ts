@@ -8,3 +8,4 @@ export * from './queryClient';
 export * from './store';
 export * from './theme';
 export { formatTraffic } from './format';
+export { useIsMobile } from './useIsMobile';
