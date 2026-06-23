@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { devicesService } from '../services';
 import type { PaginatedDeviceResponse } from '../generated';
-import { useState } from 'react';
 
 export const deviceKeys = {
   all: ['devices'] as const,

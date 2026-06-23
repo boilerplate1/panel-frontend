@@ -1,5 +1,5 @@
 import { apiClient } from '../api-client';
-import type { DeviceResponse, DeviceUpdateRequest, PaginatedDeviceResponse } from '../generated';
+import type { DeviceUpdateRequest, PaginatedDeviceResponse } from '../generated';
 
 export class DevicesService {
   getAll(page = 1, limit = 20): Promise<PaginatedDeviceResponse> {

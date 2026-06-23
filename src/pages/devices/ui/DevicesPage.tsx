@@ -6,8 +6,6 @@ import styles from './DevicesPage.module.css';
 import { useDevicesQuery, useUpdateDeviceMutation, useRemoveDeviceMutation } from '@/shared/api';
 import { useState } from 'react';
 
-const DEVICES_PER_PAGE = 20;
-
 function DevicesPage() {
   const { user } = useAuth();
   const { t } = useTranslation();

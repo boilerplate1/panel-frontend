@@ -18,7 +18,7 @@ function ProfilePage() {
   const { data: devices, isLoading: devicesLoading } = useDevicesQuery(!!user);
   const { data: subscriptions, isLoading: subscriptionsLoading } = useSubscriptionsQuery(!!user);
 
-  const devicePreview = devices?.slice(0, 3) ?? [];
+  const devicePreview = devices?.items?.slice(0, 3) ?? [];
   const activeSubscription =
     subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
 
@@ -109,7 +109,7 @@ function ProfilePage() {
               <DeviceCardSkeleton />
             </>
           ) : devicePreview.length > 0 ? (
-            devicePreview.map((device) => (
+            devicePreview.map((device: { id: string; name: string; type: string; lastSeen: string }) => (
               <div
                 key={device.id}
                 className={styles.item}
