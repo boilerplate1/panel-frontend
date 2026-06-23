@@ -75,7 +75,11 @@ export function DashboardSidebar() {
         <div className={styles.mobileBottom}>
           <div className={styles.divider} />
 
-          <ThemeToggle label={t('shared.theme_toggle')} />
+          <div className={styles.themeRow}>
+            <ThemeToggle label={t('shared.theme_toggle')} />
+          </div>
+
+          <div className={styles.bottomDivider} />
 
           <button
             onClick={() => {
