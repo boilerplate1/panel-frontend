@@ -2,7 +2,7 @@ import { apiClient } from '../api-client';
 import type { DeviceUpdateRequest, PaginatedDeviceResponse } from '../generated';
 
 export class DevicesService {
-  getAll(page = 1, limit = 20): Promise<PaginatedDeviceResponse> {
+  getAll(page = 1, limit = 8): Promise<PaginatedDeviceResponse> {
     return apiClient.get('/devices', { params: { page, limit } }).then((r) => r.data);
   }
 

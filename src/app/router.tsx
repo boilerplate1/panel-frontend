@@ -15,9 +15,7 @@ const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));
 const ProfilePage = lazy(() => import('@/pages/profile/ui/ProfilePage'));
 const DevicesPage = lazy(() => import('@/pages/devices/ui/DevicesPage'));
 const BalanceHistoryPage = lazy(() => import('@/pages/balance-history/ui/BalanceHistoryPage'));
-const BalanceHistoryDetailPage = lazy(
-  () => import('@/pages/balance-history-detail/ui/BalanceHistoryDetailPage'),
-);
+
 const SubscriptionBuyPage = lazy(() => import('@/pages/subscription-buy/ui/SubscriptionBuyPage'));
 const PaymentStatusPage = lazy(() => import('@/pages/payment-status/ui/PaymentStatusPage'));
 const PaymentResultPage = lazy(() => import('@/pages/payment-result/ui/PaymentResultPage'));
@@ -80,11 +78,7 @@ export const router = createBrowserRouter(
                 description: 'dashboard.history_subtitle',
               },
             },
-            {
-              path: 'dashboard/history/:id',
-              element: <BalanceHistoryDetailPage />,
-              handle: { title: 'dashboard.history_title' },
-            },
+            
             {
               path: 'dashboard/pay',
               element: (

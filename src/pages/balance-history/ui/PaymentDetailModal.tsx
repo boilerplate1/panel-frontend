@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePaymentHistoryInfiniteQuery } from '@/features/payment-management';
+import { ResponsiveModal, Button } from '@/shared/ui';
+import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import {
   formatCurrency,
   formatDate,
@@ -9,43 +8,30 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { Button, ResponsiveModal } from '@/shared/ui';
-import { ROUTES } from '@/shared/config';
-import styles from './BalanceHistoryDetailPage.module.css';
+import styles from './BalanceHistoryPage.module.css';
 
-function BalanceHistoryDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const { data, isLoading } = usePaymentHistoryInfiniteQuery(true);
+type PaymentHistoryItemType = NonNullable<
+  ReturnType<typeof usePaymentHistoryPageQuery>['data']
+>['items'][number];
 
-  const history = data?.pages.flatMap((page) => page.items) ?? [];
-  const selectedItem = history.find((item) => item.id === id) ?? null;
+interface PaymentDetailModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  selectedItem: PaymentHistoryItemType | null; 
+  locale: 'ru-RU' | 'en-US';
+}
 
-  const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-
-  const handleClose = () => {
-    navigate(ROUTES.HISTORY);
-  };
-
-  if (isLoading) {
-    return (
-      <div className={styles.loading}>
-        <Loader2 className={styles.spinner} />
-      </div>
-    );
-  }
-
+export function PaymentDetailModal({ isOpen, onClose, selectedItem, locale }: PaymentDetailModalProps) {
+  const { t } = useTranslation();
+console.log('Стили модалки:', styles);
   return (
     <ResponsiveModal
-      isOpen={true}
-      onClose={handleClose}
+      isOpen={isOpen}
+      onClose={onClose}
       title={selectedItem?.planName ?? t('dashboard.subscriptions')}
-      width="min(92vw, 520px)"
     >
       {selectedItem ? (
         <div className={styles.modalGrid}>
-          {/* ... modal content ... */}
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_provider')}</span>
             <strong className={styles.modalProviderValue}>
@@ -59,42 +45,48 @@ function BalanceHistoryDetailPage() {
               <span>{getPaymentProviderLabel(selectedItem.provider)}</span>
             </strong>
           </div>
-          {/* ... other rows ... */}
+
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_amount')}</span>
             <strong>
               {formatCurrency(selectedItem.amountCents, selectedItem.currency, locale)}
             </strong>
           </div>
+
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_status')}</span>
             <strong className={styles.modalStatusValue}>
               {getPaymentStatusLabel(selectedItem.status, t)}
             </strong>
           </div>
+
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_plan_id')}</span>
             <strong>{selectedItem.planId ?? '-'}</strong>
           </div>
+
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_payment_id')}</span>
             <strong>{selectedItem.providerPaymentId ?? '-'}</strong>
           </div>
+
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_created')}</span>
             <strong>{formatDate(selectedItem.createdAt)}</strong>
           </div>
+
           <div className={`${styles.modalRow} ${styles.modalRowFullWide}`}>
             <span>{t('dashboard.history_updated')}</span>
             <strong>{formatDate(selectedItem.updatedAt)}</strong>
           </div>
+          
           {selectedItem.lastError && (
             <div className={`${styles.modalError} ${styles.modalRowFullWide}`}>
               <span>{t('dashboard.history_error')}</span>
               <strong>{selectedItem.lastError}</strong>
             </div>
           )}
-
+          
           {(selectedItem.providerInvoiceUrl || selectedItem.lastError) && (
             <div className={styles.modalSupportBlock}>
               {selectedItem.providerInvoiceUrl && (
@@ -116,10 +108,8 @@ function BalanceHistoryDetailPage() {
           )}
         </div>
       ) : (
-        <p>{t('dashboard.history_empty')}</p>
+        <p className={styles.emptyText}>{t('dashboard.history_empty')}</p>
       )}
     </ResponsiveModal>
   );
 }
-
-export default BalanceHistoryDetailPage;
