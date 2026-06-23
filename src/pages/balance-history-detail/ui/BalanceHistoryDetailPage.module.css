@@ -78,8 +78,6 @@
 .modalError span {
   color: var(--text-secondary);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   font-weight: 600;
 }
 

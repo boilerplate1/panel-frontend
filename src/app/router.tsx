@@ -15,7 +15,9 @@ const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));
 const ProfilePage = lazy(() => import('@/pages/profile/ui/ProfilePage'));
 const DevicesPage = lazy(() => import('@/pages/devices/ui/DevicesPage'));
 const BalanceHistoryPage = lazy(() => import('@/pages/balance-history/ui/BalanceHistoryPage'));
-const BalanceHistoryDetailPage = lazy(() => import('@/pages/balance-history-detail/ui/BalanceHistoryDetailPage'));
+const BalanceHistoryDetailPage = lazy(
+  () => import('@/pages/balance-history-detail/ui/BalanceHistoryDetailPage'),
+);
 const SubscriptionBuyPage = lazy(() => import('@/pages/subscription-buy/ui/SubscriptionBuyPage'));
 
 const PageLoader = () => (
@@ -57,7 +59,10 @@ export const router = createBrowserRouter(
                   <ProfilePage />
                 </LazyLoad>
               ),
-              handle: { title: 'dashboard.sidebar_profile' },
+              handle: {
+                title: 'dashboard.sidebar_profile',
+                description: 'dashboard.profile_description',
+              },
             },
             {
               path: 'dashboard/devices',
@@ -66,7 +71,10 @@ export const router = createBrowserRouter(
                   <DevicesPage />
                 </LazyLoad>
               ),
-              handle: { title: 'dashboard.sidebar_devices' },
+              handle: {
+                title: 'dashboard.sidebar_devices',
+                description: 'dashboard.devices_description',
+              },
             },
             {
               path: 'dashboard/history',
@@ -75,7 +83,10 @@ export const router = createBrowserRouter(
                   <BalanceHistoryPage />
                 </LazyLoad>
               ),
-              handle: { title: 'dashboard.sidebar_history' },
+              handle: {
+                title: 'dashboard.sidebar_history',
+                description: 'dashboard.history_subtitle',
+              },
             },
             {
               path: 'dashboard/history/:id',
@@ -93,7 +104,11 @@ export const router = createBrowserRouter(
                   <SubscriptionBuyPage />
                 </LazyLoad>
               ),
-              handle: { hideSidebar: true, title: 'dashboard.buy_subscription_select' },
+              handle: {
+                hideSidebar: true,
+                title: 'dashboard.buy_subscription_select',
+                description: 'dashboard.buy_subscription_menu',
+              },
             },
           ],
         },

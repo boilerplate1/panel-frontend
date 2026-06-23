@@ -176,6 +176,8 @@ const ru = {
     sidebar_history: 'История пополнений',
     sidebar_settings: 'Настройки',
     sidebar_logout: 'Выйти',
+    profile_description: 'Управляйте своим профилем и подписками',
+    devices_description: 'Список подключенных устройств',
     history_title: 'История пополнений',
     history_subtitle: 'Все оплаты по подпискам в одном месте',
     history_plan: 'Тариф',

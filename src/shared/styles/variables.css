@@ -51,7 +51,7 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
-  --radius-button: 20px;
+  --radius-button: var(--radius-md);
   --buy-card-radius: var(--radius-lg);
 
   --border-width: 1px;

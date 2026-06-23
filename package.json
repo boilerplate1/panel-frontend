@@ -11,7 +11,8 @@
     "build": "npx tsc -b && vite build --config vite.config.cjs",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:api": "openapi-typescript https://prod-v1-api.umbr.rest/api/openapi.json --output src/shared/api/generated/types.ts"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.3",
@@ -47,6 +48,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.58.0",

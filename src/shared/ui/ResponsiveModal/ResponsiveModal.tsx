@@ -1,6 +1,6 @@
 import { Modal } from '../Modal';
 import { Drawer } from '../Drawer';
-import { useIsMobile } from '@/shared/lib';
+import { useIsMobile } from '@/shared/hooks';
 
 interface ResponsiveModalProps {
   isOpen: boolean;

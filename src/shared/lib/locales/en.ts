@@ -177,6 +177,8 @@ const en = {
     sidebar_history: 'Top-up history',
     sidebar_settings: 'Settings',
     sidebar_logout: 'Logout',
+    profile_description: 'Manage your profile and subscriptions',
+    devices_description: 'List of connected devices',
     history_title: 'Top-up history',
     history_subtitle: 'All subscription payments in one place',
     history_plan: 'Plan',

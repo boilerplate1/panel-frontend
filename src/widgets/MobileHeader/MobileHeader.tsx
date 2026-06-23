@@ -17,8 +17,11 @@ export function MobileHeader() {
   const isPayPage = location.pathname === ROUTES.PAY;
 
   const currentMatch = matches[matches.length - 1];
-  const titleKey = (currentMatch?.handle as { title?: string })?.title;
+  const handle = currentMatch?.handle as { title?: string; description?: string } | undefined;
+  const titleKey = handle?.title;
+  const descriptionKey = handle?.description;
   const pageTitle = titleKey ? t(titleKey) : '';
+  const pageDescription = descriptionKey ? t(descriptionKey) : '';
 
   return (
     <header className={styles.wrapper}>
@@ -38,9 +41,10 @@ export function MobileHeader() {
 
         <div className={styles.centerSlot}>
           {!isRoot && (
-            <span className={`${styles.pageTitle} ${isPayPage ? styles.backDesktop : ''}`}>
-              {pageTitle}
-            </span>
+            <div className={`${styles.titleBlock} ${isPayPage ? styles.backDesktop : ''}`}>
+              <span className={styles.pageTitle}>{pageTitle}</span>
+              {pageDescription && <span className={styles.pageDescription}>{pageDescription}</span>}
+            </div>
           )}
         </div>
 
