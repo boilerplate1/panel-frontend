@@ -1,7 +1,8 @@
 import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft } from 'lucide-react';
+import { Menu, ChevronLeft } from 'lucide-react';
 import { Logo, ThemeToggle } from '@/shared/ui';
+import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
 
@@ -10,6 +11,7 @@ export function MobileHeader() {
   const location = useLocation();
   const navigate = useNavigate();
   const matches = useMatches();
+  const { toggleSidebar } = useUIStore();
 
   const isRoot = location.pathname === ROUTES.DASHBOARD;
   const isPayPage = location.pathname === ROUTES.PAY;
@@ -43,7 +45,16 @@ export function MobileHeader() {
         </div>
 
         <div className={styles.rightSlot}>
-          <ThemeToggle />
+          <div className={styles.themeDesktop}>
+            <ThemeToggle />
+          </div>
+          <button
+            className={styles.menuButton}
+            onClick={() => toggleSidebar(true)}
+            aria-label="Menu"
+          >
+            <Menu size={28} />
+          </button>
         </div>
       </div>
     </header>
