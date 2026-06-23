@@ -29,11 +29,11 @@ export function DeviceItem({ device, dataUpdatedAt, onEdit, onDelete }: DeviceIt
 
   return (
     <div className={styles.item}>
-      <div className={styles.itemInfo}>
-        <div className={styles.itemName}>{label}</div>
+      <div className={styles.itemName}>
+        <div className={styles.itemInfo}> {hasCustomName && <span>{device.name}</span>}</div>
         <div className={styles.itemStatus}>
           <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
-          {hasCustomName && <span className={styles.rawName}>{device.name}</span>}
+          {hasCustomName && <span className={styles.rawName}>{label}</span>}
           <span className={`${styles.onlineDot} ${isOnline ? styles.online : styles.offline}`} />
           <span className={isOnline ? styles.onlineText : styles.offlineText}>
             {isOnline ? t('devices.online') : t('devices.offline')}
