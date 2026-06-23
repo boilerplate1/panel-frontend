@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, useParams, useSearchParams } from 'react-router-dom';
 import { lazy } from 'react';
 import { RequireAuth } from '@/app/guards/RequireAuth';
 import { GuestOnly } from '@/app/guards/GuestOnly';
@@ -8,6 +8,7 @@ import { DashboardLayout } from '@/app/layouts/DashboardLayout';
 import { AuthLayout } from '@/app/layouts/AuthLayout';
 import { LazyLoad } from '@/shared/ui/LazyLoad/LazyLoad';
 import { ROUTE_PATTERNS, ROUTES } from '@/shared/config';
+import { buildLegacyPayRedirect } from '@/constants';
 
 const LoginPage = lazy(() => import('@/pages/login/ui/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/register/ui/RegisterPage'));
@@ -79,7 +80,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: ROUTES.PAY,
+              path: ROUTES.CHECKOUT,
               element: (
                 <LazyLoad>
                   <SubscriptionBuyPage />
@@ -92,7 +93,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: ROUTE_PATTERNS.PAY_PROVIDER,
+              path: ROUTE_PATTERNS.CHECKOUT_PROVIDER,
               element: (
                 <LazyLoad>
                   <SubscriptionBuyPage />
@@ -104,7 +105,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: ROUTE_PATTERNS.PAY_METHOD,
+              path: ROUTE_PATTERNS.CHECKOUT_PROVIDER_METHODS,
               element: (
                 <LazyLoad>
                   <SubscriptionBuyPage />
@@ -116,7 +117,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: ROUTES.PAY_STATUS,
+              path: ROUTES.CHECKOUT_STATUS,
               element: (
                 <LazyLoad>
                   <PaymentStatusPage />
@@ -128,7 +129,7 @@ export const router = createBrowserRouter(
               },
             },
             {
-              path: ROUTE_PATTERNS.PAY_STATUS_INTENT,
+              path: ROUTE_PATTERNS.CHECKOUT_STATUS_INTENT,
               element: (
                 <LazyLoad>
                   <PaymentStatusPage />
@@ -138,6 +139,26 @@ export const router = createBrowserRouter(
                 hideSidebar: true,
                 title: 'dashboard.buy_subscription_waiting',
               },
+            },
+            {
+              path: ROUTE_PATTERNS.LEGACY_PAY,
+              element: <Navigate to={ROUTES.CHECKOUT} replace />,
+            },
+            {
+              path: ROUTE_PATTERNS.LEGACY_PAY_PROVIDER,
+              element: <LegacyPayRedirect />,
+            },
+            {
+              path: ROUTE_PATTERNS.LEGACY_PAY_METHOD,
+              element: <LegacyPayRedirect />,
+            },
+            {
+              path: ROUTE_PATTERNS.LEGACY_PAY_STATUS,
+              element: <Navigate to={ROUTES.CHECKOUT_STATUS} replace />,
+            },
+            {
+              path: ROUTE_PATTERNS.LEGACY_PAY_STATUS_INTENT,
+              element: <LegacyPayRedirect />,
             },
             {
               path: ROUTES.DASHBOARD_PAYMENT_SUCCESS,
@@ -209,3 +230,11 @@ export const router = createBrowserRouter(
   ],
   { basename: import.meta.env.BASE_URL ?? '/' },
 );
+
+function LegacyPayRedirect() {
+  const params = useParams();
+  const [searchParams] = useSearchParams();
+  const intentId = params.intentId ?? searchParams.get('intentId') ?? undefined;
+
+  return <Navigate to={buildLegacyPayRedirect(params.planId, params.provider, intentId)} replace />;
+}

@@ -29,7 +29,7 @@ const seoByPath: Record<string, (t: (key: string) => string) => SeoEntry> = {
     title: t('seo.history_title'),
     description: t('seo.history_description'),
   }),
-  [ROUTES.PAY]: (t) => ({
+  [ROUTES.CHECKOUT]: (t) => ({
     title: t('seo.subscription_title'),
     description: t('seo.subscription_description'),
   }),

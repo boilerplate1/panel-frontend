@@ -3,33 +3,37 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-4);
-  padding: 20px 24px;
-  height: 80px;
-  background: transparent;
-  border: 1px solid var(--surface-secondary);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-  text-align: left;
+  width: 100%;
+  padding: 16px 18px;
+  min-height: 84px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
   color: inherit;
   cursor: pointer;
-  width: 100%;
+  text-align: left;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .item:hover {
+  border-color: var(--border-color);
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--surface-secondary) 0%, white 2%);
 }
 
 .itemInfo {
   display: flex;
-  flex-direction: column;
-  flex: 1;
   min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .itemTopRow {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--spacing-3);
 }
@@ -39,69 +43,84 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-3);
-  margin-top: 0.15rem;
+  min-width: 0;
 }
 
 .itemLeft {
   display: flex;
+  min-width: 0;
   align-items: center;
   gap: 8px;
-  min-width: 0;
-  overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .itemName {
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-base);
-  color: var(--text-primary);
   overflow: hidden;
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   text-overflow: ellipsis;
   white-space: nowrap;
-  min-width: 0;
 }
 
 .itemAmount {
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  white-space: nowrap;
   flex-shrink: 0;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
 }
 
 .statusLabel {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
   white-space: nowrap;
 }
 
-.itemDate {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.amountPositive {
+.amountPositive,
+.statusLabel.amountPositive {
   color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
 }
 
-.amountNeutral {
+.amountNeutral,
+.statusLabel.amountNeutral {
   color: var(--text-secondary);
+  background: color-mix(in srgb, var(--text-secondary) 10%, transparent);
 }
 
-.amountNegative {
+.amountNegative,
+.statusLabel.amountNegative {
   color: var(--status-error);
+  background: color-mix(in srgb, var(--status-error) 12%, transparent);
 }
 
 .providerRow {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   min-width: 0;
-  overflow: hidden;
+  padding: 0 8px;
+  min-height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--surface-secondary);
 }
 
-.providerText {
+.providerText,
+.itemDate,
+.statusLabel {
   font-size: var(--font-size-xs);
+}
+
+.providerText,
+.itemDate {
+  color: var(--text-secondary);
 }
 
 .providerIcon {
@@ -112,52 +131,32 @@
 
 @media (max-width: 992px) {
   .item {
-    align-items: center;
-    padding: 0 16px;
-    gap: 12px;
-    height: 80px;
+    align-items: flex-start;
+    padding: 14px;
+    min-height: 0;
   }
 
   .itemInfo {
+    gap: 6px;
+  }
+
+  .itemTopRow,
+  .itemBottomRow {
     gap: 8px;
   }
 
-  .itemTopRow {
-    gap: var(--spacing-2);
-  }
-
-  .itemName {
-    font-size: var(--font-size-sm);
-    line-height: 1.3;
-  }
-
+  .itemName,
   .itemAmount {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
   }
 
-  .itemBottomRow {
-    gap: var(--spacing-2);
-  }
-
-  .itemLeft {
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
+  .statusLabel,
+  .providerText,
   .itemDate {
-    font-size: var(--font-size-xs);
+    font-size: 11px;
   }
 
-  .statusLabel {
-    font-size: var(--font-size-xs);
-  }
-
-  .providerText {
-    font-size: var(--font-size-xs);
-  }
-
-  .providerIcon {
-    width: 12px;
-    height: 12px;
+  .providerRow {
+    padding: 0 7px;
   }
 }

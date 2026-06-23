@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import {
   formatCurrency,
   formatDate,
@@ -45,14 +44,10 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
         </div>
         <div className={styles.itemBottomRow}>
           <div className={styles.itemLeft}>
-            <span className={styles.statusLabel}>{statusLabel}</span>
+            <span className={`${styles.statusLabel} ${amountClass}`}>{statusLabel}</span>
             {providerIcon && (
               <span className={styles.providerRow}>
-                <img
-                  src={providerIcon}
-                  alt={providerLabel}
-                  className={styles.providerIcon}
-                />
+                <img src={providerIcon} alt={providerLabel} className={styles.providerIcon} />
                 <span className={styles.providerText}>{providerLabel}</span>
               </span>
             )}

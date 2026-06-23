@@ -1,1 +1,5 @@
-export { default } from '@/features/payment-status/ui/PaymentStatusPage';
+import { PaymentStatusPage as PaymentStatusFeaturePage } from '@/features/payment-status';
+
+export default function PaymentStatusPage() {
+  return <PaymentStatusFeaturePage />;
+}

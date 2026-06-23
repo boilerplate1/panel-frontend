@@ -1,11 +1,4 @@
-export {
-  authKeys,
-  useLoginMutation,
-  useRegisterMutation,
-  useLogoutMutation,
-  useAuthMeQuery,
-} from './useAuth';
-export { pairingKeys, usePairingInitQuery, usePairingStatusQuery } from './usePairing';
+export { authKeys, useAuthMeQuery } from './useAuth';
 export {
   deviceKeys,
   useDevicesQuery,
@@ -23,6 +16,5 @@ export {
   useCreatePaymentIntentMutation,
   useCheckPaymentIntentQuery,
   useCancelPaymentIntentMutation,
-  usePaymentHistoryInfiniteQuery,
   usePaymentHistoryPageQuery,
 } from './usePayments';

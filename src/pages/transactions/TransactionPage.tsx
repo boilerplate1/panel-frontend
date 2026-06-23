@@ -1,1 +1,5 @@
-export { default } from '@/features/transactions/ui/TransactionPage';
+import { TransactionPage as TransactionFeaturePage } from '@/features/transactions';
+
+export default function TransactionPage() {
+  return <TransactionFeaturePage />;
+}

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { useUIStore } from '@/shared/lib';
 import { useAppInit } from '@/shared/hooks/useAppInit';
 import { Toast, Seo } from '@/shared/ui';
+import { useUIStore } from '@/stores/uiStore';
 import styles from './GlobalLayout.module.css';
 
 export function GlobalLayout() {

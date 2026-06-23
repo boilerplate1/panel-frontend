@@ -1,6 +1,6 @@
 import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getDeviceIcon, getDeviceTypeLabel } from './DevicePage.utils';
+import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
 import styles from './DeviceItem.module.css';
 
 interface DeviceItemProps {
@@ -13,23 +13,25 @@ interface DeviceItemProps {
 export function DeviceItem({ device, dataUpdatedAt, onEdit, onDelete }: DeviceItemProps) {
   const { t } = useTranslation();
 
-  const isOnline = device.status === 'active' ||
-    (dataUpdatedAt - new Date(device.lastSeen).getTime() < 5 * 60 * 1000);
+  const isOnline =
+    device.status === 'active' ||
+    dataUpdatedAt - new Date(device.lastSeen).getTime() < 5 * 60 * 1000;
 
   const label = getDeviceTypeLabel(device.type);
-  const hasCustomName = device.name.toLowerCase() !== device.type.toLowerCase() && device.name !== label;
+  const hasCustomName =
+    device.name.toLowerCase() !== device.type.toLowerCase() && device.name !== label;
 
   return (
     <div className={styles.item}>
-      <div className={styles.itemName}>
-        <div className={styles.itemInfo}>
-          {hasCustomName && <span>{device.name}</span>}
-        </div>
+      <div className={styles.itemMain}>
+        <div className={styles.itemName}>{hasCustomName ? device.name : label}</div>
         <div className={styles.itemStatus}>
           <span className={styles.deviceIcon}>{getDeviceIcon(device.type)}</span>
           {hasCustomName && <span className={styles.rawName}>{label}</span>}
           <span className={`${styles.onlineDot} ${isOnline ? styles.online : styles.offline}`} />
-          <span className={isOnline ? styles.onlineText : styles.offlineText}>
+          <span
+            className={`${styles.statusPill} ${isOnline ? styles.statusOnline : styles.statusOffline}`}
+          >
             {isOnline ? t('devices.online') : t('devices.offline')}
           </span>
           {!isOnline && (

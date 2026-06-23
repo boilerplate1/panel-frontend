@@ -1,32 +1,16 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2 } from 'lucide-react';
-import { useAuth } from '@/features/auth';
-import { usePaymentHistoryPageQuery } from '@/features/payment-management';
 import { Card, Pagination, SectionHeader } from '@/shared/ui';
-import { TransactionItem } from './TransactionItem';
+import { useTransactionPage } from '../model/useTransactionPage';
+import { TransactionItem } from './components/TransactionItem';
 import { TransactionDetailModal } from './modals/TransactionDetailModal';
 import styles from './TransactionPage.module.css';
 
 function TransactionPage() {
-  const { user } = useAuth();
-  const { i18n, t } = useTranslation();
-  const [page, setPage] = useState(1);
-  const { data, isLoading } = usePaymentHistoryPageQuery(!!user, page);
-  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
+  const { t } = useTranslation();
+  const transactionsPage = useTransactionPage();
 
-  if (!user) return null;
-
-  const locale = i18n.language.startsWith('ru') ? 'ru-RU' : 'en-US';
-  const transactions = data?.items ?? [];
-  const totalPages = data?.totalPages ?? 0;
-  const selectedTransaction = transactions.find((item) => item.id === selectedTransactionId) ?? null;
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-    setSelectedTransactionId(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  if (!transactionsPage.user) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -37,25 +21,25 @@ function TransactionPage() {
           className={styles.header}
         />
 
-        {isLoading ? (
+        {transactionsPage.isLoading ? (
           <div className={styles.loading}>
             <Loader2 className={styles.spinner} />
           </div>
-        ) : transactions.length > 0 ? (
+        ) : transactionsPage.transactions.length > 0 ? (
           <div className={styles.container}>
-            {transactions.map((item) => (
+            {transactionsPage.transactions.map((item) => (
               <TransactionItem
                 key={item.id}
                 transaction={item}
-                locale={locale}
-                onOpenDetail={(id) => setSelectedTransactionId(id)}
+                locale={transactionsPage.locale}
+                onOpenDetail={transactionsPage.openDetail}
               />
             ))}
 
             <Pagination
-              page={page}
-              totalPages={totalPages}
-              onChange={handlePageChange}
+              page={transactionsPage.page}
+              totalPages={transactionsPage.totalPages}
+              onChange={transactionsPage.changePage}
             />
           </div>
         ) : (
@@ -64,10 +48,10 @@ function TransactionPage() {
       </Card>
 
       <TransactionDetailModal
-        isOpen={!!selectedTransactionId}
-        onClose={() => setSelectedTransactionId(null)}
-        transaction={selectedTransaction}
-        locale={locale}
+        isOpen={transactionsPage.isDetailOpen}
+        onClose={transactionsPage.closeDetail}
+        transaction={transactionsPage.selectedTransaction}
+        locale={transactionsPage.locale}
       />
     </div>
   );

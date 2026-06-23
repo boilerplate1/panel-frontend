@@ -1,1 +1,5 @@
-export { default } from '@/features/profile/ui/ProfilePage';
+import { ProfilePage as ProfileFeaturePage } from '@/features/profile';
+
+export default function ProfilePage() {
+  return <ProfileFeaturePage />;
+}

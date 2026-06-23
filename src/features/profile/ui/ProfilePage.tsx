@@ -1,83 +1,61 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, MonitorSmartphone } from 'lucide-react';
-import { useAuth } from '@/features/auth';
-import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
-import { copyToClipboard, useUIStore } from '@/shared/lib';
-import { getDeviceIcon, getDeviceTypeLabel } from '@/features/device-management/ui/pages/DevicePage.utils';
+import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
 import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
-import { ROUTES } from '@/shared/config';
-import { SubscriptionCard } from '@/features/profile/ui/SubscriptionCard';
+import { useProfilePage } from '../model/useProfilePage';
+import { SubscriptionCard } from './SubscriptionCard';
 import styles from './ProfilePage.module.css';
 
 function ProfilePage() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { showToast } = useUIStore();
-  const { data: devices, isLoading: devicesLoading } = useDevicesQuery(!!user);
-  const { data: subscriptions, isLoading: subscriptionsLoading } = useSubscriptionsQuery(!!user);
+  const profile = useProfilePage();
 
-  const devicePreview = devices?.items?.slice(0, 3) ?? [];
-  const activeSubscription =
-    subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
-
-  if (!user) return null;
-
-  const handleCopySubscription = async () => {
-    if (!activeSubscription?.remnaSubLink) return;
-
-    const success = await copyToClipboard(activeSubscription.remnaSubLink);
-    if (success) {
-      showToast(t('profile.copied'), 'success');
-    }
-  };
+  if (!profile.user) return null;
 
   return (
     <div className={styles.wrapper}>
-      <Card padding="medium" className={styles.heroCard}>
-        <div className={styles.avatar}>{user.username.charAt(0).toUpperCase()}</div>
-        <div className={styles.profileMeta}>
-          <div className={styles.username}>{user.username}</div>
-          <div className={styles.profileSubtitle}>{user.email || t('dashboard.email_not_set')}</div>
-        </div>
-      </Card>
-
-      <Card padding="medium" className={styles.card}>
-        {subscriptionsLoading ? (
-          <SubscriptionCardSkeleton />
-        ) : activeSubscription ? (
-          <>
-            <SubscriptionCard
-              subscription={activeSubscription}
-              onCopyLink={handleCopySubscription}
-            />
-            <Button
-              type="button"
-              variant="secondary"
-              className={styles.devicesBtn}
-              onClick={() => navigate(ROUTES.PAY)}
-            >
-              {t('dashboard.renew_subscription', 'Продлить подписку')}
+      {profile.dashboardBanner ? (
+        <Card padding="medium" className={styles.banner}>
+          <div className={styles.bannerText}>
+            <strong>{profile.dashboardBanner.title}</strong>
+            <span>{profile.dashboardBanner.description}</span>
+          </div>
+          {profile.dashboardBanner.actionLabel && profile.dashboardBanner.onAction ? (
+            <Button type="button" variant="secondary" onClick={profile.dashboardBanner.onAction}>
+              {profile.dashboardBanner.actionLabel}
             </Button>
-          </>
-        ) : (
-          <>
-            <SectionHeader title={t('dashboard.subscriptions')} className={styles.header} />
-            <div className={styles.subscriptionEmpty}>
-              <div className={styles.emptyState}>{t('dashboard.no_subscriptions')}</div>
-              <Button
-                type="button"
-                className={styles.devicesBtn}
-                onClick={() => navigate(ROUTES.PAY)}
-              >
-                {t('dashboard.purchase_subscription')}
-              </Button>
+          ) : null}
+        </Card>
+      ) : null}
+
+      <div className={styles.overviewGrid}>
+        <Card padding="medium" className={styles.identityCard}>
+          <div className={styles.accountHeader}>
+            <div className={styles.avatar}>{profile.user.username.charAt(0).toUpperCase()}</div>
+            <div className={styles.accountIdentity}>
+              <div className={styles.username}>{profile.user.username}</div>
+              <div className={styles.profileSubtitle}>
+                {profile.user.email || t('dashboard.email_not_set')}
+              </div>
             </div>
-          </>
-        )}
-      </Card>
+          </div>
+        </Card>
+
+        <Card padding="medium" className={styles.subscriptionCard}>
+          {profile.subscriptionsLoading ? (
+            <SubscriptionCardSkeleton />
+          ) : (
+            <SubscriptionCard
+              subscription={profile.activeSubscription}
+              daysLeft={profile.subscriptionDaysLeft}
+              state={profile.subscriptionState}
+              onCopyLink={profile.copySubscriptionLink}
+              onRenew={profile.goToPayment}
+            />
+          )}
+        </Card>
+      </div>
 
       <Card padding="medium" className={styles.card}>
         <SectionHeader
@@ -87,24 +65,24 @@ function ProfilePage() {
         />
 
         <div className={styles.container}>
-          {devicesLoading ? (
+          {profile.devicesLoading ? (
             <>
               <DeviceCardSkeleton />
               <DeviceCardSkeleton />
             </>
-          ) : devicePreview.length > 0 ? (
-            devicePreview.map((device) => (
+          ) : profile.devicePreview.length > 0 ? (
+            profile.devicePreview.map((device) => (
               <div
                 key={device.id}
                 className={styles.item}
-                onClick={() => navigate(ROUTES.DEVICES)}
+                onClick={profile.goToDevices}
                 style={{ cursor: 'pointer' }}
               >
                 <div className={styles.itemIconWrapper}>{getDeviceIcon(device.type)}</div>
                 <div className={styles.itemContent}>
                   <div className={styles.itemName}>{device.name}</div>
                   <div className={styles.itemStatus}>
-                    {getDeviceTypeLabel(device.type)} · {t('devices.last_seen')}{' '}
+                    {getDeviceTypeLabel(device.type)} - {t('devices.last_seen')}{' '}
                     {new Date(device.lastSeen).toLocaleString()}
                   </div>
                 </div>
@@ -120,7 +98,7 @@ function ProfilePage() {
           type="button"
           variant="secondary"
           className={styles.devicesBtn}
-          onClick={() => navigate(ROUTES.DEVICES)}
+          onClick={profile.goToDevices}
         >
           <MonitorSmartphone size={22} />
           {t('dashboard.sidebar_devices')}

@@ -2,8 +2,9 @@ import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft, LogOut, Sun, Moon } from 'lucide-react';
 import { Logo, Container, Dropdown } from '@/shared/ui';
-import { useAuth } from '@/features/auth';
-import { useUIStore, getCurrentTheme, applyTheme } from '@/shared/lib';
+import { getCurrentTheme, applyTheme } from '@/shared/lib';
+import { useAuth } from '@/stores/authStore';
+import { useUIStore } from '@/stores/uiStore';
 import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
 
@@ -16,7 +17,7 @@ export function MobileHeader() {
   const { toggleSidebar } = useUIStore();
 
   const isRoot = location.pathname === ROUTES.DASHBOARD;
-  const isPayPage = location.pathname === ROUTES.PAY;
+  const isCheckoutPage = location.pathname.startsWith(ROUTES.CHECKOUT);
 
   const currentMatch = matches[matches.length - 1];
   const handle = currentMatch?.handle as { title?: string; description?: string } | undefined;
@@ -36,7 +37,7 @@ export function MobileHeader() {
             <Logo className={styles.logoMobile} />
           ) : (
             <button
-              className={`${styles.backButton} ${isPayPage ? styles.backDesktop : ''}`}
+              className={`${styles.backButton} ${isCheckoutPage ? styles.backDesktop : ''}`}
               onClick={() => navigate(-1)}
             >
               <ChevronLeft size={28} />
@@ -46,7 +47,7 @@ export function MobileHeader() {
 
         <div className={styles.centerSlot}>
           {!isRoot && (
-            <div className={`${styles.titleBlock} ${isPayPage ? styles.backDesktop : ''}`}>
+            <div className={`${styles.titleBlock} ${isCheckoutPage ? styles.backDesktop : ''}`}>
               <span className={styles.pageTitle}>{pageTitle}</span>
               {pageDescription && <span className={styles.pageDescription}>{pageDescription}</span>}
             </div>

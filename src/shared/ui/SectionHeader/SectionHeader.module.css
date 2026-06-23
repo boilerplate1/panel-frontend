@@ -19,3 +19,13 @@
   font-size: var(--font-size-sm);
   line-height: 1.45;
 }
+
+@media (max-width: 992px) {
+  .title {
+    font-size: var(--font-size-base);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-xs);
+  }
+}

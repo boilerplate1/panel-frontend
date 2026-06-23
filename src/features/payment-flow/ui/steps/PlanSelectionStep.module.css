@@ -39,15 +39,24 @@
   padding: 14px 16px;
   background: transparent;
   border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease;
   text-align: left;
   border: 1px solid var(--surface-secondary);
   color: inherit;
 }
 
 .item:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--surface-secondary) 35%, transparent);
+}
+
+.item:focus-visible {
+  outline: none;
+  border-color: var(--border-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--border-color) 35%, transparent);
 }
 
 .itemSelected {

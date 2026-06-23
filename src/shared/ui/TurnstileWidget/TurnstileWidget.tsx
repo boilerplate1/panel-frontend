@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { Turnstile as ReactTurnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { APP_CONFIG } from '@/shared/config';
 import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
@@ -21,8 +21,8 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
     const turnstileRef = useRef<TurnstileInstance>(null);
 
     useEffect(() => {
-      return subscribeTheme((t) => {
-        themeRef.current = t;
+      return subscribeTheme((theme) => {
+        themeRef.current = theme;
         turnstileRef.current?.reset();
       });
     }, []);

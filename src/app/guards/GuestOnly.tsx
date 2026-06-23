@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '@/features/auth';
 import { Loader } from '@/shared/ui';
+import { useAuth } from '@/stores/authStore';
 
 interface GuestOnlyProps {
   children: ReactNode;

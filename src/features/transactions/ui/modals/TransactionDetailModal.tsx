@@ -17,8 +17,15 @@ interface TransactionDetailModalProps {
   locale: 'ru-RU' | 'en-US';
 }
 
-export function TransactionDetailModal({ isOpen, onClose, transaction, locale }: TransactionDetailModalProps) {
+export function TransactionDetailModal({
+  isOpen,
+  onClose,
+  transaction,
+  locale,
+}: TransactionDetailModalProps) {
   const { t } = useTranslation();
+  const providerInvoiceUrl = transaction?.providerInvoiceUrl ?? undefined;
+  const providerIcon = transaction ? getPaymentProviderIcon(transaction.provider) : null;
 
   return (
     <ResponsiveModal
@@ -31,9 +38,9 @@ export function TransactionDetailModal({ isOpen, onClose, transaction, locale }:
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_provider')}</span>
             <strong className={styles.modalProviderValue}>
-              {getPaymentProviderIcon(transaction.provider) ? (
+              {providerIcon ? (
                 <img
-                  src={getPaymentProviderIcon(transaction.provider)}
+                  src={providerIcon}
                   alt={getPaymentProviderLabel(transaction.provider)}
                   className={styles.modalProviderIcon}
                 />
@@ -44,9 +51,7 @@ export function TransactionDetailModal({ isOpen, onClose, transaction, locale }:
 
           <div className={styles.modalRow}>
             <span>{t('dashboard.history_amount')}</span>
-            <strong>
-              {formatCurrency(transaction.amountCents, transaction.currency, locale)}
-            </strong>
+            <strong>{formatCurrency(transaction.amountCents, transaction.currency, locale)}</strong>
           </div>
 
           <div className={styles.modalRow}>
@@ -75,20 +80,20 @@ export function TransactionDetailModal({ isOpen, onClose, transaction, locale }:
             <span>{t('dashboard.history_updated')}</span>
             <strong>{formatDate(transaction.updatedAt)}</strong>
           </div>
-          
+
           {transaction.lastError && (
             <div className={`${styles.modalError} ${styles.modalRowFullWide}`}>
               <span>{t('dashboard.history_error')}</span>
               <strong>{transaction.lastError}</strong>
             </div>
           )}
-          
-          {(transaction.providerInvoiceUrl || transaction.lastError) && (
+
+          {(providerInvoiceUrl || transaction.lastError) && (
             <div className={styles.modalSupportBlock}>
-              {transaction.providerInvoiceUrl && (
+              {providerInvoiceUrl && (
                 <Button
                   as="a"
-                  href={transaction.providerInvoiceUrl}
+                  href={providerInvoiceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalLink}

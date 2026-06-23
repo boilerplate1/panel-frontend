@@ -48,15 +48,24 @@
   border: 1px solid var(--surface-secondary);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease;
   text-align: left;
   color: inherit;
   width: 100%;
 }
 
 .providerBtn:hover {
-  border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 5%, transparent);
+  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--surface-secondary) 35%, transparent);
+}
+
+.providerBtn:focus-visible {
+  outline: none;
+  border-color: var(--border-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--border-color) 35%, transparent);
 }
 
 .providerContent {

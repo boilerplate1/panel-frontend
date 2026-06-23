@@ -86,7 +86,9 @@ export function PaymentMethodStep({
               );
             })
           ) : (
-            <div className={styles.emptyText}>{t('dashboard.buy_subscription_provider_unavailable')}</div>
+            <div className={styles.emptyText}>
+              {t('dashboard.buy_subscription_provider_unavailable')}
+            </div>
           )}
         </div>
       </Card>

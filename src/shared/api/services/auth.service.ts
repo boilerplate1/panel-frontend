@@ -1,6 +1,6 @@
 import { apiClient } from '../api-client';
 import type { LoginRequest, RegisterRequest, User } from '../generated';
-import type { AuthResponse, PairingInitResponse, PairingStatusResponse } from '../generated';
+import type { AuthResponse } from '../generated';
 
 export class AuthService {
   register(data: RegisterRequest): Promise<AuthResponse> {
@@ -17,13 +17,5 @@ export class AuthService {
 
   getMe(): Promise<User> {
     return apiClient.get('/auth/me').then((r) => r.data);
-  }
-
-  initPairing(): Promise<PairingInitResponse> {
-    return apiClient.post('/auth/pair/init').then((r) => r.data);
-  }
-
-  checkPairingStatus(sessionId: string): Promise<PairingStatusResponse> {
-    return apiClient.get(`/auth/pair/status/${sessionId}`).then((r) => r.data);
   }
 }

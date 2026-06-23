@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { billingService } from '../services';
 import type {
   CreatePaymentIntentRequest,
@@ -41,17 +41,6 @@ export function useCheckPaymentIntentQuery(intentId: string | null, enabled = tr
 export function useCancelPaymentIntentMutation() {
   return useMutation<PaymentIntentResponse, Error, string>({
     mutationFn: billingService.cancelIntent,
-  });
-}
-
-export function usePaymentHistoryInfiniteQuery(enabled: boolean) {
-  return useInfiniteQuery<PaymentHistoryResponse>({
-    queryKey: paymentKeys.history,
-    queryFn: ({ pageParam }) => billingService.getHistory(pageParam as string | undefined),
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-    initialPageParam: undefined,
-    enabled,
-    staleTime: 30_000,
   });
 }
 

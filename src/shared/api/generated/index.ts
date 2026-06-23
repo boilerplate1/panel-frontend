@@ -6,8 +6,6 @@ export type { DeviceUpdateRequest } from './deviceUpdateRequest';
 export type { LoginRequest } from './loginRequest';
 export type { LoginResponse } from './loginResponse';
 export type { PaginatedDeviceResponse } from './paginatedDeviceResponse';
-export type { PairingInitResponse } from './pairingInitResponse';
-export type { PairingStatusResponse } from './pairingStatusResponse';
 export type { PaymentHistoryItem, PaymentHistoryResponse } from './paymentHistoryResponse';
 export type { PaymentIntentResponse } from './paymentIntentResponse';
 export type { PaymentProvidersResponse } from './paymentProvidersResponse';

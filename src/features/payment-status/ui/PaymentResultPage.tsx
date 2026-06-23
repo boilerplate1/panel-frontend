@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/features/auth';
-import { useCheckPaymentIntentQuery } from '@/features/payment-management';
-import { useSubscriptionPlansQuery } from '@/shared/api';
-import { formatDate, formatPlanDurationLabel, getMonthLabels, getIntentId, getQueryValue, queryClient } from '@/shared/lib';
+import { useCheckPaymentIntentQuery, useSubscriptionPlansQuery } from '@/shared/api';
+import {
+  formatDate,
+  formatPlanDurationLabel,
+  getMonthLabels,
+  getIntentId,
+  getQueryValue,
+  queryClient,
+} from '@/shared/lib';
 import { Button, Card, Logo } from '@/shared/ui';
 import { ROUTES } from '@/shared/config';
 import { usePaymentStore } from '@/stores/paymentStore';
+import { useAuth } from '@/stores/authStore';
 import styles from './PaymentResultPage.module.css';
 
 type ResultState = 'success' | 'pending' | 'failed';
@@ -18,10 +24,13 @@ function PaymentResultPage() {
   const { isAuthenticated } = useAuth();
   const { activePayment, reset } = usePaymentStore();
   const isDashboardRoute = location.pathname.startsWith('/dashboard/');
+  const paymentFailedMatch = useMatch(ROUTES.PAYMENT_FAILED);
+  const dashboardPaymentFailedMatch = useMatch(ROUTES.DASHBOARD_PAYMENT_FAILED);
+  const isFailedRoute = !!paymentFailedMatch || !!dashboardPaymentFailedMatch;
   const intentId = getIntentId(location.search) ?? activePayment?.id ?? null;
   const statusQuery = useCheckPaymentIntentQuery(intentId, isAuthenticated);
   const { data: plans } = useSubscriptionPlansQuery(isAuthenticated);
-  const routeState: ResultState = location.pathname.endsWith('/failed') ? 'failed' : 'success';
+  const routeState: ResultState = isFailedRoute ? 'failed' : 'success';
   const normalizedStatus = statusQuery.data?.status.toUpperCase();
 
   const resultState: ResultState =
@@ -174,7 +183,7 @@ function PaymentResultPage() {
               {isAuthenticated ? t('shared.back_to_dashboard') : t('auth.login')}
             </Button>
             {!isSuccess ? (
-              <Button as={Link} to={ROUTES.PAY} variant="outline">
+              <Button as={Link} to={ROUTES.CHECKOUT} variant="outline">
                 {t('dashboard.payment_result_try_again')}
               </Button>
             ) : null}
