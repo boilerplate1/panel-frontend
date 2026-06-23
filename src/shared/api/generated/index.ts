@@ -1,2 +1,14 @@
-// Generated types will be placed here via `npm run generate:api`
-// Run: openapi-typescript <API_URL>/openapi.json --output src/shared/api/generated/types.ts
+export type { AccountResponse } from './accountResponse';
+export type { LoginRequest } from './loginRequest';
+export type { LoginResponse } from './loginResponse';
+export type { RegisterRequest } from './registerRequest';
+export type { DeviceResponse } from './deviceResponse';
+export type { DeviceUpdateRequest } from './deviceUpdateRequest';
+export type { SubscriptionResponse } from './subscriptionResponse';
+export type { SubscriptionPlanResponse } from './subscriptionPlanResponse';
+export type { PaymentIntentResponse } from './paymentIntentResponse';
+export type { PaymentHistoryItem, PaymentHistoryResponse } from './paymentHistoryResponse';
+export type { CreatePaymentIntentRequest } from './createPaymentIntentRequest';
+export type { PairingInitResponse } from './pairingInitResponse';
+export type { PairingStatusResponse } from './pairingStatusResponse';
+export type { PaymentProvidersResponse } from './paymentProvidersResponse';
