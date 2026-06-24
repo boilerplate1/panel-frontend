@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Loader2 } from 'lucide-react';
-import { Card, Pagination, SectionHeader } from '@/shared/ui';
+import { Loader2, RefreshCw } from 'lucide-react';
+import { Button, Card, Pagination, SectionHeader } from '@/shared/ui';
 import { useDevicesPage } from '../../model/useDevicesPage';
 import { DeviceDeleteModal } from '../modals/DeviceDeleteModal';
 import { DeviceRenameModal } from '../modals/DeviceRenameModal';
@@ -22,7 +22,15 @@ function DevicesPage() {
           className={styles.header}
         />
 
-        {devicesPage.isLoading ? (
+        {devicesPage.isError ? (
+          <div className={styles.errorState}>
+            <p className={styles.errorText}>{t('shared.server_error')}</p>
+            <Button type="button" variant="outline" size="small" onClick={() => devicesPage.refetch()}>
+              <RefreshCw size={18} />
+              {t('shared.retry')}
+            </Button>
+          </div>
+        ) : devicesPage.isLoading ? (
           <div className={styles.loading}>
             <Loader2 className={styles.spinner} />
           </div>

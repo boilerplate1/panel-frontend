@@ -8,7 +8,13 @@ export function useDevicesPage() {
   const [editingDevice, setEditingDevice] = useState<{ id: string; name: string } | null>(null);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
-  const { data: paginated, isLoading, dataUpdatedAt } = useDevicesQuery(!!user, page);
+  const {
+    data: paginated,
+    isLoading,
+    isError,
+    refetch,
+    dataUpdatedAt,
+  } = useDevicesQuery(!!user, page);
   const updateDeviceMutation = useUpdateDeviceMutation();
   const removeDeviceMutation = useRemoveDeviceMutation();
 
@@ -39,6 +45,8 @@ export function useDevicesPage() {
     page,
     setPage,
     isLoading,
+    isError,
+    refetch,
     dataUpdatedAt,
     devices: paginated?.items ?? [],
     totalPages: paginated?.totalPages ?? 0,

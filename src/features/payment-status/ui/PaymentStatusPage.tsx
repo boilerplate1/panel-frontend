@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Loader2 } from 'lucide-react';
+import { ExternalLink, Loader2, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card } from '@/shared/ui';
 import { getPaymentProviderLabel } from '@/shared/lib';
@@ -12,6 +12,24 @@ function PaymentStatusPage() {
   const paymentStatus = usePaymentStatusPage();
 
   if (paymentStatus.isError) {
+    const isNetworkError = paymentStatus.errorKind === 'network';
+    const isForbidden = paymentStatus.errorKind === 'forbidden';
+    const isNotFound = paymentStatus.errorKind === 'not_found';
+    const title = isNetworkError
+      ? t('dashboard.buy_subscription_payment_offline_title')
+      : isForbidden
+        ? t('dashboard.buy_subscription_payment_forbidden_title')
+        : isNotFound
+          ? t('dashboard.buy_subscription_payment_not_found')
+          : t('dashboard.buy_subscription_payment_error_title');
+    const text = isNetworkError
+      ? t('dashboard.buy_subscription_payment_offline_hint')
+      : isForbidden
+        ? t('dashboard.buy_subscription_payment_forbidden_hint')
+        : isNotFound
+          ? t('dashboard.buy_subscription_payment_not_found_hint')
+          : t('shared.server_error');
+
     return (
       <div className={styles.wrapper}>
         <Card variant="outline" padding="none" className={styles.card}>
@@ -29,11 +47,29 @@ function PaymentStatusPage() {
           </div>
 
           <div className={styles.content}>
-            <h1 className={styles.title}>{t('dashboard.buy_subscription_payment_not_found')}</h1>
-            <p className={styles.text}>{t('dashboard.buy_subscription_payment_not_found_hint')}</p>
+            <h1 className={styles.title}>{title}</h1>
+            <p className={styles.text}>{text}</p>
           </div>
 
           <div className={styles.actions}>
+            {isNetworkError ? (
+              <Button type="button" variant="outline" onClick={() => paymentStatus.refetchStatus()}>
+                <RefreshCw size={18} />
+                {t('shared.retry')}
+              </Button>
+            ) : null}
+            {paymentStatus.invoiceUrl ? (
+              <Button
+                as="a"
+                href={paymentStatus.invoiceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+              >
+                <ExternalLink size={18} />
+                {t('dashboard.buy_subscription_open_payment')}
+              </Button>
+            ) : null}
             <Button as={Link} to={ROUTES.CHECKOUT} variant="outline">
               {t('dashboard.buy_subscription_new_purchase')}
             </Button>

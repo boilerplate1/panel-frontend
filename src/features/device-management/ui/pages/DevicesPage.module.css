@@ -30,6 +30,20 @@
   padding: var(--spacing-8);
 }
 
+.errorState {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  padding: var(--spacing-4) 0;
+}
+
+.errorText {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
 .emptyText {
   color: var(--text-secondary);
   text-align: center;

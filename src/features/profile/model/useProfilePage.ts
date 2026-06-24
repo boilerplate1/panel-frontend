@@ -12,8 +12,18 @@ export function useProfilePage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showToast } = useUIStore();
-  const { data: devices, isLoading: devicesLoading } = useDevicesQuery(!!user);
-  const { data: subscriptions, isLoading: subscriptionsLoading } = useSubscriptionsQuery(!!user);
+  const {
+    data: devices,
+    isLoading: devicesLoading,
+    isError: devicesError,
+    refetch: refetchDevices,
+  } = useDevicesQuery(!!user);
+  const {
+    data: subscriptions,
+    isLoading: subscriptionsLoading,
+    isError: subscriptionsError,
+    refetch: refetchSubscriptions,
+  } = useSubscriptionsQuery(!!user);
 
   const devicePreview = devices?.items?.slice(0, 3) ?? [];
   const devicesCount = devices?.total ?? devicePreview.length ?? 0;
@@ -37,7 +47,9 @@ export function useProfilePage() {
     devicePreview,
     devicesCount,
     devicesLoading,
+    devicesError,
     subscriptionsLoading,
+    subscriptionsError,
     activeSubscription,
     deviceAvailability,
     subscriptionState,
@@ -46,5 +58,7 @@ export function useProfilePage() {
     goToDevices: () => navigate(ROUTES.DEVICES),
     goToPayment: () => navigate(ROUTES.CHECKOUT),
     goToQuickConnect: () => navigate(ROUTES.QUICK_CONNECT),
+    refetchDevices,
+    refetchSubscriptions,
   };
 }

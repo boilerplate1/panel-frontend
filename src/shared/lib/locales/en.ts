@@ -272,6 +272,13 @@ const en = {
     buy_subscription_auto_check_timer: '{{seconds}} sec',
     buy_subscription_payment_subject: 'What you pay for',
     buy_subscription_payment_method: 'Payment method',
+    buy_subscription_payment_offline_title: 'No connection',
+    buy_subscription_payment_offline_hint:
+      'Check your internet connection and try checking the payment again.',
+    buy_subscription_payment_forbidden_title: 'Payment access denied',
+    buy_subscription_payment_forbidden_hint:
+      'This link belongs to another account or is no longer available.',
+    buy_subscription_payment_error_title: 'Could not verify payment',
     buy_subscription_payment_not_found: 'Payment not found',
     buy_subscription_payment_not_found_hint: 'Check the link or start payment again',
     buy_subscription_return_to_plans: 'Return to plan',
@@ -461,6 +468,7 @@ const en = {
     page_error_title: 'Oops! Something went wrong',
     page_error_subtitle: 'We are already working on a fix.',
     server_error: 'Server error',
+    retry: 'Retry',
     too_many_requests: 'Too many requests. Please try again later.',
     back_to_home: 'Back to home',
     back_to_dashboard: 'Back to dashboard',

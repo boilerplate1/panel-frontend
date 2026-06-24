@@ -268,6 +268,13 @@ const ru = {
     buy_subscription_auto_check_timer: '{{seconds}} сек',
     buy_subscription_payment_subject: 'Что оплачивает',
     buy_subscription_payment_method: 'Метод оплаты',
+    buy_subscription_payment_offline_title: 'Нет соединения',
+    buy_subscription_payment_offline_hint:
+      'Проверьте интернет и попробуйте проверить платёж ещё раз.',
+    buy_subscription_payment_forbidden_title: 'Доступ к платежу закрыт',
+    buy_subscription_payment_forbidden_hint:
+      'Эта ссылка привязана к другому аккаунту или больше недоступна.',
+    buy_subscription_payment_error_title: 'Не удалось проверить платёж',
     buy_subscription_payment_not_found: 'Платёж не найден',
     buy_subscription_payment_not_found_hint: 'Проверьте ссылку или начните оплату заново',
     buy_subscription_return_to_plans: 'Вернуться к тарифу',
@@ -485,6 +492,7 @@ const ru = {
     dark: 'Тёмная',
     unlimited_traffic: 'безлимитный трафик',
     error: 'Ошибка',
+    retry: 'Повторить',
   },
 };
 

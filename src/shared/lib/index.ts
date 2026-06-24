@@ -1,4 +1,4 @@
-export { getApiErrorMessage } from './utils/apiError';
+export { getApiErrorMessage, getApiErrorKind } from './utils/apiError';
 export { copyToClipboard } from './utils/copy';
 export {
   formatDate,

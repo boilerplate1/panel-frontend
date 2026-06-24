@@ -9,6 +9,7 @@ import {
 import {
   formatCurrency,
   formatPlanDurationLabel,
+  getApiErrorKind,
   getApiErrorMessage,
   getMonthLabels,
 } from '@/shared/lib';
@@ -33,7 +34,9 @@ export function usePaymentStatusPage() {
     isFetching,
     isLoading,
     isError,
+    error,
   } = useCheckPaymentIntentQuery(intentId);
+  const errorKind = getApiErrorKind(error);
 
   const paymentPlanId = currentIntent?.planId ?? activePayment?.planId ?? null;
   const { data: plans } = useSubscriptionPlansQuery(!!paymentPlanId);
@@ -88,10 +91,10 @@ export function usePaymentStatusPage() {
   }, [countdown, intentId, isError, isFetching, isLoading, refetchStatus]);
 
   useEffect(() => {
-    if (isError) {
+    if (isError && errorKind !== 'network') {
       reset();
     }
-  }, [isError, reset]);
+  }, [errorKind, isError, reset]);
 
   const cancelPayment = async () => {
     if (!intentId) {
@@ -120,6 +123,8 @@ export function usePaymentStatusPage() {
     isFetching,
     isLoading,
     isError,
+    errorKind,
+    refetchStatus,
     isCancelling: cancelIntentMutation.isPending,
     cancelPayment,
   };

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, MonitorSmartphone } from 'lucide-react';
+import { ChevronRight, MonitorSmartphone, RefreshCw } from 'lucide-react';
 import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
 import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
@@ -30,10 +30,35 @@ function ProfilePage() {
 
   if (!profile.user) return null;
 
+  const hasError = profile.devicesError || profile.subscriptionsError;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.desktopGrid}>
         <div className={styles.mainColumn}>
+          {hasError ? (
+            <Card padding="medium" className={styles.errorCard}>
+              <SectionHeader
+                title={t('shared.server_error')}
+                subtitle={t('errors.page_error_subtitle')}
+                className={styles.header}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="small"
+                onClick={() => {
+                  profile.refetchSubscriptions();
+                  profile.refetchDevices();
+                }}
+                className={styles.errorBtn}
+              >
+                <RefreshCw size={18} />
+                {t('shared.retry')}
+              </Button>
+            </Card>
+          ) : null}
+
           <Card padding="medium" className={styles.subscriptionCard}>
             {profile.subscriptionsLoading ? (
               <SubscriptionCardSkeleton />

@@ -8,6 +8,21 @@ type ApiErrorResponse = {
 
 type Translate = (key: string) => string;
 
+export type ApiErrorKind = 'network' | 'not_found' | 'forbidden' | 'rate_limited' | 'unknown';
+
+export function getApiErrorKind(error: unknown): ApiErrorKind {
+  if (!axios.isAxiosError(error)) return 'unknown';
+
+  if (isNetworkApiError(error)) return 'network';
+
+  const status = error.response?.status;
+  if (status === 404) return 'not_found';
+  if (status === 403) return 'forbidden';
+  if (status === 429) return 'rate_limited';
+
+  return 'unknown';
+}
+
 export function getApiErrorMessage(error: unknown, fallback: string, t?: Translate): string {
   let message = fallback;
 
