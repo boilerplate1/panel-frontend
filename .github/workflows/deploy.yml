@@ -1,8 +1,8 @@
-name: Frontend CI/CD (No Source on Server)
+name: Frontend CI
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 env:
   REGISTRY: ghcr.io
@@ -16,18 +16,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Notify Telegram (Build Started)
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Frontend Build Started
-
-            Repo: ${{ github.repository }}
-            Author: ${{ github.actor }}
-            Progress: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -44,103 +32,3 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: read
-
-    steps:
-      - name: Notify Telegram (Deployment Started)
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Frontend Deployment Started
-
-            Repo: ${{ github.repository }}
-            Author: ${{ github.actor }}
-            Progress: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-      - name: Checkout code (for docker-compose file)
-        uses: actions/checkout@v4
-
-      - name: Prepare deploy directory
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: |
-            ${{ secrets.SSH_KEY }}
-          script: |
-            mkdir -p /opt/hypex/frontend
-
-      - name: Copy docker-compose.yml to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: |
-            ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml"
-          target: "/opt/hypex/frontend"
-          strip_components: 0
-
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: |
-            ${{ secrets.SSH_KEY }}
-          script: |
-            set -e
-            cd /opt/hypex/frontend
-
-            if [ ! -f .env ]; then
-              cat > .env <<'EOF'
-            VITE_API_URL=https://prod-v1-api.umbr.rest/api
-            VITE_TURNSTILE_SITE_KEY=0x4AAAAAADksO24nf-9vXTAc
-            VITE_ANDROID_APK_URL=https://hypexvpn.com/downloads/hypexvpn.apk
-            VITE_BASE_URL=https://my.hypexvpn.com
-            EOF
-            fi
-
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            export GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
-
-            docker compose pull
-            docker compose up -d
-            docker image prune -f
-
-      - name: Notify Telegram (Success)
-        if: success()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Frontend Deployed Successfully
-
-            Repo: ${{ github.repository }}
-            Author: ${{ github.actor }}
-            Commit: ${{ github.event.head_commit.message }}
-            Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-      - name: Notify Telegram (Failure)
-        if: failure()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Frontend Deployment Failed
-
-            Repo: ${{ github.repository }}
-            Author: ${{ github.actor }}
-            Commit: ${{ github.event.head_commit.message }}
-            Status: Build or deploy step failed.
-            Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

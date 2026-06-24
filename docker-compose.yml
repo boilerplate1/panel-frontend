@@ -3,6 +3,8 @@ services:
     image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/hypex-frontend:latest
     container_name: hypex-frontend
     restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     env_file:
       - .env
     networks:
