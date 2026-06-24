@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, MonitorSmartphone } from 'lucide-react';
-import { SOCIAL_LINKS } from '@/constants/social';
 import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
 import { Button, Card, SectionHeader } from '@/shared/ui';
 import { DeviceCardSkeleton, SubscriptionCardSkeleton } from '@/shared/ui/Skeleton';
@@ -43,19 +42,17 @@ function ProfilePage() {
           </Card>
 
           {showHelpBanner ? (
-            <a className={styles.bannerLink} href={SOCIAL_LINKS.TG_CHANNEL} target="_blank" rel="noreferrer">
+            <button className={styles.bannerLink} type="button" onClick={profile.goToQuickConnect}>
               <Card padding="medium" className={styles.bannerCard}>
                 <div className={styles.bannerContent}>
                   <div className={styles.bannerText}>
-                    <span className={styles.bannerTitle}>Нужна помощь?</span>
-                    <span className={styles.bannerSubtitle}>
-                      Подключение и настройка в Telegram за пару кликов.
-                    </span>
+                    <span className={styles.bannerTitle}>Быстрое подключение</span>
+                    <span className={styles.bannerSubtitle}>Happ Plus и v2rayTun в один клик</span>
                   </div>
-                  <div className={styles.bannerMeta}>TG</div>
+                  <div className={styles.bannerMeta}>Deeplink</div>
                 </div>
               </Card>
-            </a>
+            </button>
           ) : null}
 
           <Card padding="medium" className={styles.card}>

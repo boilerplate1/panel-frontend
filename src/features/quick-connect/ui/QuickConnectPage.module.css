@@ -1,0 +1,146 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.summaryCard,
+.appCard,
+.emptyCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  border: none;
+}
+
+.summaryTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summaryText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summaryMeta {
+  display: flex;
+  min-width: 140px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.summaryMeta strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.linkRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.linkText {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.appTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.appIcon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: hsla(var(--v1-colors-omegaBlue400), 0.16);
+  color: var(--accent);
+}
+
+.appText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.appText strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.appText span {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+}
+
+.appActions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.appBtn,
+.emptyBtn {
+  justify-content: center;
+}
+
+.header {
+  margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+  .appsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryTop {
+    flex-direction: column;
+  }
+
+  .summaryMeta {
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .linkRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .linkText {
+    white-space: normal;
+    word-break: break-word;
+  }
+}

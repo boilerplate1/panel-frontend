@@ -13,6 +13,7 @@ export const ROUTES = {
   DEVICES: '/dashboard/devices',
   HISTORY: '/dashboard/history',
   HISTORY_DETAIL: '/dashboard/history/:transactionId',
+  QUICK_CONNECT: '/dashboard/connect',
   CHECKOUT: '/dashboard/checkout',
   CHECKOUT_STATUS: '/dashboard/checkout/status',
   DASHBOARD_PAYMENT_SUCCESS: '/dashboard/payment/success',
@@ -31,6 +32,7 @@ export const ROUTE_PATTERNS = {
   LEGACY_PAY_STATUS_INTENT: 'dashboard/pay/status/:intentId',
 
   HISTORY_DETAIL: 'dashboard/history/:transactionId',
+  QUICK_CONNECT: 'dashboard/connect',
 
   DASHBOARD_REDIRECT: 'dashboard/*',
 } as const;

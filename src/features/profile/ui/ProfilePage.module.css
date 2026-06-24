@@ -36,8 +36,14 @@
 
 .bannerLink {
   display: block;
+  width: 100%;
   color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
   text-decoration: none;
+  text-align: left;
+  cursor: pointer;
 }
 
 .bannerCard {

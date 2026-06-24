@@ -25,8 +25,8 @@ export function MobileHeader() {
   const titleKey = handle?.title;
   const descriptionKey = handle?.description;
   const hideSidebar = !!handle?.hideSidebar;
-  const pageTitle = titleKey ? t(titleKey) : '';
-  const pageDescription = descriptionKey ? t(descriptionKey) : '';
+  const pageTitle = titleKey ? t(titleKey, { defaultValue: titleKey }) : '';
+  const pageDescription = descriptionKey ? t(descriptionKey, { defaultValue: descriptionKey }) : '';
 
   return (
     <header className={styles.wrapper}>

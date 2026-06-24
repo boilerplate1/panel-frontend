@@ -17,6 +17,7 @@ const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));
 const DevicesPage = lazy(() => import('@/pages/devices/DevicesPage'));
 const TransactionPage = lazy(() => import('@/pages/transactions/TransactionPage'));
 const TransactionDetailPage = lazy(() => import('@/pages/transactions/TransactionDetailPage'));
+const QuickConnectPage = lazy(() => import('@/pages/connect/QuickConnectPage'));
 
 const SubscriptionBuyPage = lazy(() => import('@/pages/payment/SubscriptionBuyPage'));
 const PaymentStatusPage = lazy(() => import('@/pages/payment/PaymentStatusPage'));
@@ -78,6 +79,18 @@ export const router = createBrowserRouter(
               handle: {
                 title: 'dashboard.sidebar_history',
                 description: 'dashboard.history_subtitle',
+              },
+            },
+            {
+              path: ROUTES.QUICK_CONNECT,
+              element: (
+                <LazyLoad>
+                  <QuickConnectPage />
+                </LazyLoad>
+              ),
+              handle: {
+                title: 'Быстрое подключение',
+                description: 'Happ Plus и v2rayTun в один клик',
               },
             },
             {

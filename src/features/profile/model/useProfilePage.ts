@@ -43,5 +43,6 @@ export function useProfilePage() {
     copySubscriptionLink,
     goToDevices: () => navigate(ROUTES.DEVICES),
     goToPayment: () => navigate(ROUTES.CHECKOUT),
+    goToQuickConnect: () => navigate(ROUTES.QUICK_CONNECT),
   };
 }
