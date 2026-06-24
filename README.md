@@ -27,7 +27,7 @@
 VITE_API_URL=https://api.example.com
 VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key
 VITE_ANDROID_APK_URL=https://example.com/app.apk
-VITE_BASE_URL=https://my.hpxvpn.xyz
+VITE_BASE_URL=https://my.hypexvpn.com
 ```
 
 В Docker значения могут переопределяться через `/env.js`, который генерируется
@@ -443,8 +443,8 @@ Checkout flow:
 6. Payment providers return users to the public payment result URLs:
 
 ```text
-https://my.hpxvpn.xyz/payment/success?intentId=<payment-intent-id>
-https://my.hpxvpn.xyz/payment/failed?intentId=<payment-intent-id>
+https://my.hypexvpn.com/payment/success?intentId=<payment-intent-id>
+https://my.hypexvpn.com/payment/failed?intentId=<payment-intent-id>
 ```
 
 The page also accepts `paymentId` or `id` as query parameter names. If the user is still authenticated, the page checks the latest intent status and refreshes subscription/history queries after success. If the session is gone, it still shows a safe static result and offers login.

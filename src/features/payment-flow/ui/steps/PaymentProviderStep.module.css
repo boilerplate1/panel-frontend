@@ -18,6 +18,9 @@
 
 .backBtn {
   align-self: flex-start;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .providerList {

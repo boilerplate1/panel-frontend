@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Turnstile as ReactTurnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { APP_CONFIG } from '@/shared/config';
 import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
@@ -17,14 +17,11 @@ export interface TurnstileWidgetRef {
 
 export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetProps>(
   ({ onSuccess, onExpire, onError, action = 'login' }, ref) => {
-    const themeRef = useRef<Theme>(getCurrentTheme());
+    const [theme, setTheme] = useState<Theme>(getCurrentTheme());
     const turnstileRef = useRef<TurnstileInstance>(null);
 
     useEffect(() => {
-      return subscribeTheme((theme) => {
-        themeRef.current = theme;
-        turnstileRef.current?.reset();
-      });
+      return subscribeTheme(setTheme);
     }, []);
 
     useImperativeHandle(ref, () => ({
@@ -40,7 +37,7 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
           onExpire={onExpire}
           onError={onError}
           options={{
-            theme: themeRef.current,
+            theme,
             size: 'flexible',
             action,
           }}

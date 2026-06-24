@@ -1,6 +1,6 @@
 # Vercel specific deployment notes
 
-This project is deployed to my.hpxvpn.xyz using Vercel. The following file
+This project is deployed to my.hypexvpn.com using Vercel. The following file
 configures rewrites and caching behavior to ensure SPA routing works and
 assets are cached appropriately.
 
