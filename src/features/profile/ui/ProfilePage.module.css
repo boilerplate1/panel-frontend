@@ -42,10 +42,8 @@
 
 .bannerCard {
   overflow: hidden;
-  border: none;
   background: var(--surface-card);
   box-shadow: none;
-  border-left: 4px solid #0088cc;
 }
 
 .bannerCard:hover {
