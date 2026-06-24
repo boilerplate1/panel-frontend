@@ -8,7 +8,6 @@ import { useUIStore } from '@/stores/uiStore';
 import { ROUTES } from '@/shared/config';
 import { ThemeToggle, Card } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
-import vtbLogo from '../../../rip/Интернет-банк ВТБ Онлайн_ вход в личный кабинет_files/MainLogoVTBDark.png';
 
 export function DashboardSidebar() {
   const { t } = useTranslation();
@@ -48,17 +47,12 @@ export function DashboardSidebar() {
 
       <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
         <div className={styles.mobileHeader}>
-          <img className={styles.mobileLogo} src={vtbLogo} alt={t('shared.brand_name')} />
           <button className={styles.closeButton} onClick={() => toggleSidebar(false)}>
             <X size={24} />
           </button>
         </div>
 
         <div className={styles.desktopOnly}>
-          <div className={styles.brandRow}>
-            <img className={styles.brandLogo} src={vtbLogo} alt={t('shared.brand_name')} />
-          </div>
-
           <Card padding="medium" className={styles.accountCard}>
             <div className={styles.accountInfo}>
               <strong className={styles.accountName}>{username}</strong>
@@ -129,7 +123,7 @@ export function DashboardSidebar() {
           <div className={styles.divider} />
 
           <div className={styles.themeRow}>
-            <ThemeToggle label={currentTheme === 'dark' ? t('shared.dark') : t('shared.light')} />
+            <ThemeToggle label={currentTheme === 'dark' ? t('shared.light') : t('shared.dark')} />
           </div>
 
           <button

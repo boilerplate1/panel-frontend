@@ -9,16 +9,6 @@
   gap: 12px;
 }
 
-.brandRow {
-  display: flex;
-  align-items: center;
-  padding: 4px 6px 2px;
-}
-
-.brandLogo {
-  height: 24px;
-}
-
 .accountCard {
   display: flex;
   align-items: center;
@@ -123,26 +113,32 @@
   color: var(--text-primary);
 }
 
-.mobileLogo {
-  height: 20px;
-}
-
 .closeButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-right: -10px;
-  color: var(--text-primary);
+  width: 52px;
+  height: 52px;
+  margin-right: -14px;
+  color: var(--accent);
   background: transparent;
   border: none;
-  border-radius: var(--radius-full);
-  transition: background 0.2s ease;
+  border-radius: 12px;
+  opacity: 0.7;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.closeButton:hover {
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  opacity: 1;
 }
 
 .closeButton:active {
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  opacity: 1;
 }
 
 .mobileOnly {
@@ -204,10 +200,6 @@
   .nav {
     flex: 1;
     overflow-y: auto;
-  }
-
-  .brandRow {
-    padding: 2px 4px 0;
   }
 }
 
