@@ -74,14 +74,14 @@ export function SubscriptionCard({
             <Button
               type="button"
               variant="accentSoft"
-              size="small"
+              size="medium"
               className={styles.actionBtn}
               onClick={onCopyLink}
             >
               <Copy size={20} />
               {t('dashboard.copy_subscription_link')}
             </Button>
-            <Button type="button" size="small" className={styles.actionBtn} onClick={onRenew}>
+            <Button type="button" size="medium" className={styles.actionBtn} onClick={onRenew}>
               {t('dashboard.renew_subscription')}
             </Button>
           </div>
@@ -89,7 +89,7 @@ export function SubscriptionCard({
       ) : (
         <div className={styles.emptySubscription}>
           <p>{t('dashboard.no_subscriptions')}</p>
-          <Button type="button" size="small" className={styles.actionBtn} onClick={onRenew}>
+          <Button type="button" size="medium" className={styles.actionBtn} onClick={onRenew}>
             {t('dashboard.purchase_subscription')}
           </Button>
         </div>

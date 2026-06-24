@@ -132,7 +132,8 @@
   background: transparent;
   border: none;
   color: var(--status-error);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   text-decoration: underline;
   cursor: pointer;
   padding: var(--spacing-2);
@@ -212,6 +213,10 @@
     width: 100%;
     min-width: 0;
     white-space: normal;
+  }
+
+  .cancelLink {
+    font-size: var(--font-size-sm);
   }
 
   .autoCheck {
