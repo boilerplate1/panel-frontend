@@ -132,7 +132,7 @@ export function TransactionDetailModal({
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalLink}
-                  variant="outline"
+                  variant="accentSoft"
                 >
                   {t('dashboard.history_open_payment')}
                 </Button>

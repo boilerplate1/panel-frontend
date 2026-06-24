@@ -40,7 +40,7 @@ export function DeviceRenameModal({ isOpen, onClose, currentName, isPending, onS
           }}
         />
         <div className={styles.modalActions}>
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="accentSoft" onClick={onClose}>
             {t('common.cancel')}
           </Button>
           <Button onClick={handleSave} disabled={!editName.trim() || isPending}>

@@ -73,7 +73,7 @@ export function SubscriptionCard({
           <div className={styles.actions}>
             <Button
               type="button"
-              variant="secondary"
+              variant="accentSoft"
               size="small"
               className={styles.actionBtn}
               onClick={onCopyLink}
