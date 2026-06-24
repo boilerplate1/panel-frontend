@@ -76,11 +76,7 @@
   --accent: hsl(var(--v1-colors-omegaBlue400));
   --accent-color: hsl(var(--v1-colors-omegaBlue400));
   --accent-hover: hsl(218 100% 56%);
-  --accent-gradient: linear-gradient(
-    135deg,
-    hsl(var(--v1-colors-omegaBlue400)),
-    hsl(218 100% 56%)
-  );
+  --accent-gradient: linear-gradient(135deg, hsl(var(--v1-colors-omegaBlue400)), hsl(218 100% 56%));
   --color-primary: var(--accent-color);
   --color-primary-hover: var(--accent-hover);
   --color-success: rgb(16 185 129);
@@ -152,11 +148,7 @@ html[data-theme='light'] {
   --accent: hsl(var(--v1-colors-omegaBlue400));
   --accent-color: hsl(var(--v1-colors-omegaBlue400));
   --accent-hover: hsl(218 100% 56%);
-  --accent-gradient: linear-gradient(
-    135deg,
-    hsl(var(--v1-colors-omegaBlue400)),
-    hsl(218 100% 56%)
-  );
+  --accent-gradient: linear-gradient(135deg, hsl(var(--v1-colors-omegaBlue400)), hsl(218 100% 56%));
   --color-primary: var(--accent-color);
   --color-primary-hover: var(--accent-hover);
   --color-success: #0f9d58;

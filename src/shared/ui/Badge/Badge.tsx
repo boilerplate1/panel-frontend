@@ -11,12 +11,7 @@ interface BadgeProps {
   className?: string;
 }
 
-export function Badge({
-  children,
-  variant = 'neutral',
-  size = 'md',
-  className = '',
-}: BadgeProps) {
+export function Badge({ children, variant = 'neutral', size = 'md', className = '' }: BadgeProps) {
   return (
     <span className={`${styles.root} ${styles[variant]} ${styles[size]} ${className}`.trim()}>
       {children}

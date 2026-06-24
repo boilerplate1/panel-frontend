@@ -11,13 +11,12 @@ function ProfilePage() {
   const { t } = useTranslation();
   const profile = useProfilePage();
   const showHelpBanner = !!profile.activeSubscription;
-  const devicesSubtitle =
-    profile.deviceAvailability?.limit
-      ? t('profile.devices_available_count', {
-          count: Math.max(profile.deviceAvailability.used ?? 0, profile.devicesCount ?? 0),
-          limit: profile.deviceAvailability.limit,
-        })
-      : t('devices.subtitle');
+  const devicesSubtitle = profile.deviceAvailability?.limit
+    ? t('profile.devices_available_count', {
+        count: Math.max(profile.deviceAvailability.used ?? 0, profile.devicesCount ?? 0),
+        limit: profile.deviceAvailability.limit,
+      })
+    : t('devices.subtitle');
   const promoBanners = [
     {
       id: 'quick-connect',

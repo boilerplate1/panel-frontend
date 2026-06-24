@@ -24,8 +24,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, #0663ef 28%, transparent), color-mix(in srgb, #1f58d6 18%, transparent));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, #0663ef 28%, transparent),
+    color-mix(in srgb, #1f58d6 18%, transparent)
+  );
   color: #dbeafe;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);

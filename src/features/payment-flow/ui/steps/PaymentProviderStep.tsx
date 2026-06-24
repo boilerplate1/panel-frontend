@@ -24,7 +24,13 @@ export function PaymentProviderStep({
     <div className={styles.wrapper}>
       <Card padding="medium" className={styles.card}>
         <div className={styles.header}>
-          <Button type="button" variant="accentSoft" size="small" className={styles.backBtn} onClick={onBack}>
+          <Button
+            type="button"
+            variant="accentSoft"
+            size="small"
+            className={styles.backBtn}
+            onClick={onBack}
+          >
             <ArrowLeft size={16} />
             <span>{t('dashboard.buy_subscription_return_to_plans')}</span>
           </Button>

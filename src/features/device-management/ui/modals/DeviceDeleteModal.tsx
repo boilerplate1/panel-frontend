@@ -10,7 +10,12 @@ interface DeviceDeleteModalProps {
   isPending: boolean;
 }
 
-export function DeviceDeleteModal({ isOpen, onClose, onConfirm, isPending }: DeviceDeleteModalProps) {
+export function DeviceDeleteModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  isPending,
+}: DeviceDeleteModalProps) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +27,9 @@ export function DeviceDeleteModal({ isOpen, onClose, onConfirm, isPending }: Dev
       <div className={styles.modalContent}>
         <p>{t('devices.confirm_delete')}</p>
         <div className={styles.modalActions}>
-          <Button variant="accentSoft" onClick={onClose}>{t('common.cancel')}</Button>
+          <Button variant="accentSoft" onClick={onClose}>
+            {t('common.cancel')}
+          </Button>
           <Button variant="danger" onClick={onConfirm} disabled={isPending}>
             {isPending ? <Loader2 className={styles.spinner} size={18} /> : t('common.delete')}
           </Button>

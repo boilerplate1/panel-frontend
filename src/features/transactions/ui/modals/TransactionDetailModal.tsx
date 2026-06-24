@@ -42,18 +42,16 @@ export function TransactionDetailModal({
     : 'neutral';
 
   return (
-    <ResponsiveModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={t('dashboard.history_title')}
-    >
+    <ResponsiveModal isOpen={isOpen} onClose={onClose} title={t('dashboard.history_title')}>
       {transaction ? (
         <div className={styles.detailPage}>
           <section className={styles.hero}>
             <div className={styles.heroTop}>
               <div className={styles.heroTitleBlock}>
                 <span className={styles.heroEyebrow}>{t('dashboard.history_title')}</span>
-                <strong className={styles.heroTitle}>{transaction.planName ?? t('dashboard.subscriptions')}</strong>
+                <strong className={styles.heroTitle}>
+                  {transaction.planName ?? t('dashboard.subscriptions')}
+                </strong>
               </div>
               <Badge variant={statusVariant} className={styles.statusBadge}>
                 {statusLabel}
@@ -63,7 +61,9 @@ export function TransactionDetailModal({
             <div className={styles.heroMain}>
               <div className={styles.amountBlock}>
                 <span>{t('dashboard.history_amount')}</span>
-                <strong>{formatCurrency(transaction.amountCents, transaction.currency, locale)}</strong>
+                <strong>
+                  {formatCurrency(transaction.amountCents, transaction.currency, locale)}
+                </strong>
               </div>
 
               <div className={styles.providerBlock}>
@@ -102,7 +102,7 @@ export function TransactionDetailModal({
                 <strong>{formatDate(transaction.updatedAt)}</strong>
               </div>
               {transaction.creditedAt ? (
-              <div className={styles.row}>
+                <div className={styles.row}>
                   <span>{t('dashboard.history_credited')}</span>
                   <strong>{formatDate(transaction.creditedAt)}</strong>
                 </div>

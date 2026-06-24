@@ -53,10 +53,7 @@ export function MobileHeader() {
               <Logo className={styles.logoMobile} />
             </button>
           ) : (
-            <button
-              className={styles.backButton}
-              onClick={() => navigate(-1)}
-            >
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
               <ChevronLeft size={28} />
             </button>
           )}

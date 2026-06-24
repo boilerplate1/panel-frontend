@@ -20,8 +20,7 @@ export default function QuickConnectPage() {
             className={styles.header}
           />
           <Button className={styles.emptyBtn} onClick={page.goToCheckout}>
-            <Download size={18} />
-            К списку платежей
+            <Download size={18} />К списку платежей
           </Button>
         </Card>
       </div>

@@ -8,7 +8,11 @@ interface PaginationProps {
   siblingCount?: number;
 }
 
-function getPageNumbers(current: number, total: number, siblingCount: number): (number | 'ellipsis')[] {
+function getPageNumbers(
+  current: number,
+  total: number,
+  siblingCount: number,
+): (number | 'ellipsis')[] {
   const totalNumbers = siblingCount * 2 + 5; // siblings + first + last + current + 2 ellipsis slots
   if (total <= totalNumbers) {
     return Array.from({ length: total }, (_, i) => i + 1);

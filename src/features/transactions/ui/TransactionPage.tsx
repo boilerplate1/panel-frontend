@@ -45,7 +45,6 @@ function TransactionPage() {
           <div className={styles.emptyText}>{t('dashboard.history_empty')}</div>
         )}
       </Card>
-
     </div>
   );
 }

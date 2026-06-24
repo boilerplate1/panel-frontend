@@ -25,7 +25,12 @@ function DevicesPage() {
         {devicesPage.isError ? (
           <div className={styles.errorState}>
             <p className={styles.errorText}>{t('shared.server_error')}</p>
-            <Button type="button" variant="outline" size="small" onClick={() => devicesPage.refetch()}>
+            <Button
+              type="button"
+              variant="outline"
+              size="small"
+              onClick={() => devicesPage.refetch()}
+            >
               <RefreshCw size={18} />
               {t('shared.retry')}
             </Button>

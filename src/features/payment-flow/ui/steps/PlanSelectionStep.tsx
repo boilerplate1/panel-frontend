@@ -45,7 +45,13 @@ export function PlanSelectionStep({
       <div className={styles.cardStack}>
         <Card padding="medium" className={styles.card}>
           <div className={styles.header}>
-            <Button type="button" variant="accentSoft" size="small" className={styles.backBtn} onClick={onBack}>
+            <Button
+              type="button"
+              variant="accentSoft"
+              size="small"
+              className={styles.backBtn}
+              onClick={onBack}
+            >
               <ArrowLeft size={16} />
               <span>{t('shared.back')}</span>
             </Button>

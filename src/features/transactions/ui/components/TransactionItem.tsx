@@ -38,7 +38,9 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
     >
       <div className={styles.itemInfo}>
         <div className={styles.itemTopRow}>
-          <div className={styles.itemName}>{transaction.planName ?? t('dashboard.subscriptions')}</div>
+          <div className={styles.itemName}>
+            {transaction.planName ?? t('dashboard.subscriptions')}
+          </div>
           <span className={styles.itemAmount}>
             {amountPrefix}
             {formatCurrency(transaction.amountCents, transaction.currency, locale)}

@@ -14,10 +14,9 @@ export function useTransactionDetailPage() {
   const page = Number(searchParams.get('page') ?? '1') || 1;
   const { data, isLoading } = usePaymentHistoryPageQuery(!!user, page);
 
-  const transactions = data?.items ?? [];
   const transaction = useMemo(
-    () => transactions.find((item) => item.id === transactionId) ?? null,
-    [transactionId, transactions],
+    () => data?.items.find((item) => item.id === transactionId) ?? null,
+    [data?.items, transactionId],
   );
 
   const backToHistory = () => {

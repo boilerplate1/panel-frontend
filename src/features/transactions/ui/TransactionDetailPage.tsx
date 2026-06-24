@@ -86,7 +86,9 @@ function TransactionDetailPage() {
             <div className={styles.heroMain}>
               <div className={styles.amountBlock}>
                 <span>{t('dashboard.history_amount')}</span>
-                <strong>{formatCurrency(transaction.amountCents, transaction.currency, page.locale)}</strong>
+                <strong>
+                  {formatCurrency(transaction.amountCents, transaction.currency, page.locale)}
+                </strong>
               </div>
 
               <div className={styles.providerBlock}>
