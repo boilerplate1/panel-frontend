@@ -82,8 +82,8 @@
   flex-shrink: 0;
   padding: 8px 12px;
   border-radius: 999px;
-  background: color-mix(in srgb, #0088cc 14%, transparent);
-  color: #0088cc;
+  background: hsla(var(--v1-colors-omegaBlue400), 0.16);
+  color: hsl(var(--v1-colors-omegaBlue400));
   font-size: 12px;
   font-weight: var(--font-weight-semibold);
 }

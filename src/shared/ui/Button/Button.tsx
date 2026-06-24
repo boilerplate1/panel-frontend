@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ComponentPropsWithoutRef, ElementType, React
 import styles from './Button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'accentSoft';
   size?: 'small' | 'medium' | 'large';
   children: ReactNode;
   as?: ElementType;

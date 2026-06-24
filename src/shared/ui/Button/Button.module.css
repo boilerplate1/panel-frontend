@@ -83,6 +83,15 @@
   background: var(--surface-hover);
 }
 
+.accentSoft {
+  background: hsla(var(--v1-colors-omegaBlue400), 0.16);
+  color: var(--accent);
+}
+
+.accentSoft:hover {
+  background: hsla(var(--v1-colors-omegaBlue400), 0.24);
+}
+
 .root:disabled {
   opacity: 0.55;
   cursor: not-allowed;
