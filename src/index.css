@@ -11,7 +11,7 @@ html {
   color-scheme: dark;
   width: 100%;
   max-width: 100%;
-  background: var(--overscroll-bg);
+  background: var(--page-bg);
   overflow-x: clip;
 }
 
@@ -30,8 +30,9 @@ button, input, textarea, select {
 }
 
 body {
-  background: var(--overscroll-bg);
+  background: var(--page-bg);
   color: var(--text-primary);
+  overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

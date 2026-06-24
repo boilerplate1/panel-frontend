@@ -32,7 +32,7 @@ function PaymentStatusPage() {
 
     return (
       <div className={styles.wrapper}>
-        <Card variant="outline" padding="none" className={styles.card}>
+        <Card variant="flat" padding="medium" className={styles.card}>
           <div className={styles.iconWrap}>
             <svg viewBox="0 0 80 80" className={styles.resultIcon} aria-hidden="true">
               <circle className={styles.failedAura} cx="50%" cy="50%" r="50%" />
@@ -84,7 +84,7 @@ function PaymentStatusPage() {
 
   return (
     <div className={styles.wrapper}>
-      <Card variant="outline" padding="none" className={styles.card}>
+      <Card variant="flat" padding="medium" className={styles.card}>
         <div className={styles.iconWrap}>
           <svg viewBox="0 0 80 80" className={styles.resultIcon} aria-hidden="true">
             <circle className={styles.pendingAura} cx="50%" cy="50%" r="50%" />

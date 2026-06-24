@@ -17,19 +17,7 @@
 }
 
 .backBtn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  padding: 0;
-}
-
-.backBtn:hover {
-  color: var(--text-primary);
+  align-self: flex-start;
 }
 
 .providerList {
@@ -120,6 +108,10 @@
   .card {
     padding: 12px;
     border-radius: 18px;
+  }
+
+  .backBtn {
+    display: none;
   }
 
   .providerBtn {

@@ -1,7 +1,7 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { MirIcon, SbpIcon, YookassaIcon } from '@/shared/assets/icons';
-import { Card, SectionHeader, Skeleton } from '@/shared/ui';
+import { Button, Card, SectionHeader, Skeleton } from '@/shared/ui';
 import styles from './PaymentMethodStep.module.css';
 
 interface PaymentMethodStepProps {
@@ -46,10 +46,10 @@ export function PaymentMethodStep({
     <div className={styles.wrapper}>
       <Card padding="medium" className={styles.card}>
         <div className={styles.header}>
-          <button className={styles.backBtn} onClick={onBack}>
+          <Button type="button" variant="accentSoft" size="small" className={styles.backBtn} onClick={onBack}>
             <ArrowLeft size={16} />
             <span>{t('dashboard.buy_subscription_return_to_payment_methods')}</span>
-          </button>
+          </Button>
           <SectionHeader
             title={t('dashboard.buy_subscription_method_title')}
             subtitle={t('dashboard.buy_subscription_method_hint')}

@@ -267,6 +267,10 @@
     padding: 10px 12px;
   }
 
+  .backBtn {
+    display: none;
+  }
+
 }
 
 @media (min-width: 993px) {
