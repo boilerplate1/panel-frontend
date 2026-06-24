@@ -67,10 +67,16 @@ function TransactionDetailPage() {
       {transaction ? (
         <>
           <Card padding="medium" className={styles.heroCard}>
-            <button type="button" className={styles.backBtn} onClick={page.backToHistory}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="small"
+              className={styles.backBtn}
+              onClick={page.backToHistory}
+            >
               <ArrowLeft size={18} />
               <span>{t('shared.back')}</span>
-            </button>
+            </Button>
 
             <div className={styles.heroTop}>
               <div className={styles.heroTitleBlock}>

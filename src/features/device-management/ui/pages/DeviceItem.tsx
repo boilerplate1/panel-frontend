@@ -1,7 +1,7 @@
 import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getDeviceTypeLabel } from '@/shared/lib';
-import { Badge } from '@/shared/ui';
+import { Badge, Button } from '@/shared/ui';
 import styles from './DeviceItem.module.css';
 
 interface DeviceItemProps {
@@ -35,22 +35,26 @@ export function DeviceItem({ device, dataUpdatedAt, onEdit, onDelete }: DeviceIt
       </div>
 
       <div className={styles.itemActions}>
-        <button
+        <Button
+          type="button"
+          variant="ghost"
+          size="small"
           className={styles.actionBtn}
           onClick={() => onEdit(device.id, device.name)}
-          type="button"
           title={t('common.rename')}
         >
           <Edit2 size={18} />
-        </button>
-        <button
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="small"
           className={`${styles.actionBtn} ${styles.actionDanger}`}
           onClick={() => onDelete(device.id)}
-          type="button"
           title={t('common.delete')}
         >
           <Trash2 size={18} />
-        </button>
+        </Button>
       </div>
     </div>
   );

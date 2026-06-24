@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useMatches } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft, LogOut, Sun, Moon } from 'lucide-react';
-import { Logo, Container, Dropdown } from '@/shared/ui';
+import { Logo, Container, Dropdown, Button } from '@/shared/ui';
 import { getCurrentTheme, applyTheme } from '@/shared/lib';
 import { useAuth } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
@@ -33,8 +33,10 @@ export function MobileHeader() {
     <header className={styles.wrapper}>
       <Container className={styles.inner}>
         <div className={styles.leftSlot}>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="small"
             className={styles.logoButton}
             onClick={goToDashboard}
             aria-label={t('dashboard.title')}
@@ -42,20 +44,29 @@ export function MobileHeader() {
             <span className={styles.logoDesktop}>
               <Logo className={styles.logo} />
             </span>
-          </button>
+          </Button>
           {isRoot ? (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="small"
               className={styles.logoButton}
               onClick={goToDashboard}
               aria-label={t('dashboard.title')}
             >
               <Logo className={styles.logoMobile} />
-            </button>
+            </Button>
           ) : (
-            <button className={styles.backButton} onClick={() => navigate(-1)}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="small"
+              className={styles.backButton}
+              onClick={() => navigate(-1)}
+              aria-label={t('shared.back')}
+            >
               <ChevronLeft size={28} />
-            </button>
+            </Button>
           )}
         </div>
 
@@ -100,13 +111,16 @@ export function MobileHeader() {
             />
           </div>
           {!hideSidebar ? (
-            <button
+            <Button
+              type="button"
+              variant="ghost"
+              size="small"
               className={styles.menuButton}
               onClick={() => toggleSidebar(true)}
               aria-label={t('shared.open_menu')}
             >
               <Menu size={24} />
-            </button>
+            </Button>
           ) : null}
         </div>
       </Container>

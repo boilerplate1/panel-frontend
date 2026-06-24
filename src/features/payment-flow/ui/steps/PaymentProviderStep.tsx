@@ -64,11 +64,14 @@ export function PaymentProviderStep({
                     : '';
 
                 return (
-                  <button
-                    key={provider}
-                    className={styles.providerBtn}
-                    onClick={() => onSelectProvider(provider)}
-                  >
+                <Button
+                  key={provider}
+                  type="button"
+                  variant="ghost"
+                  size="large"
+                  className={styles.providerBtn}
+                  onClick={() => onSelectProvider(provider)}
+                >
                     <div className={styles.providerContent}>
                       <div className={styles.providerIcon}>
                         {isYookassa ? (
@@ -83,9 +86,9 @@ export function PaymentProviderStep({
                       </div>
                     </div>
                     <ChevronRight size={20} className={styles.providerChevron} />
-                  </button>
-                );
-              })}
+                </Button>
+              );
+            })}
         </div>
       </Card>
     </div>

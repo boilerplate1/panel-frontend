@@ -73,8 +73,11 @@ export function PaymentMethodStep({
               const desc = getMethodDescription(method, t);
 
               return (
-                <button
+                <Button
                   key={method}
+                  type="button"
+                  variant="ghost"
+                  size="large"
                   className={styles.providerBtn}
                   onClick={() => onSelectMethod(method)}
                 >
@@ -88,7 +91,7 @@ export function PaymentMethodStep({
                     </div>
                   </div>
                   <ChevronRight size={20} className={styles.providerChevron} />
-                </button>
+                </Button>
               );
             })
           ) : (

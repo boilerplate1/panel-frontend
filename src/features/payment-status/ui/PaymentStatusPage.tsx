@@ -138,15 +138,17 @@ function PaymentStatusPage() {
           <Button as={Link} to={ROUTES.DASHBOARD} variant="outline">
             {t('shared.back_to_dashboard')}
           </Button>
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="small"
             className={styles.cancelLink}
             onClick={paymentStatus.cancelPayment}
             disabled={paymentStatus.isCancelling}
-            type="button"
           >
             {paymentStatus.isCancelling ? <Loader2 size={14} className={styles.spinner} /> : null}
             {t('dashboard.buy_subscription_cancel')}
-          </button>
+          </Button>
         </div>
 
         <div className={styles.autoCheck} aria-live="polite">

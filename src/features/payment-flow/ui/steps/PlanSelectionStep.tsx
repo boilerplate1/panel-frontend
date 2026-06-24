@@ -86,9 +86,11 @@ export function PlanSelectionStep({
                 const itemClasses = [styles.item, isSelected ? styles.itemSelected : ''].join(' ');
 
                 return (
-                  <button
+                  <Button
                     key={plan.id}
                     type="button"
+                    variant="ghost"
+                    size="large"
                     className={itemClasses}
                     onClick={() => onSelectPlan(plan.id)}
                   >
@@ -120,7 +122,7 @@ export function PlanSelectionStep({
                         <span>{monthlyLabel}</span>
                       </div>
                     </div>
-                  </button>
+                  </Button>
                 );
               })
             ) : (

@@ -6,7 +6,7 @@ import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
 import { useAuth } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
 import { ROUTES } from '@/shared/config';
-import { ThemeToggle, Card } from '@/shared/ui';
+import { ThemeToggle, Card, Button } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
 
 export function DashboardSidebar() {
@@ -51,14 +51,16 @@ export function DashboardSidebar() {
             <span className={styles.mobileUserLabel}>{t('shared.user')}</span>
             <strong className={styles.mobileUserName}>{username}</strong>
           </div>
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="small"
             className={styles.closeButton}
             onClick={() => toggleSidebar(false)}
             aria-label={t('shared.close')}
-            type="button"
           >
             <X size={24} />
-          </button>
+          </Button>
         </div>
 
         <div className={styles.desktopOnly}>
@@ -135,7 +137,9 @@ export function DashboardSidebar() {
             <ThemeToggle label={currentTheme === 'dark' ? t('shared.light') : t('shared.dark')} />
           </div>
 
-          <button
+          <Button
+            type="button"
+            variant="ghost"
             onClick={() => {
               logout();
               toggleSidebar(false);
@@ -144,7 +148,7 @@ export function DashboardSidebar() {
           >
             <LogOut size={22} />
             <span>{t('dashboard.sidebar_logout')}</span>
-          </button>
+          </Button>
         </div>
       </aside>
     </>

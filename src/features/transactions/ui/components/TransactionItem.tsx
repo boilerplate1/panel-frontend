@@ -6,7 +6,7 @@ import {
   getPaymentStatusLabel,
 } from '@/shared/lib';
 import type { PaymentHistoryItem } from '@/shared/api/generated';
-import { Badge } from '@/shared/ui';
+import { Badge, Button } from '@/shared/ui';
 import styles from './TransactionItem.module.css';
 
 interface TransactionItemProps {
@@ -31,8 +31,10 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
         : 'neutral';
 
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="medium"
       className={`${styles.item} stagger-item`}
       onClick={() => onOpenDetail(transaction.id)}
     >
@@ -55,6 +57,6 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
           <span className={styles.itemDate}>{formatDate(transaction.createdAt)}</span>
         </div>
       </div>
-    </button>
+    </Button>
   );
 }

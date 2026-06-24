@@ -75,10 +75,12 @@ function ProfilePage() {
           {showHelpBanner ? (
             <div className={styles.bannerStack}>
               {promoBanners.map((banner) => (
-                <button
+                <Button
                   key={banner.id}
-                  className={styles.bannerLink}
                   type="button"
+                  variant="ghost"
+                  size="large"
+                  className={styles.bannerLink}
                   onClick={banner.onClick}
                 >
                   <Card padding="medium" className={styles.bannerCard}>
@@ -90,7 +92,7 @@ function ProfilePage() {
                       <div className={styles.bannerMeta}>{banner.meta}</div>
                     </div>
                   </Card>
-                </button>
+                </Button>
               ))}
             </div>
           ) : null}
