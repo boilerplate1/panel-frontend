@@ -6,15 +6,17 @@ import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
 import { useAuth } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
 import { ROUTES } from '@/shared/config';
-import { ThemeToggle } from '@/shared/ui';
+import { ThemeToggle, Card } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
+import vtbLogo from '../../../rip/Интернет-банк ВТБ Онлайн_ вход в личный кабинет_files/MainLogoVTBDark.png';
 
 export function DashboardSidebar() {
   const { t } = useTranslation();
   const location = useLocation();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
   const [currentTheme, setCurrentTheme] = useState<Theme>(getCurrentTheme);
+  const username = user?.username ?? t('shared.user');
 
   useEffect(() => {
     return subscribeTheme(setCurrentTheme);
@@ -46,38 +48,82 @@ export function DashboardSidebar() {
 
       <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
         <div className={styles.mobileHeader}>
-          <span className={styles.mobileTitle}>{t('shared.brand_name')}</span>
+          <img className={styles.mobileLogo} src={vtbLogo} alt={t('shared.brand_name')} />
           <button className={styles.closeButton} onClick={() => toggleSidebar(false)}>
             <X size={24} />
           </button>
         </div>
 
-        <nav className={styles.nav}>
-          <NavLink
-            to={ROUTES.DASHBOARD}
-            end
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-          >
-            <User size={22} />
-            <span>{t('dashboard.sidebar_profile')}</span>
-          </NavLink>
+        <div className={styles.desktopOnly}>
+          <div className={styles.brandRow}>
+            <img className={styles.brandLogo} src={vtbLogo} alt={t('shared.brand_name')} />
+          </div>
 
-          <NavLink
-            to={ROUTES.DEVICES}
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-          >
-            <MonitorSmartphone size={22} />
-            <span>{t('dashboard.sidebar_devices')}</span>
-          </NavLink>
+          <Card padding="medium" className={styles.accountCard}>
+            <div className={styles.accountInfo}>
+              <strong className={styles.accountName}>{username}</strong>
+              <span className={styles.accountMeta}>{t('dashboard.title')}</span>
+            </div>
+          </Card>
 
-          <NavLink
-            to={ROUTES.HISTORY}
-            className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
-          >
-            <History size={22} />
-            <span>{t('dashboard.sidebar_history')}</span>
-          </NavLink>
-        </nav>
+          <Card padding="small" className={styles.navCard}>
+            <nav className={styles.nav}>
+              <NavLink
+                to={ROUTES.DASHBOARD}
+                end
+                className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+              >
+                <User size={20} />
+                <span>{t('dashboard.sidebar_profile')}</span>
+              </NavLink>
+
+              <NavLink
+                to={ROUTES.DEVICES}
+                className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+              >
+                <MonitorSmartphone size={20} />
+                <span>{t('dashboard.sidebar_devices')}</span>
+              </NavLink>
+
+              <NavLink
+                to={ROUTES.HISTORY}
+                className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+              >
+                <History size={20} />
+                <span>{t('dashboard.sidebar_history')}</span>
+              </NavLink>
+            </nav>
+          </Card>
+        </div>
+
+        <div className={styles.mobileOnly}>
+          <nav className={styles.nav}>
+            <NavLink
+              to={ROUTES.DASHBOARD}
+              end
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              <User size={22} />
+              <span>{t('dashboard.sidebar_profile')}</span>
+            </NavLink>
+
+            <NavLink
+              to={ROUTES.DEVICES}
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              <MonitorSmartphone size={22} />
+              <span>{t('dashboard.sidebar_devices')}</span>
+            </NavLink>
+
+            <NavLink
+              to={ROUTES.HISTORY}
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              <History size={22} />
+              <span>{t('dashboard.sidebar_history')}</span>
+            </NavLink>
+          </nav>
+        </div>
 
         <div className={styles.mobileBottom}>
           <div className={styles.divider} />

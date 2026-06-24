@@ -1,7 +1,7 @@
 .root {
   width: 100%;
   padding: 18px 22px;
-  background: transparent;
+  background: var(--surface-input);
   border-radius: 18px;
   color: var(--text-primary);
   font-size: var(--font-size-base);
@@ -12,7 +12,7 @@
 }
 
 .root:focus {
-  background: transparent;
+  background: var(--surface-input-hover);
   border-color: var(--border-color);
 }
 

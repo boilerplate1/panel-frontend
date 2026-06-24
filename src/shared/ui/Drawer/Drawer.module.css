@@ -1,7 +1,9 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--surface-overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: var(--z-modal);
 }
 
@@ -9,8 +11,8 @@
   background: var(--surface-card);
   display: flex;
   flex-direction: column;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -18,19 +20,20 @@
   max-height: 90dvh;
   z-index: calc(var(--z-modal) + 1);
   outline: none;
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.24);
 }
 
 .handle {
-  width: 40px;
+  width: 44px;
   height: 4px;
   border-radius: 100px;
   background: var(--surface-secondary);
-  margin: 12px auto;
+  margin: 10px auto 12px;
   flex-shrink: 0;
 }
 
 .inner {
-  padding: 0 var(--spacing-5) calc(var(--spacing-6) + env(safe-area-inset-bottom));
+  padding: 0 20px calc(var(--spacing-6) + env(safe-area-inset-bottom));
   overflow-y: auto;
   display: flex;
   flex-direction: column;

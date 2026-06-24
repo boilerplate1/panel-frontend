@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next';
 import {
   formatCurrency,
   formatDate,
-  getPaymentAmountClass,
   getPaymentAmountPrefix,
   getPaymentStatusLabel,
 } from '@/shared/lib';
 import type { PaymentHistoryItem } from '@/shared/api/generated';
+import { Badge } from '@/shared/ui';
 import styles from './TransactionItem.module.css';
 
 interface TransactionItemProps {
@@ -19,8 +19,16 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
   const { t } = useTranslation();
 
   const statusLabel = getPaymentStatusLabel(transaction.status, t);
-  const amountClass = getPaymentAmountClass(transaction.status, styles);
   const amountPrefix = getPaymentAmountPrefix(transaction.status);
+  const normalizedStatus = transaction.status.toLowerCase();
+  const statusVariant =
+    normalizedStatus === 'paid'
+      ? 'success'
+      : normalizedStatus === 'failed' ||
+          normalizedStatus === 'canceled' ||
+          normalizedStatus === 'expired'
+        ? 'danger'
+        : 'neutral';
 
   return (
     <button
@@ -30,17 +38,17 @@ export function TransactionItem({ transaction, locale, onOpenDetail }: Transacti
     >
       <div className={styles.itemInfo}>
         <div className={styles.itemTopRow}>
-          <div className={styles.itemName}>
-            {transaction.planName ?? t('dashboard.subscriptions')}
-          </div>
-          <span className={`${styles.itemAmount} ${amountClass}`}>
+          <div className={styles.itemName}>{transaction.planName ?? t('dashboard.subscriptions')}</div>
+          <span className={styles.itemAmount}>
             {amountPrefix}
             {formatCurrency(transaction.amountCents, transaction.currency, locale)}
           </span>
         </div>
         <div className={styles.itemBottomRow}>
           <div className={styles.itemLeft}>
-            <span className={`${styles.statusLabel} ${amountClass}`}>{statusLabel}</span>
+            <Badge variant={statusVariant} className={styles.statusBadge}>
+              {statusLabel}
+            </Badge>
           </div>
           <span className={styles.itemDate}>{formatDate(transaction.createdAt)}</span>
         </div>

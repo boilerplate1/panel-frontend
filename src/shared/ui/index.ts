@@ -22,3 +22,4 @@ export * from './Modal';
 export * from './ResponsiveModal';
 export * from './Container';
 export * from './TurnstileWidget';
+export * from './Badge';

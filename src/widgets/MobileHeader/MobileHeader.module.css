@@ -1,10 +1,12 @@
 .wrapper {
   display: flex;
   justify-content: center;
-  height: 64px;
+  height: 68px;
   align-items: center;
   padding: 0;
   background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: none;
   position: sticky;
   top: 0;
@@ -15,7 +17,8 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0 24px;
+  max-width: 1280px;
+  padding: 0 20px;
 }
 
 .leftSlot {
@@ -40,7 +43,7 @@
 }
 
 .logo {
-  height: 24px;
+  height: 20px;
 }
 
 .logoDesktop {
@@ -49,12 +52,12 @@
 
 .logoMobile {
   display: block;
-  height: 24px;
+  height: 20px;
 }
 
 .pageTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -82,8 +85,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   color: var(--text-primary);
   background: transparent;
   border: none;
@@ -97,8 +100,8 @@
 }
 
 .backButton {
-  margin-left: -8px;
-  color: var(--text-primary);
+  margin-left: -6px;
+  color: var(--accent);
 }
 
 .backButton:active,
@@ -108,7 +111,7 @@
 }
 
 .menuButton {
-  margin-right: -8px;
+  margin-right: -6px;
 }
 
 .userDesktop {
@@ -118,9 +121,8 @@
 .userCard {
   display: flex;
   align-items: center;
-  gap: var(--spacing-2);
   cursor: pointer;
-  padding: 4px 12px 4px 4px;
+  padding: 4px;
   border-radius: var(--radius-full);
   transition: background-color var(--transition-fast);
   background: var(--surface-secondary);
@@ -131,30 +133,64 @@
 }
 
 .userAvatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--avatar-bg);
   color: var(--avatar-foreground);
-  font-size: var(--font-size-sm);
+  font-size: 12px;
   font-weight: var(--font-weight-bold);
   flex-shrink: 0;
 }
 
-.userName {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.backButton:hover,
+.menuButton:hover,
+.userCard:hover {
+  background: var(--surface-hover);
+}
+
+.backButton:hover {
+  color: var(--accent-hover);
 }
 
 @media (min-width: 993px) {
+  .wrapper {
+    height: 74px;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 16px;
+    max-width: 1280px;
+    padding: 0 24px;
+  }
+
+  .leftSlot,
+  .centerSlot,
+  .rightSlot {
+    min-width: 0;
+  }
+
+  .leftSlot {
+    justify-content: flex-start;
+  }
+
+  .centerSlot {
+    justify-content: center;
+  }
+
+  .rightSlot {
+    justify-content: flex-end;
+  }
+
+  .centerSlot {
+    display: none;
+  }
+
   .userDesktop {
     display: block;
   }
@@ -166,19 +202,25 @@
     display: none;
   }
 
-  .backButton,
-  .pageTitle,
-  .pageDescription {
+  .backButton {
     display: none;
-  }
-
-  .backDesktop.backButton,
-  .backDesktop.pageTitle,
-  .backDesktop.pageDescription {
-    display: flex;
   }
 
   .menuButton {
     display: none;
+  }
+
+}
+
+@media (max-width: 992px) {
+  .wrapper {
+    margin: 0 0 12px;
+    width: 100%;
+    background: var(--surface-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    overflow: hidden;
   }
 }

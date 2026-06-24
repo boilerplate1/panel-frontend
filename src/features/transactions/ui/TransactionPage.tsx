@@ -3,7 +3,6 @@ import { Loader2 } from 'lucide-react';
 import { Card, Pagination, SectionHeader } from '@/shared/ui';
 import { useTransactionPage } from '../model/useTransactionPage';
 import { TransactionItem } from './components/TransactionItem';
-import { TransactionDetailModal } from './modals/TransactionDetailModal';
 import styles from './TransactionPage.module.css';
 
 function TransactionPage() {
@@ -47,12 +46,6 @@ function TransactionPage() {
         )}
       </Card>
 
-      <TransactionDetailModal
-        isOpen={transactionsPage.isDetailOpen}
-        onClose={transactionsPage.closeDetail}
-        transaction={transactionsPage.selectedTransaction}
-        locale={transactionsPage.locale}
-      />
     </div>
   );
 }

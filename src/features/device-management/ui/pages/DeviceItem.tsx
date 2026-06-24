@@ -1,6 +1,7 @@
 import { Edit2, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getDeviceTypeLabel } from '@/shared/lib';
+import { Badge } from '@/shared/ui';
 import styles from './DeviceItem.module.css';
 
 interface DeviceItemProps {
@@ -26,11 +27,9 @@ export function DeviceItem({ device, dataUpdatedAt, onEdit, onDelete }: DeviceIt
       <div className={styles.itemMain}>
         <div className={styles.itemName}>{hasCustomName ? device.name : label}</div>
         <div className={styles.itemStatus}>
-          <span
-            className={`${styles.statusPill} ${isOnline ? styles.statusOnline : styles.statusOffline}`}
-          >
+          <Badge variant={isOnline ? 'success' : 'neutral'} className={styles.statusBadge}>
             {isOnline ? t('devices.online') : t('devices.offline')}
-          </span>
+          </Badge>
           {!hasCustomName && <span className={styles.typeLabel}>{label}</span>}
         </div>
       </div>

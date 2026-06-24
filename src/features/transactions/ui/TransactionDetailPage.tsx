@@ -1,5 +1,6 @@
+import { ArrowLeft, ExternalLink, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Badge, ResponsiveModal, Button } from '@/shared/ui';
+import { Badge, Button, Card } from '@/shared/ui';
 import {
   formatCurrency,
   formatDate,
@@ -7,24 +8,44 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import type { PaymentHistoryItem } from '@/shared/api/generated';
-import styles from './TransactionDetailModal.module.css';
+import styles from './modals/TransactionDetailModal.module.css';
+import { useTransactionDetailPage } from '../model/useTransactionDetailPage';
 
-interface TransactionDetailModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  transaction: PaymentHistoryItem | null;
-  locale: 'ru-RU' | 'en-US';
-}
-
-export function TransactionDetailModal({
-  isOpen,
-  onClose,
-  transaction,
-  locale,
-}: TransactionDetailModalProps) {
+function TransactionDetailPage() {
   const { t } = useTranslation();
-  const providerInvoiceUrl = transaction?.providerInvoiceUrl ?? undefined;
+  const page = useTransactionDetailPage();
+
+  if (!page.user) return null;
+
+  if (page.isLoading) {
+    return (
+      <div className={styles.detailPage}>
+        <Card padding="medium" className={styles.pageCard}>
+          <div className={styles.loadingState}>
+            <Loader2 size={20} className={styles.spinner} />
+            <span>{t('shared.loading')}</span>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!page.transaction && !page.isLoading) {
+    return (
+      <div className={styles.detailPage}>
+        <Card padding="medium" className={styles.pageCard}>
+          <strong className={styles.heroTitle}>{t('dashboard.history_empty')}</strong>
+          <div className={styles.actionsBlock}>
+            <Button type="button" variant="outline" onClick={page.backToHistory}>
+              {t('shared.back')}
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  const transaction = page.transaction;
   const providerIcon = transaction ? getPaymentProviderIcon(transaction.provider) : null;
   const statusLabel = transaction ? getPaymentStatusLabel(transaction.status, t) : '';
   const statusVariant = transaction
@@ -42,18 +63,20 @@ export function TransactionDetailModal({
     : 'neutral';
 
   return (
-    <ResponsiveModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={t('dashboard.history_title')}
-    >
+    <div className={styles.detailPage}>
       {transaction ? (
-        <div className={styles.detailPage}>
-          <section className={styles.hero}>
+        <>
+          <Card padding="medium" className={styles.heroCard}>
+            <button type="button" className={styles.backBtn} onClick={page.backToHistory}>
+              <ArrowLeft size={18} />
+              <span>{t('shared.back')}</span>
+            </button>
+
             <div className={styles.heroTop}>
               <div className={styles.heroTitleBlock}>
-                <span className={styles.heroEyebrow}>{t('dashboard.history_title')}</span>
-                <strong className={styles.heroTitle}>{transaction.planName ?? t('dashboard.subscriptions')}</strong>
+                <strong className={styles.heroTitle}>
+                  {transaction.planName ?? t('dashboard.subscriptions')}
+                </strong>
               </div>
               <Badge variant={statusVariant} className={styles.statusBadge}>
                 {statusLabel}
@@ -63,7 +86,7 @@ export function TransactionDetailModal({
             <div className={styles.heroMain}>
               <div className={styles.amountBlock}>
                 <span>{t('dashboard.history_amount')}</span>
-                <strong>{formatCurrency(transaction.amountCents, transaction.currency, locale)}</strong>
+                <strong>{formatCurrency(transaction.amountCents, transaction.currency, page.locale)}</strong>
               </div>
 
               <div className={styles.providerBlock}>
@@ -80,9 +103,9 @@ export function TransactionDetailModal({
                 </strong>
               </div>
             </div>
-          </section>
+          </Card>
 
-          <section className={styles.section}>
+          <Card padding="medium" className={styles.sectionCard}>
             <div className={styles.sectionTitle}>{t('dashboard.history_details')}</div>
             <div className={styles.grid}>
               <div className={styles.row}>
@@ -102,7 +125,7 @@ export function TransactionDetailModal({
                 <strong>{formatDate(transaction.updatedAt)}</strong>
               </div>
               {transaction.creditedAt ? (
-              <div className={styles.row}>
+                <div className={styles.row}>
                   <span>{t('dashboard.history_credited')}</span>
                   <strong>{formatDate(transaction.creditedAt)}</strong>
                 </div>
@@ -114,38 +137,37 @@ export function TransactionDetailModal({
                 </div>
               ) : null}
             </div>
-          </section>
+          </Card>
 
           {transaction.lastError ? (
-            <section className={styles.errorBlock}>
+            <Card padding="medium" className={styles.errorCard}>
               <span>{t('dashboard.history_error')}</span>
               <strong>{transaction.lastError}</strong>
-            </section>
+            </Card>
           ) : null}
 
-          {(providerInvoiceUrl || transaction.lastError) && (
-            <section className={styles.actionsBlock}>
-              {providerInvoiceUrl && (
-                <Button
-                  as="a"
-                  href={providerInvoiceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.modalLink}
-                  variant="outline"
-                >
-                  {t('dashboard.history_open_payment')}
-                </Button>
-              )}
+          {transaction.providerInvoiceUrl ? (
+            <Card padding="medium" className={styles.actionsCard}>
+              <Button
+                as="a"
+                href={transaction.providerInvoiceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.modalLink}
+                variant="outline"
+              >
+                <ExternalLink size={18} />
+                {t('dashboard.history_open_payment')}
+              </Button>
               <div className={styles.modalSupportText}>
                 {t('dashboard.history_payment_support_hint')}
               </div>
-            </section>
-          )}
-        </div>
-      ) : (
-        <p className={styles.emptyText}>{t('dashboard.history_empty')}</p>
-      )}
-    </ResponsiveModal>
+            </Card>
+          ) : null}
+        </>
+      ) : null}
+    </div>
   );
 }
+
+export default TransactionDetailPage;

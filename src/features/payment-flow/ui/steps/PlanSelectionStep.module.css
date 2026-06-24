@@ -86,28 +86,7 @@
 }
 
 .badge {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  color: var(--text-primary);
-  background: var(--surface-secondary);
-  padding: 1px 8px;
-  border-radius: 6px;
-  letter-spacing: 0.02em;
-  text-transform: lowercase;
-}
-
-.bestValueBadge {
-  background: color-mix(in srgb, #22c55e 16%, transparent);
-  color: var(--text-primary);
-  border: none;
-  font-weight: 500;
-}
-
-.hotBadge {
-  background: color-mix(in srgb, var(--color-danger) 16%, transparent);
-  color: var(--text-primary);
-  border: none;
-  font-weight: 500;
+  flex-shrink: 0;
 }
 
 .itemName {
@@ -248,11 +227,6 @@
   .itemMeta {
     font-size: var(--font-size-xs);
     gap: 6px;
-  }
-
-  .bestValueBadge {
-    padding: 2px 7px;
-    font-size: var(--font-size-xs);
   }
 
   .modalLink {

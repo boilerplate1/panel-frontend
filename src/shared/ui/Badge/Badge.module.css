@@ -1,0 +1,50 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.sm {
+  min-height: 22px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.md {
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: var(--font-size-xs);
+}
+
+.neutral {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-secondary) 10%, transparent);
+}
+
+.success {
+  color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+}
+
+.warning {
+  color: var(--color-warning);
+  background: color-mix(in srgb, var(--color-warning) 14%, transparent);
+}
+
+.danger {
+  color: var(--status-error);
+  background: color-mix(in srgb, var(--status-error) 14%, transparent);
+}
+
+.info {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}

@@ -11,26 +11,10 @@
   gap: var(--spacing-3);
 }
 
-.subscriptionHeading {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 2px;
-}
-
 .subscriptionTitle,
 .progressHeader span {
   color: var(--text-secondary);
   font-size: var(--font-size-xs);
-}
-
-.subscriptionUser {
-  overflow: hidden;
-  min-width: 0;
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .progressHeader strong {
@@ -51,29 +35,7 @@
 }
 
 .statusBadge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 0 9px;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
   flex: 0 0 auto;
-}
-
-.active {
-  background: color-mix(in srgb, var(--color-success) 14%, transparent);
-  color: var(--color-success);
-}
-
-.expiring {
-  background: color-mix(in srgb, var(--color-warning) 16%, transparent);
-  color: var(--text-primary);
-}
-
-.inactive {
-  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
-  color: var(--color-danger);
 }
 
 .progressBlock {
@@ -133,10 +95,6 @@
 }
 
 @media (max-width: 992px) {
-  .subscriptionHeading {
-    gap: 1px;
-  }
-
   .subscriptionTitle {
     font-size: var(--font-size-base);
   }
@@ -148,11 +106,6 @@
 
   .progressHeader strong {
     font-size: var(--font-size-sm);
-  }
-
-  .statusBadge {
-    min-height: 24px;
-    padding: 0 8px;
   }
 
   .actionBtn {

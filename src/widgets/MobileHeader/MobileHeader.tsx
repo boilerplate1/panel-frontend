@@ -17,12 +17,14 @@ export function MobileHeader() {
   const { toggleSidebar } = useUIStore();
 
   const isRoot = location.pathname === ROUTES.DASHBOARD;
-  const isCheckoutPage = location.pathname.startsWith(ROUTES.CHECKOUT);
 
   const currentMatch = matches[matches.length - 1];
-  const handle = currentMatch?.handle as { title?: string; description?: string } | undefined;
+  const handle = currentMatch?.handle as
+    | { title?: string; description?: string; hideSidebar?: boolean }
+    | undefined;
   const titleKey = handle?.title;
   const descriptionKey = handle?.description;
+  const hideSidebar = !!handle?.hideSidebar;
   const pageTitle = titleKey ? t(titleKey) : '';
   const pageDescription = descriptionKey ? t(descriptionKey) : '';
 
@@ -37,7 +39,7 @@ export function MobileHeader() {
             <Logo className={styles.logoMobile} />
           ) : (
             <button
-              className={`${styles.backButton} ${isCheckoutPage ? styles.backDesktop : ''}`}
+              className={styles.backButton}
               onClick={() => navigate(-1)}
             >
               <ChevronLeft size={28} />
@@ -46,12 +48,12 @@ export function MobileHeader() {
         </div>
 
         <div className={styles.centerSlot}>
-          {!isRoot && (
-            <div className={`${styles.titleBlock} ${isCheckoutPage ? styles.backDesktop : ''}`}>
+          {!isRoot ? (
+            <div className={styles.titleBlock}>
               <span className={styles.pageTitle}>{pageTitle}</span>
               {pageDescription && <span className={styles.pageDescription}>{pageDescription}</span>}
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className={styles.rightSlot}>
@@ -62,7 +64,6 @@ export function MobileHeader() {
                   <div className={styles.userAvatar}>
                     {user?.username?.charAt(0).toUpperCase() || 'U'}
                   </div>
-                  <span className={styles.userName}>{user?.username || ''}</span>
                 </div>
               }
               showChevron={false}
@@ -81,13 +82,15 @@ export function MobileHeader() {
               ]}
             />
           </div>
-          <button
-            className={styles.menuButton}
-            onClick={() => toggleSidebar(true)}
-            aria-label="Menu"
-          >
-            <Menu size={28} />
-          </button>
+          {!hideSidebar ? (
+            <button
+              className={styles.menuButton}
+              onClick={() => toggleSidebar(true)}
+              aria-label={t('shared.open_menu')}
+            >
+              <Menu size={24} />
+            </button>
+          ) : null}
         </div>
       </Container>
     </header>

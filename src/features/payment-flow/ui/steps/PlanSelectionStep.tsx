@@ -1,7 +1,7 @@
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { SubscriptionPlanResponse } from '@/shared/api/generated';
-import { Button, Card, SectionHeader, Skeleton } from '@/shared/ui';
+import { Badge, Button, Card, SectionHeader, Skeleton } from '@/shared/ui';
 import {
   formatCurrency,
   formatDate,
@@ -91,14 +91,14 @@ export function PlanSelectionStep({
                         <div className={styles.itemLabelGroup}>
                           <div className={styles.itemName}>{monthsLabel}</div>
                           {isHot ? (
-                            <span className={`${styles.badge} ${styles.hotBadge}`}>
+                            <Badge variant="danger" className={styles.badge}>
                               {t('dashboard.buy_subscription_hot')}
-                            </span>
+                            </Badge>
                           ) : null}
                           {isBestValue ? (
-                            <span className={`${styles.badge} ${styles.bestValueBadge}`}>
+                            <Badge variant="success" className={styles.badge}>
                               {t('dashboard.buy_subscription_best_value_badge')}
-                            </span>
+                            </Badge>
                           ) : null}
                         </div>
                         <div className={styles.itemName}>

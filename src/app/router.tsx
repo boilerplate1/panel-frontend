@@ -16,6 +16,7 @@ const NotFoundPage = lazy(() => import('@/pages/not-found/ui/NotFoundPage'));
 const ProfilePage = lazy(() => import('@/pages/profile/ProfilePage'));
 const DevicesPage = lazy(() => import('@/pages/devices/DevicesPage'));
 const TransactionPage = lazy(() => import('@/pages/transactions/TransactionPage'));
+const TransactionDetailPage = lazy(() => import('@/pages/transactions/TransactionDetailPage'));
 
 const SubscriptionBuyPage = lazy(() => import('@/pages/payment/SubscriptionBuyPage'));
 const PaymentStatusPage = lazy(() => import('@/pages/payment/PaymentStatusPage'));
@@ -80,6 +81,18 @@ export const router = createBrowserRouter(
               },
             },
             {
+              path: ROUTE_PATTERNS.HISTORY_DETAIL,
+              element: (
+                <LazyLoad>
+                  <TransactionDetailPage />
+                </LazyLoad>
+              ),
+              handle: {
+                title: 'dashboard.history_title',
+                description: 'dashboard.history_subtitle',
+              },
+            },
+            {
               path: ROUTES.CHECKOUT,
               element: (
                 <LazyLoad>
@@ -87,9 +100,9 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.buy_subscription_select',
                 description: 'dashboard.buy_subscription_menu',
+                hideSidebar: true,
               },
             },
             {
@@ -100,8 +113,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.buy_subscription_method_title',
+                hideSidebar: true,
               },
             },
             {
@@ -112,8 +125,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.buy_subscription_method_title',
+                hideSidebar: true,
               },
             },
             {
@@ -124,8 +137,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.buy_subscription_waiting',
+                hideSidebar: true,
               },
             },
             {
@@ -136,8 +149,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.buy_subscription_waiting',
+                hideSidebar: true,
               },
             },
             {
@@ -168,8 +181,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.payment_result_success_title',
+                hideSidebar: true,
               },
             },
             {
@@ -180,8 +193,8 @@ export const router = createBrowserRouter(
                 </LazyLoad>
               ),
               handle: {
-                hideSidebar: true,
                 title: 'dashboard.payment_result_failed_title',
+                hideSidebar: true,
               },
             },
           ],

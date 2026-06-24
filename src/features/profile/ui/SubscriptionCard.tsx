@@ -1,13 +1,12 @@
 import { Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Button, MetricRow } from '@/shared/ui';
+import { Badge, Button, MetricRow } from '@/shared/ui';
 import { formatDate, formatTraffic } from '@/shared/lib';
 import type { SubscriptionResponse as Subscription } from '@/shared/api';
 import type { SubscriptionState } from '../lib/profileSummary';
 import styles from './SubscriptionCard.module.css';
 
 interface SubscriptionCardProps {
-  username: string;
   subscription: Subscription | null;
   daysLeft: number | null;
   state: SubscriptionState;
@@ -16,7 +15,6 @@ interface SubscriptionCardProps {
 }
 
 export function SubscriptionCard({
-  username,
   subscription,
   daysLeft,
   state,
@@ -34,13 +32,13 @@ export function SubscriptionCard({
   return (
     <div className={styles.subscriptionCard}>
       <div className={styles.subscriptionTop}>
-        <div className={styles.subscriptionHeading}>
-          <strong className={styles.subscriptionTitle}>
-            {t('profile.greeting', { username })}
-          </strong>
-          <span className={styles.subscriptionUser}>{t('profile.my_subscription')}</span>
-        </div>
-        <span className={`${styles.statusBadge} ${styles[state]}`}>{stateLabel}</span>
+        <strong className={styles.subscriptionTitle}>{t('profile.my_subscription')}</strong>
+        <Badge
+          variant={isInactive ? 'danger' : state === 'expiring' ? 'warning' : 'success'}
+          className={styles.statusBadge}
+        >
+          {stateLabel}
+        </Badge>
       </div>
 
       {subscription ? (

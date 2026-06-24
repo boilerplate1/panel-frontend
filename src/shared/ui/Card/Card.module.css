@@ -16,7 +16,7 @@
   background-color: var(--surface-card);
 }
 .clickable.flat:hover {
-  border-color: var(--border-color);
+  background-color: var(--bg-card-hover);
   transform: translateY(-2px);
 }
 
@@ -35,7 +35,7 @@
   -webkit-backdrop-filter: none;
 }
 .clickable.glass:hover {
-  border-color: var(--border-color);
+  background-color: var(--bg-card-hover);
 }
 
 .padding-none {

@@ -192,6 +192,7 @@ const ru = {
     history_updated: 'Обновлено',
     history_credited: 'Зачислено',
     history_expires: 'Истекает',
+    history_details: 'Детали платежа',
     history_error: 'Ошибка',
     history_open_payment: 'Открыть оплату',
     history_payment_support_hint: 'Если у вас есть вопросы по платежу, обратитесь в техподдержку.',
@@ -365,7 +366,7 @@ const ru = {
     subscription_inactive: 'Не активна',
     days_left: 'Осталось',
     days_count: '{{count}} дн.',
-    devices_available_count: 'Доступно {{count}} устройств',
+    devices_available_count: 'Свободно {{count}} из {{limit}}',
   },
   devices: {
     title: 'Мои устройства',

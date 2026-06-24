@@ -1,14 +1,76 @@
 .wrapper {
-  width: 260px;
+  width: 280px;
   flex-shrink: 0;
+}
+
+.desktopOnly {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px 2px;
+}
+
+.brandLogo {
+  height: 24px;
+}
+
+.accountCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-card);
+}
+
+.accountAvatar {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #0663ef 28%, transparent), color-mix(in srgb, #1f58d6 18%, transparent));
+  color: #dbeafe;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+}
+
+.accountInfo {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0;
+}
+
+.accountName {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountMeta {
+  display: none;
+}
+
+.navCard {
+  padding: 12px;
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
-  position: sticky;
-  top: 0;
+  gap: 4px;
   padding: 0;
 }
 
@@ -16,27 +78,33 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
-  padding: var(--spacing-3) var(--spacing-5);
+  padding: 14px 16px;
   color: var(--text-secondary);
   border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   transition: all 0.2s ease;
   text-decoration: none;
 }
 
 .linkActive {
-  background: var(--surface-card);
+  background: color-mix(in srgb, var(--surface-secondary) 72%, var(--surface-card));
   color: var(--text-primary);
   font-weight: var(--font-weight-semibold);
+}
+
+.link:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(6, 7, 9, 0.5);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
   z-index: var(--z-modal);
 }
 
@@ -44,15 +112,19 @@
   display: none;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-5) var(--spacing-6);
+  padding: var(--spacing-6) var(--spacing-6);
   margin-bottom: var(--spacing-4);
-  height: 64px;
+  height: 68px;
 }
 
 .mobileTitle {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
+}
+
+.mobileLogo {
+  height: 20px;
 }
 
 .closeButton {
@@ -73,6 +145,10 @@
   background: var(--surface-hover);
 }
 
+.mobileOnly {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .wrapper {
     position: fixed;
@@ -86,6 +162,7 @@
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
+    gap: 0;
   }
 
   .wrapperOpen {
@@ -101,14 +178,22 @@
     display: flex;
   }
 
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: block;
+  }
+
   .nav {
     padding: 0 16px;
     gap: 2px;
   }
 
   .link {
-    font-size: var(--font-size-sm);
-    padding: 12px 16px;
+    font-size: var(--font-size-base);
+    padding: 14px 16px;
   }
 
   .linkActive {
@@ -120,12 +205,22 @@
     flex: 1;
     overflow-y: auto;
   }
+
+  .brandRow {
+    padding: 2px 4px 0;
+  }
 }
 
 .mobileBottom {
   display: none;
   padding: 0 16px 24px;
   flex-shrink: 0;
+}
+
+.divider {
+  height: 1px;
+  margin: 8px 0 12px;
+  background: var(--surface-secondary);
 }
 
 @media (max-width: 992px) {
@@ -170,7 +265,7 @@
 
 @media (max-width: 992px) {
   .logoutBtn {
-    padding: 12px 16px;
-    font-size: var(--font-size-sm);
+    padding: 14px 16px;
+    font-size: var(--font-size-base);
   }
 }
