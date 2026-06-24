@@ -91,6 +91,7 @@ export const router = createBrowserRouter(
               handle: {
                 title: 'Быстрое подключение',
                 description: 'Happ Plus и v2rayTun в один клик',
+                hideSidebar: true,
               },
             },
             {
