@@ -47,6 +47,10 @@ export function DashboardSidebar() {
 
       <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
         <div className={styles.mobileHeader}>
+          <div className={styles.mobileUser}>
+            <span className={styles.mobileUserLabel}>{t('shared.user')}</span>
+            <strong className={styles.mobileUserName}>{username}</strong>
+          </div>
           <button
             className={styles.closeButton}
             onClick={() => toggleSidebar(false)}

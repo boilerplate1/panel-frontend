@@ -104,7 +104,7 @@
 .mobileHeader {
   display: none;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: var(--spacing-6) var(--spacing-6);
   margin-bottom: var(--spacing-4);
   height: 68px;
@@ -146,6 +146,29 @@
 
 .mobileOnly {
   display: none;
+}
+
+.mobileUser {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.mobileUserLabel {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1.2;
+}
+
+.mobileUserName {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 @media (max-width: 992px) {
