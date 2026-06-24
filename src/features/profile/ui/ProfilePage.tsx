@@ -12,14 +12,21 @@ function ProfilePage() {
   const profile = useProfilePage();
   const showHelpBanner = !!profile.activeSubscription;
   const devicesSubtitle =
-    profile.deviceAvailability?.remaining !== null &&
-    profile.deviceAvailability?.remaining !== undefined &&
     profile.deviceAvailability?.limit
       ? t('profile.devices_available_count', {
-          count: profile.deviceAvailability.remaining,
+          count: Math.max(profile.deviceAvailability.used ?? 0, profile.devicesCount ?? 0),
           limit: profile.deviceAvailability.limit,
         })
       : t('devices.subtitle');
+  const promoBanners = [
+    {
+      id: 'quick-connect',
+      title: 'Быстрое подключение',
+      subtitle: 'В пару кликов ускорим вам интернет',
+      meta: 'Deeplink',
+      onClick: profile.goToQuickConnect,
+    },
+  ];
 
   if (!profile.user) return null;
 
@@ -42,17 +49,26 @@ function ProfilePage() {
           </Card>
 
           {showHelpBanner ? (
-            <button className={styles.bannerLink} type="button" onClick={profile.goToQuickConnect}>
-              <Card padding="medium" className={styles.bannerCard}>
-                <div className={styles.bannerContent}>
-                  <div className={styles.bannerText}>
-                    <span className={styles.bannerTitle}>Быстрое подключение</span>
-                    <span className={styles.bannerSubtitle}>Happ Plus и v2rayTun в один клик</span>
-                  </div>
-                  <div className={styles.bannerMeta}>Deeplink</div>
-                </div>
-              </Card>
-            </button>
+            <div className={styles.bannerStack}>
+              {promoBanners.map((banner) => (
+                <button
+                  key={banner.id}
+                  className={styles.bannerLink}
+                  type="button"
+                  onClick={banner.onClick}
+                >
+                  <Card padding="medium" className={styles.bannerCard}>
+                    <div className={styles.bannerContent}>
+                      <div className={styles.bannerText}>
+                        <span className={styles.bannerTitle}>{banner.title}</span>
+                        <span className={styles.bannerSubtitle}>{banner.subtitle}</span>
+                      </div>
+                      <div className={styles.bannerMeta}>{banner.meta}</div>
+                    </div>
+                  </Card>
+                </button>
+              ))}
+            </div>
           ) : null}
 
           <Card padding="medium" className={styles.card}>

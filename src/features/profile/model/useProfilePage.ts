@@ -16,6 +16,7 @@ export function useProfilePage() {
   const { data: subscriptions, isLoading: subscriptionsLoading } = useSubscriptionsQuery(!!user);
 
   const devicePreview = devices?.items?.slice(0, 3) ?? [];
+  const devicesCount = devices?.total ?? devicePreview.length ?? 0;
   const activeSubscription =
     subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
   const deviceAvailability = activeSubscription?.deviceAvailability ?? null;
@@ -34,6 +35,7 @@ export function useProfilePage() {
   return {
     user,
     devicePreview,
+    devicesCount,
     devicesLoading,
     subscriptionsLoading,
     activeSubscription,

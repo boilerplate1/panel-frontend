@@ -27,16 +27,31 @@ export function MobileHeader() {
   const hideSidebar = !!handle?.hideSidebar;
   const pageTitle = titleKey ? t(titleKey, { defaultValue: titleKey }) : '';
   const pageDescription = descriptionKey ? t(descriptionKey, { defaultValue: descriptionKey }) : '';
+  const goToDashboard = () => navigate(ROUTES.DASHBOARD);
 
   return (
     <header className={styles.wrapper}>
       <Container className={styles.inner}>
         <div className={styles.leftSlot}>
-          <div className={styles.logoDesktop}>
-            <Logo className={styles.logo} />
-          </div>
+          <button
+            type="button"
+            className={styles.logoButton}
+            onClick={goToDashboard}
+            aria-label={t('dashboard.title')}
+          >
+            <span className={styles.logoDesktop}>
+              <Logo className={styles.logo} />
+            </span>
+          </button>
           {isRoot ? (
-            <Logo className={styles.logoMobile} />
+            <button
+              type="button"
+              className={styles.logoButton}
+              onClick={goToDashboard}
+              aria-label={t('dashboard.title')}
+            >
+              <Logo className={styles.logoMobile} />
+            </button>
           ) : (
             <button
               className={styles.backButton}

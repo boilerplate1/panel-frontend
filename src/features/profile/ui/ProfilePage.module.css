@@ -19,6 +19,12 @@
   min-width: 0;
 }
 
+.bannerStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -70,10 +76,11 @@
   min-width: 0;
   flex-direction: column;
   gap: 4px;
+  flex: 1;
 }
 
 .bannerTitle {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   line-height: 1.2;
 }
@@ -194,12 +201,13 @@
     align-items: flex-start;
   }
 
-  .bannerSubtitle {
-    display: none;
+  .bannerTitle {
+    font-size: var(--font-size-lg);
   }
 
-  .bannerTitle {
-    font-size: var(--font-size-sm);
+  .bannerSubtitle {
+    display: block;
+    font-size: var(--font-size-xs);
   }
 
   .bannerMeta {

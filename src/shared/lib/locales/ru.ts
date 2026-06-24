@@ -366,7 +366,7 @@ const ru = {
     subscription_inactive: 'Не активна',
     days_left: 'Осталось',
     days_count: '{{count}} дн.',
-    devices_available_count: 'Свободно {{count}} из {{limit}}',
+    devices_available_count: 'Подключено {{count}} из {{limit}}',
   },
   devices: {
     title: 'Мои устройства',

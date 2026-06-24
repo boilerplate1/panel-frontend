@@ -47,7 +47,12 @@ export function DashboardSidebar() {
 
       <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
         <div className={styles.mobileHeader}>
-          <button className={styles.closeButton} onClick={() => toggleSidebar(false)}>
+          <button
+            className={styles.closeButton}
+            onClick={() => toggleSidebar(false)}
+            aria-label={t('shared.close')}
+            type="button"
+          >
             <X size={24} />
           </button>
         </div>

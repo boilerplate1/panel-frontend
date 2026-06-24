@@ -62,6 +62,9 @@
   position: sticky;
   top: 0;
   align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .railLink {
@@ -71,32 +74,15 @@
 
 .railCard {
   display: flex;
-  min-height: 260px;
+  min-height: 160px;
   flex-direction: column;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
   border: none;
-  background:
-    linear-gradient(180deg, #0088cc 0%, #0077b3 52%, #006699 100%);
-  color: #ffffff;
+  background: var(--surface-card);
+  color: var(--text-primary);
   box-shadow: none;
-}
-
-.railTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.railIcon {
-  display: flex;
-  width: 38px;
-  height: 38px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
+  overflow: hidden;
 }
 
 .railText {
@@ -106,21 +92,27 @@
 }
 
 .railText strong {
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
 }
 
 .railText span {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--text-secondary);
   max-width: 220px;
   font-size: var(--font-size-sm);
   line-height: 1.4;
 }
 
-.railArrow {
-  color: rgba(255, 255, 255, 0.92);
+.railMeta {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: hsla(218, 100%, 62%, 0.16);
+  color: hsl(var(--v1-colors-omegaBlue400));
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
 }
 
 @media (max-width: 992px) {

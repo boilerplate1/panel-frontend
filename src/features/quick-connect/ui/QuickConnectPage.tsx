@@ -1,4 +1,4 @@
-import { ArrowRight, Copy, Download, Smartphone } from 'lucide-react';
+import { ChevronRight, Copy, Download, Smartphone } from 'lucide-react';
 import { Badge, Button, Card, SectionHeader } from '@/shared/ui';
 import { formatDate } from '@/shared/lib';
 import { useQuickConnectPage } from '../model/useQuickConnectPage';
@@ -78,7 +78,7 @@ export default function QuickConnectPage() {
                   onClick={() => page.openApp(app.href)}
                   disabled={!app.href}
                 >
-                  <ArrowRight size={18} />
+                  <ChevronRight size={18} />
                   Открыть
                 </Button>
               </div>

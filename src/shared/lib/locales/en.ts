@@ -355,7 +355,7 @@ const en = {
     subscription_inactive: 'Inactive',
     days_left: 'Days left',
     days_count: '{{count}} days',
-    devices_available_count: '{{count}} of {{limit}} available',
+    devices_available_count: '{{count}} of {{limit}} connected',
   },
   devices: {
     title: 'My devices',

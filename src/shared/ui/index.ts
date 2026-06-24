@@ -23,3 +23,4 @@ export * from './ResponsiveModal';
 export * from './Container';
 export * from './TurnstileWidget';
 export * from './Badge';
+export * from './TelegramGlyph';

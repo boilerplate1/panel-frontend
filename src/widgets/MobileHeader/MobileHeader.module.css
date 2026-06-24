@@ -46,6 +46,16 @@
   height: 20px;
 }
 
+.logoButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .logoDesktop {
   display: none;
 }
@@ -216,9 +226,9 @@
   .wrapper {
     margin: 0 0 12px;
     width: 100%;
-    background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;
     overflow: hidden;
