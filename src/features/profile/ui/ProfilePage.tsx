@@ -11,6 +11,7 @@ import styles from './ProfilePage.module.css';
 function ProfilePage() {
   const { t } = useTranslation();
   const profile = useProfilePage();
+  const showHelpBanner = !!profile.activeSubscription;
   const devicesSubtitle =
     profile.deviceAvailability?.remaining !== null &&
     profile.deviceAvailability?.remaining !== undefined &&
@@ -41,17 +42,21 @@ function ProfilePage() {
             )}
           </Card>
 
-          <a className={styles.bannerLink} href={SOCIAL_LINKS.TG_CHANNEL} target="_blank" rel="noreferrer">
-            <Card padding="medium" className={styles.bannerCard}>
-              <div className={styles.bannerContent}>
-                <div className={styles.bannerText}>
-                  <span className={styles.bannerTitle}>Нужна помощь с подключением?</span>
-                  <span className={styles.bannerSubtitle}>Подключитесь за пару кликов, а мы подскажем с настройкой.</span>
+          {showHelpBanner ? (
+            <a className={styles.bannerLink} href={SOCIAL_LINKS.TG_CHANNEL} target="_blank" rel="noreferrer">
+              <Card padding="medium" className={styles.bannerCard}>
+                <div className={styles.bannerContent}>
+                  <div className={styles.bannerText}>
+                    <span className={styles.bannerTitle}>Нужна помощь?</span>
+                    <span className={styles.bannerSubtitle}>
+                      Подключение и настройка в Telegram за пару кликов.
+                    </span>
+                  </div>
+                  <div className={styles.bannerMeta}>TG</div>
                 </div>
-                <div className={styles.bannerMeta}>Telegram</div>
-              </div>
-            </Card>
-          </a>
+              </Card>
+            </a>
+          ) : null}
 
           <Card padding="medium" className={styles.card}>
             <SectionHeader

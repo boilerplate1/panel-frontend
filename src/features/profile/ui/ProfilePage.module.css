@@ -188,8 +188,16 @@
     align-items: flex-start;
   }
 
+  .bannerSubtitle {
+    display: none;
+  }
+
+  .bannerTitle {
+    font-size: var(--font-size-sm);
+  }
+
   .bannerMeta {
-    margin-top: 2px;
+    margin-top: 0;
   }
 
   .itemName {
