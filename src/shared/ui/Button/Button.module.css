@@ -102,7 +102,7 @@
 .small {
   min-height: 40px;
   padding: 10px 18px;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
   gap: 6px;
 }
 
