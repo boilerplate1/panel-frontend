@@ -1,4 +1,4 @@
-import { Monitor, Smartphone, Laptop, Copy, ExternalLink } from 'lucide-react';
+import { Monitor, Smartphone, Laptop, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import styles from './SetupGuide.module.css';
 
@@ -34,31 +34,14 @@ const PLATFORM_ICONS: Record<Platform, typeof Smartphone> = {
   macos: Laptop,
 };
 
-interface SetupGuideProps {
-  deeplinkHref: string;
-  onCopyLink: () => void;
-  onOpenApp: () => void;
-}
-
-export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuideProps) {
+export function SetupGuide() {
   const [activePlatform, setActivePlatform] = useState<Platform>('android');
 
   const clients = CLIENTS[activePlatform];
+  const PlatformIcon = PLATFORM_ICONS[activePlatform];
 
   return (
     <div className={styles.root}>
-      <p className={styles.intro}>
-        Скопируйте ссылку подписки, скачайте приложение на ваше устройство и откройте ссылку в нём — 
-        всё настроится автоматически.
-      </p>
-
-      <div className={styles.copySection}>
-        <button type="button" className={styles.copyBtn} onClick={onCopyLink}>
-          <Copy size={18} />
-          <span>Копировать ссылку подписки</span>
-        </button>
-      </div>
-
       <div className={styles.platformTabs}>
         {(Object.keys(PLATFORM_LABELS) as Platform[]).map((platform) => {
           const Icon = PLATFORM_ICONS[platform];
@@ -77,6 +60,10 @@ export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuidePr
       </div>
 
       <div className={styles.platformContent}>
+        <div className={styles.stepsTitle}>
+          <PlatformIcon size={20} />
+          <span>{PLATFORM_LABELS[activePlatform]}</span>
+        </div>
         <ol className={styles.stepsList}>
           <li className={styles.step}>
             <span className={styles.stepNumber}>1</span>
@@ -102,30 +89,16 @@ export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuidePr
           <li className={styles.step}>
             <span className={styles.stepNumber}>2</span>
             <div className={styles.stepBody}>
-              <span className={styles.stepLabel}>
-                Скопируйте ссылку подписки — нажмите на кнопку «Копировать» выше
-              </span>
+              <span className={styles.stepLabel}>Скопируйте ссылку подписки из карточки выше</span>
             </div>
           </li>
           <li className={styles.step}>
             <span className={styles.stepNumber}>3</span>
             <div className={styles.stepBody}>
-              <span className={styles.stepLabel}>
-                Откройте приложение — подписка импортируется автоматически
-              </span>
+              <span className={styles.stepLabel}>Откройте приложение — подписка импортируется автоматически</span>
             </div>
           </li>
         </ol>
-
-        <button
-          type="button"
-          className={styles.openBtn}
-          onClick={onOpenApp}
-          disabled={!deeplinkHref}
-        >
-          <ExternalLink size={18} />
-          Открыть в Happ Proxy
-        </button>
       </div>
     </div>
   );

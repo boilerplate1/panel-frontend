@@ -376,6 +376,8 @@ const ru = {
     days_left: 'Осталось',
     days_count: '{{count}} дн.',
     devices_available_count: 'Подключено {{count}} из {{limit}}',
+    link_unavailable: 'Ссылка недоступна',
+    copy_failed: 'Не удалось скопировать',
   },
   devices: {
     title: 'Мои устройства',

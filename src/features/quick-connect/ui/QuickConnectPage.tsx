@@ -1,4 +1,4 @@
-import { Download } from 'lucide-react';
+import { Copy, Download, ExternalLink } from 'lucide-react';
 import { Badge, Button, Card, SectionHeader } from '@/shared/ui';
 import { SetupGuide } from '@/shared/ui';
 import { formatDate } from '@/shared/lib';
@@ -43,11 +43,29 @@ export default function QuickConnectPage() {
       </Card>
 
       <Card padding="medium" className={styles.card}>
-        <SetupGuide
-          deeplinkHref={page.deeplinkHref}
-          onCopyLink={page.copyLink}
-          onOpenApp={page.openApp}
-        />
+        <p className={styles.intro}>
+          Скопируйте ссылку подписки, откройте приложение на вашем устройстве — 
+          всё настроится автоматически.
+        </p>
+        <div className={styles.actions}>
+          <button type="button" className={styles.copyBtn} onClick={page.copyLink}>
+            <Copy size={18} />
+            <span>Копировать ссылку подписки</span>
+          </button>
+          <button
+            type="button"
+            className={styles.openBtn}
+            onClick={page.openApp}
+            disabled={!page.deeplinkHref}
+          >
+            <ExternalLink size={18} />
+            Открыть в Happ Proxy
+          </button>
+        </div>
+      </Card>
+
+      <Card padding="medium" className={styles.card}>
+        <SetupGuide />
       </Card>
     </div>
   );

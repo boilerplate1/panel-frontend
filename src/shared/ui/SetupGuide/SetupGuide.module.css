@@ -1,41 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.intro {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: 1.6;
-}
-
-.copySection {
-  display: flex;
-  flex-direction: column;
-}
-
-.copyBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: var(--accent);
-  color: var(--text-on-accent);
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  width: fit-content;
-}
-
-.copyBtn:hover {
-  background: var(--accent-hover);
+  gap: 20px;
 }
 
 .platformTabs {
@@ -74,17 +40,16 @@
 .platformContent {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .stepsTitle {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0;
+  color: var(--text-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
 }
 
 .stepsList {
@@ -167,40 +132,7 @@
   margin-left: -4px;
 }
 
-.openBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
-  background: var(--surface-card);
-  border: 1px solid var(--surface-tertiary);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: fit-content;
-}
-
-.openBtn:hover:not(:disabled) {
-  background: var(--surface-hover);
-}
-
-.openBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
 @media (max-width: 992px) {
-  .copyBtn,
-  .openBtn {
-    width: 100%;
-    justify-content: center;
-  }
-
   .platformTabs {
     justify-content: center;
   }

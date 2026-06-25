@@ -365,6 +365,8 @@ const en = {
     days_left: 'Days left',
     days_count: '{{count}} days',
     devices_available_count: '{{count}} of {{limit}} connected',
+    link_unavailable: 'Link unavailable',
+    copy_failed: 'Failed to copy',
   },
   devices: {
     title: 'My devices',
