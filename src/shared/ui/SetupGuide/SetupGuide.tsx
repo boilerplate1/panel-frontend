@@ -10,7 +10,7 @@ const CLIENTS: Record<Platform, { name: string; url: string; store?: string }[]>
   ],
   ios: [
     { name: 'Happ Proxy', url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215', store: 'App Store' },
-    { name: 'v2rayTun', url: 'https://apps.apple.com/app/v2raytun/id6476628951', store: 'App Store' },
+    { name: 'v2rayTun', url: 'https://apps.apple.com/tr/app/v2raytun/id6476628951', store: 'App Store' },
   ],
   windows: [
     { name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' },
