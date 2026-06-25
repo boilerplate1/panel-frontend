@@ -48,7 +48,7 @@ export function DashboardSidebar() {
             onClick={() => toggleSidebar(false)}
             aria-label={t('shared.close')}
           >
-            <X size={24} />
+            <X size={36} />
           </Button>
         </div>
 
