@@ -4,23 +4,20 @@ import styles from './SetupGuide.module.css';
 
 type Platform = 'android' | 'ios' | 'windows' | 'macos';
 
-const CLIENTS: Record<Platform, { name: string; url: string }> = {
-  android: {
-    name: 'Happ Proxy',
-    url: 'https://play.google.com/store/apps/details?id=com.happproxy',
-  },
-  ios: {
-    name: 'Happ Proxy',
-    url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215',
-  },
-  windows: {
-    name: 'Happ Proxy',
-    url: 'https://happ.info/',
-  },
-  macos: {
-    name: 'Happ Proxy',
-    url: 'https://happ.info/',
-  },
+const CLIENTS: Record<Platform, { name: string; url: string; store?: string }[]> = {
+  android: [
+    { name: 'Happ Proxy', url: 'https://play.google.com/store/apps/details?id=com.happproxy', store: 'Google Play' },
+  ],
+  ios: [
+    { name: 'Happ Proxy', url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215', store: 'App Store' },
+    { name: 'v2rayTun', url: 'https://apps.apple.com/app/v2raytun/id6476628951', store: 'App Store' },
+  ],
+  windows: [
+    { name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' },
+  ],
+  macos: [
+    { name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' },
+  ],
 };
 
 const PLATFORM_LABELS: Record<Platform, string> = {
@@ -47,13 +44,13 @@ interface SetupGuideProps {
 export function SetupGuide({ subscriptionLink, deeplinkHref, onCopyLink, onOpenApp }: SetupGuideProps) {
   const [activePlatform, setActivePlatform] = useState<Platform>('android');
 
-  const client = CLIENTS[activePlatform];
+  const clients = CLIENTS[activePlatform];
   const PlatformIcon = PLATFORM_ICONS[activePlatform];
 
   return (
     <div className={styles.root}>
       <p className={styles.intro}>
-        Скопируйте ссылку подписки, скачайте Happ Proxy на ваше устройство и откройте ссылку в нём — 
+        Скопируйте ссылку подписки, скачайте приложение на ваше устройство и откройте ссылку в нём — 
         всё настроится автоматически.
       </p>
 
@@ -90,19 +87,22 @@ export function SetupGuide({ subscriptionLink, deeplinkHref, onCopyLink, onOpenA
 
           <ol className={styles.stepsList}>
             <li>
-              <strong>Скачайте Happ Proxy</strong>
-              <a
-                href={client.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.clientLink}
-              >
-                <ExternalLink size={16} />
-                <span>{client.name}</span>
-                <span className={styles.clientDesc}>
-                  {activePlatform === 'ios' ? 'App Store' : activePlatform === 'android' ? 'Google Play' : 'happ.info'}
-                </span>
-              </a>
+              <strong>Скачайте приложение</strong>
+              <div className={styles.clientLinks}>
+                {clients.map((client) => (
+                  <a
+                    key={client.name}
+                    href={client.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.clientLink}
+                  >
+                    <ExternalLink size={16} />
+                    <span>{client.name}</span>
+                    <span className={styles.clientDesc}>{client.store}</span>
+                  </a>
+                ))}
+              </div>
             </li>
             <li>
               <strong>Скопируйте ссылку подписки</strong> — нажмите на кнопку «Копировать» выше
