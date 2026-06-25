@@ -33,29 +33,15 @@ export function MobileHeader() {
     <header className={styles.wrapper}>
       <Container className={styles.inner}>
         <div className={styles.leftSlot}>
-          <Button
-            type="button"
-            variant="ghost"
-            size="small"
-            className={styles.logoButton}
-            onClick={goToDashboard}
-            aria-label={t('dashboard.title')}
-          >
+          <h1 className={styles.logoButton} onClick={goToDashboard}>
             <span className={styles.logoDesktop}>
               <Logo className={styles.logo} />
             </span>
-          </Button>
+          </h1>
           {isRoot ? (
-            <Button
-              type="button"
-              variant="ghost"
-              size="small"
-              className={styles.logoButton}
-              onClick={goToDashboard}
-              aria-label={t('dashboard.title')}
-            >
+            <h1 className={styles.logoButton} onClick={goToDashboard}>
               <Logo className={styles.logoMobile} />
-            </Button>
+            </h1>
           ) : (
             <Button
               type="button"

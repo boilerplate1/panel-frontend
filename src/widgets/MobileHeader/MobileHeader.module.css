@@ -48,11 +48,14 @@
 .logoButton {
   display: flex;
   align-items: center;
+  margin: 0;
   padding: 0;
   background: transparent;
   border: none;
   color: inherit;
   cursor: pointer;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 .logoDesktop {
