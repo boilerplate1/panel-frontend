@@ -53,7 +53,7 @@
 
 .progressTrack {
   width: 100%;
-  height: 6px;
+  height: 10px;
   border-radius: 999px;
   overflow: hidden;
   background: var(--surface-secondary);
@@ -62,7 +62,9 @@
 .progressBar {
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), hsl(218 100% 56%));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .trafficTrack {
@@ -71,13 +73,15 @@
   border-radius: 999px;
   overflow: hidden;
   background: var(--surface-secondary);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .trafficBar {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--accent), hsl(218 100% 56%));
-  transition: width 0.4s ease;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .trafficLabel {

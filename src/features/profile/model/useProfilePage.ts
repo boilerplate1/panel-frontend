@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
-import { copyToClipboard } from '@/shared/lib';
+import { useClipboard } from '@/shared/hooks';
 import { ROUTES } from '@/shared/config';
 import { useAuth } from '@/stores/authStore';
 import { getSubscriptionDaysLeft, getSubscriptionState } from '../lib/profileSummary';
@@ -12,6 +13,7 @@ export function useProfilePage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showToast } = useUIStore();
+  const { copy, copied } = useClipboard();
   const {
     data: devices,
     isLoading: devicesLoading,
@@ -33,14 +35,11 @@ export function useProfilePage() {
   const subscriptionState = getSubscriptionState(activeSubscription);
   const subscriptionDaysLeft = getSubscriptionDaysLeft(activeSubscription);
 
-  const copySubscriptionLink = async () => {
-    if (!activeSubscription?.remnaSubLink) return;
+  useEffect(() => {
+    if (copied) showToast(t('profile.copied'), 'success');
+  }, [copied, showToast, t]);
 
-    const success = await copyToClipboard(activeSubscription.remnaSubLink);
-    if (success) {
-      showToast(t('profile.copied'), 'success');
-    }
-  };
+  const copySubscriptionLink = () => copy(activeSubscription?.remnaSubLink);
 
   return {
     user,
