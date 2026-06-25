@@ -17,7 +17,7 @@ export function useClipboard(options: UseClipboardOptions = {}): UseClipboardRet
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isCopying, setIsCopying] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const copy = useCallback(
     async (text?: string) => {
@@ -31,7 +31,7 @@ export function useClipboard(options: UseClipboardOptions = {}): UseClipboardRet
 
         if (success) {
           setCopied(true);
-          clearTimeout(timeoutRef.current);
+          if (timeoutRef.current) clearTimeout(timeoutRef.current);
           timeoutRef.current = setTimeout(() => setCopied(false), timeout);
         } else {
           setError('Failed to copy');

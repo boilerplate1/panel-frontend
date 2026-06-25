@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useMatch } from 'react-router-dom';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Smartphone, Copy, ChevronRight } from 'lucide-react';
 import { useCheckPaymentIntentQuery, useSubscriptionPlansQuery } from '@/shared/api';
 import {
   formatDate,
@@ -189,6 +190,42 @@ function PaymentResultPage() {
             ) : null}
           </div>
         </Card>
+
+        {isSuccess && isAuthenticated ? (
+          <Card padding="medium" className={styles.onboardingCard}>
+            <h2 className={styles.onboardingTitle}>
+              <Smartphone size={22} />
+              Что дальше?
+            </h2>
+            <p className={styles.onboardingText}>
+              Подписка активна! Теперь нужно подключить устройства. 
+              Скопируйте ссылку подписки и откройте в приложении.
+            </p>
+            <ol className={styles.onboardingSteps}>
+              <li>
+                <span className={styles.stepNum}>1</span>
+                <span>Скачайте приложение (Happ Plus или v2rayTun) на ваше устройство</span>
+              </li>
+              <li>
+                <span className={styles.stepNum}>2</span>
+                <span>Скопируйте ссылку подписки в личном кабинете</span>
+              </li>
+              <li>
+                <span className={styles.stepNum}>3</span>
+                <span>Откройте приложение и вставьте ссылку — всё настроится само</span>
+              </li>
+            </ol>
+            <Button
+              as={Link}
+              to={ROUTES.QUICK_CONNECT}
+              variant="accentSoft"
+              className={styles.onboardingCta}
+            >
+              Перейти к подключению
+              <ChevronRight size={18} />
+            </Button>
+          </Card>
+        ) : null}
       </main>
     </div>
   );
