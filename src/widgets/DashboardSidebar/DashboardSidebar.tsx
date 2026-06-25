@@ -113,7 +113,6 @@ export function DashboardSidebar() {
         </div>
 
         <div className={styles.mobileBottom}>
-          <div className={styles.divider} />
 
           <div className={styles.themeRow}>
             <ThemeToggle label={t('shared.theme_toggle')} />
