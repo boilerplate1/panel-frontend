@@ -212,6 +212,69 @@
   width: 100%;
 }
 
+.onboardingCard {
+  width: min(100%, 520px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6) var(--spacing-5);
+  border: none;
+  text-align: left;
+  margin-top: var(--spacing-4);
+}
+
+.onboardingTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: var(--font-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.onboardingText {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.onboardingSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.onboardingSteps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.onboardingCta {
+  margin-top: var(--spacing-2);
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

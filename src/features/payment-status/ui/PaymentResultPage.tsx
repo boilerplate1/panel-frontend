@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Smartphone, Copy, ChevronRight } from 'lucide-react';
+import { Smartphone, ChevronRight } from 'lucide-react';
 import { useCheckPaymentIntentQuery, useSubscriptionPlansQuery } from '@/shared/api';
 import {
   formatDate,
