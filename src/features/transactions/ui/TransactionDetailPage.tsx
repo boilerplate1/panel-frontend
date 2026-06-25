@@ -8,6 +8,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
+import { SOCIAL_LINKS } from '@/constants';
 import styles from './modals/TransactionDetailModal.module.css';
 import { useTransactionDetailPage } from '../model/useTransactionDetailPage';
 
@@ -167,9 +168,14 @@ function TransactionDetailPage() {
                 <ExternalLink size={18} />
                 {t('dashboard.history_open_payment')}
               </Button>
-              <div className={styles.modalSupportText}>
+              <a
+                href={SOCIAL_LINKS.TG_CHANNEL}
+                className={styles.supportLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t('dashboard.history_payment_support_hint')}
-              </div>
+              </a>
             </Card>
           ) : null}
         </>

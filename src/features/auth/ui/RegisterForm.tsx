@@ -116,7 +116,6 @@ export function RegisterForm() {
           required
           autoComplete="username"
           disabled={isLoading}
-          hint={t('auth.username_policy')}
           error={usernameError ?? undefined}
           onChange={() => setUsernameError(null)}
         />

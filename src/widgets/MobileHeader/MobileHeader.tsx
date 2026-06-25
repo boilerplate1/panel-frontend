@@ -87,13 +87,17 @@ export function MobileHeader() {
                   <div className={styles.userAvatar}>
                     {user?.username?.charAt(0).toUpperCase() || 'U'}
                   </div>
+                  <div className={styles.userInfo}>
+                    <span className={styles.userName}>{user?.username || 'User'}</span>
+                    {user?.email && <span className={styles.userEmail}>{user.email}</span>}
+                  </div>
                 </div>
               }
               showChevron={false}
               items={[
                 {
-                  label: getCurrentTheme() === 'dark' ? t('shared.light') : t('shared.dark'),
-                  icon: getCurrentTheme() === 'dark' ? <Sun size={18} /> : <Moon size={18} />,
+                  label: getCurrentTheme() === 'dark' ? t('shared.dark') : t('shared.light'),
+                  icon: getCurrentTheme() === 'dark' ? <Moon size={18} /> : <Sun size={18} />,
                   onClick: () => applyTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark'),
                 },
                 {

@@ -49,13 +49,18 @@ export function useSubscriptionBuyFlow() {
   const activeSubscription = getActiveSubscription(subscriptions);
 
   useEffect(() => {
-    if (activePayment?.id && stage === 'active') {
+    if (activePayment?.id && (stage === 'active' || stage === 'creating' || stage === 'idle')) {
       navigate(buildCheckoutStatusRoute(activePayment.id), { replace: true });
     }
   }, [activePayment?.id, navigate, stage]);
 
   const startPayment = async (provider: string, method?: string) => {
     if (!selectedPlan) return;
+
+    if (activePayment?.id && stage !== 'idle') {
+      navigate(buildCheckoutStatusRoute(activePayment.id), { replace: true });
+      return;
+    }
 
     try {
       setStage('creating');

@@ -1,7 +1,7 @@
 import { Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge, Button, MetricRow } from '@/shared/ui';
-import { formatDate, formatTraffic } from '@/shared/lib';
+import { formatDate, formatTraffic, formatBytes } from '@/shared/lib';
 import type { SubscriptionResponse as Subscription } from '@/shared/api';
 import type { SubscriptionState } from '../lib/profileSummary';
 import styles from './SubscriptionCard.module.css';
@@ -28,6 +28,11 @@ export function SubscriptionCard({
     : state === 'expiring'
       ? t('profile.subscription_expiring')
       : t('profile.subscription_active');
+
+  const trafficTotal = subscription ? Number(subscription.trafficTotal) : 0;
+  const trafficUsed = subscription ? Number(subscription.trafficUsed) : 0;
+  const trafficPercent = trafficTotal > 0 ? Math.min(100, (trafficUsed / trafficTotal) * 100) : 0;
+  const isUnlimited = trafficTotal === 0;
 
   return (
     <div className={styles.subscriptionCard}>
@@ -57,6 +62,24 @@ export function SubscriptionCard({
               />
             </div>
           </div>
+
+          {!isUnlimited && (
+            <div className={styles.progressBlock}>
+              <div className={styles.progressHeader}>
+                <span>{t('dashboard.traffic')}</span>
+                <strong>{trafficPercent.toFixed(0)}%</strong>
+              </div>
+              <div className={styles.trafficTrack}>
+                <div
+                  className={styles.trafficBar}
+                  style={{ width: `${trafficPercent}%` }}
+                />
+              </div>
+              <span className={styles.trafficLabel}>
+                {formatBytes(trafficUsed)} / {formatBytes(trafficTotal)}
+              </span>
+            </div>
+          )}
 
           <div className={styles.subscriptionGrid}>
             <MetricRow label={t('dashboard.expires')} value={formatDate(subscription.expiresAt)} />

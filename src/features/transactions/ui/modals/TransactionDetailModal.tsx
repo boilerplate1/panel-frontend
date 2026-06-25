@@ -7,6 +7,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
+import { SOCIAL_LINKS } from '@/constants';
 import type { PaymentHistoryItem } from '@/shared/api/generated';
 import styles from './TransactionDetailModal.module.css';
 
@@ -137,9 +138,14 @@ export function TransactionDetailModal({
                   {t('dashboard.history_open_payment')}
                 </Button>
               )}
-              <div className={styles.modalSupportText}>
+              <a
+                href={SOCIAL_LINKS.TG_CHANNEL}
+                className={styles.supportLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t('dashboard.history_payment_support_hint')}
-              </div>
+              </a>
             </section>
           )}
         </div>

@@ -16,7 +16,7 @@
 
 .layoutStandalone {
   display: block;
-  max-width: 1040px;
+  max-width: var(--container-max-width);
 }
 
 .wrapper {
@@ -38,7 +38,7 @@
 
 .fullWidth {
   width: 100%;
-  max-width: 1040px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
   flex: none;
 }

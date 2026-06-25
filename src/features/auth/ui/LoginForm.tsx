@@ -109,7 +109,6 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           required
           autoComplete="username"
           disabled={isLoading}
-          hint={t('auth.username_policy')}
           error={usernameError ?? undefined}
           onChange={() => setUsernameError(null)}
         />

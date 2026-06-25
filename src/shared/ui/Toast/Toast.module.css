@@ -5,7 +5,19 @@
   display: flex;
   pointer-events: none;
   z-index: var(--z-toast);
-  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.wrapper.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.wrapper.hidden {
+  transform: translateY(20px);
+  opacity: 0;
 }
 
 @media (max-width: 768px) {
@@ -32,11 +44,13 @@
   border-radius: var(--radius-lg);
   background: var(--color-white);
   color: var(--color-black);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 html[data-theme='light'] .root {
   background: var(--color-black);
   color: var(--color-white);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .iconWrapper {

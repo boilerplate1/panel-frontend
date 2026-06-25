@@ -60,7 +60,7 @@ export function ThemeToggle({ variant = 'default', label, className = '' }: Them
       aria-label={t('shared.theme_toggle')}
       type="button"
     >
-      {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
+      {theme === 'dark' ? <Moon size={22} /> : <Sun size={22} />}
       {label && <span>{label}</span>}
     </button>
   );

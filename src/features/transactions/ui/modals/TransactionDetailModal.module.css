@@ -217,6 +217,19 @@
   line-height: 1.45;
 }
 
+.supportLink {
+  color: var(--accent);
+  font-size: var(--font-size-xs);
+  line-height: 1.45;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.supportLink:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 .emptyText {
   color: var(--text-secondary);
   text-align: center;
