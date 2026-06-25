@@ -44,7 +44,6 @@ export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuidePr
   const [activePlatform, setActivePlatform] = useState<Platform>('android');
 
   const clients = CLIENTS[activePlatform];
-  const PlatformIcon = PLATFORM_ICONS[activePlatform];
 
   return (
     <div className={styles.root}>
@@ -78,15 +77,11 @@ export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuidePr
       </div>
 
       <div className={styles.platformContent}>
-        <div className={styles.steps}>
-          <h4 className={styles.stepTitle}>
-            <PlatformIcon size={18} />
-            {PLATFORM_LABELS[activePlatform]}
-          </h4>
-
-          <ol className={styles.stepsList}>
-            <li>
-              <strong>Скачайте приложение</strong>
+        <ol className={styles.stepsList}>
+          <li className={styles.step}>
+            <span className={styles.stepNumber}>1</span>
+            <div className={styles.stepBody}>
+              <span className={styles.stepLabel}>Скачайте приложение</span>
               <div className={styles.clientLinks}>
                 {clients.map((client) => (
                   <a
@@ -102,24 +97,35 @@ export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuidePr
                   </a>
                 ))}
               </div>
-            </li>
-            <li>
-              <strong>Скопируйте ссылку подписки</strong> — нажмите на кнопку «Копировать» выше
-            </li>
-            <li>
-              <strong>Откройте приложение</strong> — подписка импортируется автоматически
-            </li>
-          </ol>
+            </div>
+          </li>
+          <li className={styles.step}>
+            <span className={styles.stepNumber}>2</span>
+            <div className={styles.stepBody}>
+              <span className={styles.stepLabel}>
+                Скопируйте ссылку подписки — нажмите на кнопку «Копировать» выше
+              </span>
+            </div>
+          </li>
+          <li className={styles.step}>
+            <span className={styles.stepNumber}>3</span>
+            <div className={styles.stepBody}>
+              <span className={styles.stepLabel}>
+                Откройте приложение — подписка импортируется автоматически
+              </span>
+            </div>
+          </li>
+        </ol>
 
-          <button
-            type="button"
-            className={styles.openBtn}
-            onClick={onOpenApp}
-            disabled={!deeplinkHref}
-          >
-            Открыть в Happ Proxy
-          </button>
-        </div>
+        <button
+          type="button"
+          className={styles.openBtn}
+          onClick={onOpenApp}
+          disabled={!deeplinkHref}
+        >
+          <ExternalLink size={18} />
+          Открыть в Happ Proxy
+        </button>
       </div>
     </div>
   );

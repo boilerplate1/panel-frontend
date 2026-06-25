@@ -30,25 +30,25 @@ export default function QuickConnectPage() {
 
   return (
     <div className={styles.wrapper}>
-      <Card padding="medium" className={styles.summaryCard}>
-        <div className={styles.summaryTop}>
-          <SectionHeader
-            title="Подключение"
-            subtitle="Скопируйте ссылку и откройте в приложении — всё настроится автоматически"
-            className={styles.header}
-          />
-          <div className={styles.summaryMeta}>
-            <span>Активна до</span>
-            <strong>{formatDate(page.activeSubscription.expiresAt)}</strong>
-          </div>
+      <Card padding="medium" className={styles.card}>
+        <SectionHeader
+          title="Подключение"
+          subtitle="Скопируйте ссылку и откройте в приложении — всё настроится автоматически"
+          className={styles.header}
+        />
+        <div className={styles.expiresRow}>
+          <span className={styles.expiresLabel}>Активна до</span>
+          <strong className={styles.expiresValue}>{formatDate(page.activeSubscription.expiresAt)}</strong>
         </div>
       </Card>
 
-      <SetupGuide
-        deeplinkHref={page.deeplinkHref}
-        onCopyLink={page.copyLink}
-        onOpenApp={page.openApp}
-      />
+      <Card padding="medium" className={styles.card}>
+        <SetupGuide
+          deeplinkHref={page.deeplinkHref}
+          onCopyLink={page.copyLink}
+          onOpenApp={page.openApp}
+        />
+      </Card>
     </div>
   );
 }

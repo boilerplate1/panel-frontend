@@ -14,12 +14,12 @@
 .copySection {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .copyBtn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 14px 24px;
   background: var(--accent);
@@ -74,16 +74,10 @@
 .platformContent {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
-.steps {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.stepTitle {
+.stepsTitle {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -96,27 +90,52 @@
 .stepsList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin: 0;
-  padding-left: 20px;
+  padding: 0;
+  list-style: none;
 }
 
-.stepsList li {
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stepNumber {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface-secondary);
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
-  line-height: 1.5;
+  font-weight: var(--font-weight-semibold);
 }
 
-.stepsList li strong {
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.stepLabel {
   color: var(--text-primary);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  margin-top: 4px;
 }
 
 .clientLinks {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 10px;
 }
 
 .clientLink {
@@ -128,6 +147,7 @@
   border-radius: var(--radius-sm);
   text-decoration: none;
   transition: background 0.2s ease;
+  width: fit-content;
 }
 
 .clientLink:hover {
@@ -174,7 +194,7 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 992px) {
   .copyBtn,
   .openBtn {
     width: 100%;
@@ -183,5 +203,9 @@
 
   .platformTabs {
     justify-content: center;
+  }
+
+  .clientLink {
+    width: 100%;
   }
 }
