@@ -46,6 +46,7 @@ export default function QuickConnectPage() {
 
       <SetupGuide
         subscriptionLink={page.subscriptionLink}
+        deeplinkHref={page.deeplinkHref}
         onCopyLink={page.copyLink}
         onOpenApp={page.openApp}
       />

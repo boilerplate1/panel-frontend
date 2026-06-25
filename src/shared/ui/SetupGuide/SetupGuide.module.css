@@ -38,11 +38,6 @@
   background: var(--accent-hover);
 }
 
-.copyHint {
-  color: var(--text-tertiary);
-  font-size: var(--font-size-xs);
-}
-
 .platformTabs {
   display: flex;
   gap: 6px;
@@ -117,18 +112,12 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.clientLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-}
-
 .clientLink {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 16px;
+  margin-top: 10px;
+  padding: 12px 20px;
   background: var(--surface-secondary);
   border-radius: var(--radius-sm);
   text-decoration: none;
@@ -142,86 +131,51 @@
 .clientLink span {
   color: var(--text-primary);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
 }
 
 .clientDesc {
   color: var(--text-tertiary) !important;
   font-weight: var(--font-weight-normal) !important;
   font-size: var(--font-size-xs) !important;
+  margin-left: -4px;
 }
 
-.externalIcon {
-  margin-left: auto;
-  color: var(--text-tertiary);
-  flex-shrink: 0;
-}
-
-.deeplinkBlock {
-  padding: 16px;
-  background: var(--surface-secondary);
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.deeplinkTitle {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-}
-
-.deeplinkText {
-  margin: 0;
-  color: var(--text-tertiary);
-  font-size: var(--font-size-xs);
-  line-height: 1.5;
-}
-
-.deeplinkApps {
-  display: flex;
-  gap: 8px;
-}
-
-.deeplinkBtn {
-  flex: 1;
+.openBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: 14px 24px;
   background: var(--surface-card);
   border: 1px solid var(--surface-tertiary);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   color: var(--text-primary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: fit-content;
 }
 
-.deeplinkBtn:hover:not(:disabled) {
+.openBtn:hover:not(:disabled) {
   background: var(--surface-hover);
 }
 
-.deeplinkBtn:disabled {
+.openBtn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
 @media (max-width: 640px) {
-  .copyBtn {
+  .copyBtn,
+  .openBtn {
     width: 100%;
     justify-content: center;
   }
 
   .platformTabs {
     justify-content: center;
-  }
-
-  .deeplinkApps {
-    flex-direction: column;
   }
 }

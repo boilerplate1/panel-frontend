@@ -1,26 +1,26 @@
-import { Monitor, Smartphone, Tablet, Laptop, Copy, ExternalLink, Download } from 'lucide-react';
+import { Monitor, Smartphone, Laptop, Copy, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import styles from './SetupGuide.module.css';
 
 type Platform = 'android' | 'ios' | 'windows' | 'macos';
 
-const CLIENTS: Record<Platform, { name: string; url: string; description: string }[]> = {
-  android: [
-    { name: 'Happ Plus', url: 'https://happ-plus.com/download', description: 'Рекомендуемый клиент' },
-    { name: 'v2rayTun', url: 'https://play.google.com/store/apps/details?id=com.v2raytun.android', description: 'Альтернативный клиент' },
-  ],
-  ios: [
-    { name: 'Happ Plus', url: 'https://apps.apple.com/app/happ-plus/id654321', description: 'Рекомендуемый клиент' },
-    { name: 'v2rayTun', url: 'https://apps.apple.com/app/v2raytun/id123456', description: 'Альтернативный клиент' },
-  ],
-  windows: [
-    { name: 'v2rayTun', url: 'https://v2raytun.com/download/windows', description: 'Рекомендуемый клиент' },
-    { name: 'Nekobox', url: 'https://github.com/MatsuriDayo/NekoBoxForWindows', description: 'С ручными настройками' },
-  ],
-  macos: [
-    { name: 'v2rayTun', url: 'https://v2raytun.com/download/macos', description: 'Рекомендуемый клиент' },
-    { name: 'Nekobox', url: 'https://github.com/MatsuriDayo/NekoBoxForWindows', description: 'С ручными настройками' },
-  ],
+const CLIENTS: Record<Platform, { name: string; url: string }> = {
+  android: {
+    name: 'Happ Proxy',
+    url: 'https://play.google.com/store/apps/details?id=com.happproxy',
+  },
+  ios: {
+    name: 'Happ Proxy',
+    url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215',
+  },
+  windows: {
+    name: 'Happ Proxy',
+    url: 'https://happ.info/',
+  },
+  macos: {
+    name: 'Happ Proxy',
+    url: 'https://happ.info/',
+  },
 };
 
 const PLATFORM_LABELS: Record<Platform, string> = {
@@ -32,27 +32,28 @@ const PLATFORM_LABELS: Record<Platform, string> = {
 
 const PLATFORM_ICONS: Record<Platform, typeof Smartphone> = {
   android: Smartphone,
-  ios: Tablet,
+  ios: Smartphone,
   windows: Monitor,
   macos: Laptop,
 };
 
 interface SetupGuideProps {
   subscriptionLink: string;
+  deeplinkHref: string;
   onCopyLink: () => void;
-  onOpenApp: (href: string) => void;
+  onOpenApp: () => void;
 }
 
-export function SetupGuide({ subscriptionLink, onCopyLink, onOpenApp }: SetupGuideProps) {
+export function SetupGuide({ subscriptionLink, deeplinkHref, onCopyLink, onOpenApp }: SetupGuideProps) {
   const [activePlatform, setActivePlatform] = useState<Platform>('android');
 
-  const clients = CLIENTS[activePlatform];
+  const client = CLIENTS[activePlatform];
   const PlatformIcon = PLATFORM_ICONS[activePlatform];
 
   return (
     <div className={styles.root}>
       <p className={styles.intro}>
-        Скопируйте ссылку подписки, скачайте приложение на ваше устройство и откройте ссылку в нём — 
+        Скопируйте ссылку подписки, скачайте Happ Proxy на ваше устройство и откройте ссылку в нём — 
         всё настроится автоматически.
       </p>
 
@@ -61,9 +62,6 @@ export function SetupGuide({ subscriptionLink, onCopyLink, onOpenApp }: SetupGui
           <Copy size={18} />
           <span>Копировать ссылку подписки</span>
         </button>
-        {subscriptionLink && (
-          <span className={styles.copyHint}>Ссылка скопируется в буфер обмена</span>
-        )}
       </div>
 
       <div className={styles.platformTabs}>
@@ -92,56 +90,36 @@ export function SetupGuide({ subscriptionLink, onCopyLink, onOpenApp }: SetupGui
 
           <ol className={styles.stepsList}>
             <li>
-              <strong>Скачайте приложение</strong> — выберите один из клиентов ниже
-              <div className={styles.clientLinks}>
-                {clients.map((client) => (
-                  <a
-                    key={client.name}
-                    href={client.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.clientLink}
-                  >
-                    <Download size={16} />
-                    <span>{client.name}</span>
-                    <span className={styles.clientDesc}>{client.description}</span>
-                    <ExternalLink size={14} className={styles.externalIcon} />
-                  </a>
-                ))}
-              </div>
+              <strong>Скачайте Happ Proxy</strong>
+              <a
+                href={client.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.clientLink}
+              >
+                <ExternalLink size={16} />
+                <span>{client.name}</span>
+                <span className={styles.clientDesc}>
+                  {activePlatform === 'ios' ? 'App Store' : activePlatform === 'android' ? 'Google Play' : 'happ.info'}
+                </span>
+              </a>
             </li>
             <li>
               <strong>Скопируйте ссылку подписки</strong> — нажмите на кнопку «Копировать» выше
             </li>
             <li>
-              <strong>Откройте приложение</strong> и вставьте ссылку — подключение настроится само
+              <strong>Откройте приложение</strong> — подписка импортируется автоматически
             </li>
           </ol>
-        </div>
 
-        <div className={styles.deeplinkBlock}>
-          <h4 className={styles.deeplinkTitle}>Быстрый импорт</h4>
-          <p className={styles.deeplinkText}>
-            Если приложение уже установлено, нажмите «Открыть» — 
-            подписка импортируется автоматически.
-          </p>
-          <div className={styles.deeplinkApps}>
-            {(['happ', 'v2raytun'] as const).map((app) => {
-              const scheme = app === 'happ' ? 'happ://import?url=' : 'v2raytun://import?url=';
-              const label = app === 'happ' ? 'Happ Plus' : 'v2rayTun';
-              return (
-                <button
-                  key={app}
-                  type="button"
-                  className={styles.deeplinkBtn}
-                  onClick={() => onOpenApp(`${scheme}${encodeURIComponent(subscriptionLink)}`)}
-                  disabled={!subscriptionLink}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+          <button
+            type="button"
+            className={styles.openBtn}
+            onClick={onOpenApp}
+            disabled={!deeplinkHref}
+          >
+            Открыть в Happ Proxy
+          </button>
         </div>
       </div>
     </div>

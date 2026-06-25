@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSubscriptionsQuery } from '@/shared/api';
 import { useClipboard } from '@/shared/hooks';
@@ -6,27 +6,7 @@ import { ROUTES } from '@/shared/config';
 import { useAuth } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
 
-type QuickConnectApp = {
-  key: 'happ' | 'v2raytun';
-  label: string;
-  description: string;
-  scheme: string;
-};
-
-const APPS: QuickConnectApp[] = [
-  {
-    key: 'happ',
-    label: 'Happ Plus',
-    description: 'Быстрый импорт подписки через deeplink.',
-    scheme: 'happ://import?url=',
-  },
-  {
-    key: 'v2raytun',
-    label: 'v2rayTun',
-    description: 'Откроет подписку в клиенте в один клик.',
-    scheme: 'v2raytun://import?url=',
-  },
-];
+const APP_SCHEME = 'happ://import?url=';
 
 export function useQuickConnectPage() {
   const { user } = useAuth();
@@ -38,15 +18,9 @@ export function useQuickConnectPage() {
   const activeSubscription =
     subscriptions?.find((sub) => sub.status === 'ACTIVE' || sub.status === 'active') ?? null;
   const subscriptionLink = activeSubscription?.remnaSubLink ?? '';
-
-  const deeplinkApps = useMemo(
-    () =>
-      APPS.map((app) => ({
-        ...app,
-        href: subscriptionLink ? `${app.scheme}${encodeURIComponent(subscriptionLink)}` : '',
-      })),
-    [subscriptionLink],
-  );
+  const deeplinkHref = subscriptionLink
+    ? `${APP_SCHEME}${encodeURIComponent(subscriptionLink)}`
+    : '';
 
   useEffect(() => {
     if (copied) showToast('Ссылка скопирована', 'success');
@@ -54,9 +28,9 @@ export function useQuickConnectPage() {
 
   const copyLink = () => copy(subscriptionLink);
 
-  const openApp = (href: string) => {
-    if (!href) return;
-    window.location.href = href;
+  const openApp = () => {
+    if (!deeplinkHref) return;
+    window.location.href = deeplinkHref;
   };
 
   return {
@@ -64,7 +38,7 @@ export function useQuickConnectPage() {
     isLoading,
     activeSubscription,
     subscriptionLink,
-    deeplinkApps,
+    deeplinkHref,
     copyLink,
     openApp,
     goToCheckout: () => navigate(ROUTES.CHECKOUT),
