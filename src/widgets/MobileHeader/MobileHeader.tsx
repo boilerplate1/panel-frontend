@@ -71,17 +71,12 @@ export function MobileHeader() {
         </div>
 
         <div className={styles.centerSlot}>
-          {isRoot ? (
-            <div className={styles.mobileUser}>
-              <span className={styles.mobileUserLabel}>{t('shared.user')}</span>
-              <strong className={styles.mobileUserName}>{user?.username ?? 'U'}</strong>
-            </div>
-          ) : (
+          {!isRoot ? (
             <div className={styles.titleBlock}>
               <span className={styles.pageTitle}>{pageTitle}</span>
               {pageDescription && <span className={styles.pageDescription}>{pageDescription}</span>}
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className={styles.rightSlot}>

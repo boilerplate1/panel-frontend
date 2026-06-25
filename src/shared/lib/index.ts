@@ -17,6 +17,7 @@ export {
   getPaymentAmountClass,
 } from './utils/paymentHistory';
 export { getMonthLabels, getIntentId, getQueryValue, type MonthLabels } from './utils/query';
+export { isValidUsername } from './utils/username';
 export * from './authSession';
 export * from './i18n';
 export { queryClient } from './queryClient';

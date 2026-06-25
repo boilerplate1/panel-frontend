@@ -90,31 +90,6 @@
   min-width: 0;
 }
 
-.mobileUser {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  min-width: 0;
-}
-
-.mobileUserLabel {
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  line-height: 1.2;
-}
-
-.mobileUserName {
-  max-width: 100%;
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .backButton,
 .menuButton {
   display: flex;
@@ -136,7 +111,7 @@
 
 .backButton {
   margin-left: -6px;
-  color: var(--accent);
+  color: var(--text-primary);
 }
 
 .backButton:active,
@@ -174,8 +149,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--avatar-bg);
-  color: var(--avatar-foreground);
+  background: var(--accent);
+  color: var(--text-on-accent);
   font-size: 12px;
   font-weight: var(--font-weight-bold);
   flex-shrink: 0;
@@ -188,7 +163,7 @@
 }
 
 .backButton:hover {
-  color: var(--accent-hover);
+  color: var(--text-primary);
 }
 
 @media (min-width: 993px) {

@@ -9,53 +9,6 @@
   gap: 12px;
 }
 
-.accountCard {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface-card);
-}
-
-.accountAvatar {
-  display: flex;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, #0663ef 28%, transparent),
-    color-mix(in srgb, #1f58d6 18%, transparent)
-  );
-  color: #dbeafe;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0;
-}
-
-.accountInfo {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 0;
-}
-
-.accountName {
-  overflow: hidden;
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.accountMeta {
-  display: none;
-}
-
 .navCard {
   padding: 12px;
 }
@@ -123,7 +76,7 @@
   width: 52px;
   height: 52px;
   margin-right: -6px;
-  color: var(--accent);
+  color: var(--text-primary);
   background: transparent;
   border: none;
   border-radius: 12px;
@@ -146,29 +99,6 @@
 
 .mobileOnly {
   display: none;
-}
-
-.mobileUser {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-}
-
-.mobileUserLabel {
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  line-height: 1.2;
-}
-
-.mobileUserName {
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 @media (max-width: 992px) {
@@ -198,6 +128,7 @@
 
   .mobileHeader {
     display: flex;
+    justify-content: flex-end;
   }
 
   .desktopOnly {
@@ -243,9 +174,10 @@
 
 @media (max-width: 992px) {
   .mobileBottom {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 8px;
     padding: 0 16px calc(24px + env(safe-area-inset-bottom));
     margin-top: auto;
   }
@@ -254,24 +186,31 @@
 .themeRow {
   display: flex;
   align-items: center;
-  margin-bottom: var(--spacing-1);
+  min-width: 0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 992px) {
   .themeRow {
-    padding: 12px 16px;
-    margin-bottom: 2px;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .themeRow :global(button) {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
   }
 }
 
 .logoutBtn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-3);
-  padding: var(--spacing-3) 0;
-  background: none;
-  border: none;
+  padding: var(--spacing-3) 16px;
   width: 100%;
+  min-height: 48px;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;

@@ -318,6 +318,8 @@ const en = {
     login_success: 'Login successful',
     register_error: 'Registration failed',
     register_success: 'Account created successfully',
+    error_required: 'Please fill in all fields',
+    captcha_required: 'Please wait for the security check to finish',
     username_exists: 'User with this username already exists',
     already_registered_from_this_ip: 'An account is already registered from this IP address',
     too_many_attempts: 'Too many attempts. Take a rest!',

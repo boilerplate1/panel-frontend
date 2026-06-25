@@ -329,6 +329,8 @@ const ru = {
     login_success: 'Успешный вход',
     register_error: 'Ошибка регистрации',
     register_success: 'Аккаунт успешно создан',
+    error_required: 'Заполните все поля',
+    captcha_required: 'Пожалуйста, подождите завершения проверки безопасности',
     username_exists: 'Пользователь с таким именем уже существует',
     already_registered_from_this_ip: 'С этого IP-адреса уже зарегистрирован аккаунт',
     too_many_attempts: 'Слишком много попыток. Отдохните немного!',

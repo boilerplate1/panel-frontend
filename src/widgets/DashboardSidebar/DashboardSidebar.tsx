@@ -1,8 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
-import { getCurrentTheme, subscribeTheme, type Theme } from '@/shared/lib';
 import { useAuth } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
 import { ROUTES } from '@/shared/config';
@@ -12,14 +11,8 @@ import styles from './DashboardSidebar.module.css';
 export function DashboardSidebar() {
   const { t } = useTranslation();
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
-  const [currentTheme, setCurrentTheme] = useState<Theme>(getCurrentTheme);
-  const username = user?.username ?? t('shared.user');
-
-  useEffect(() => {
-    return subscribeTheme(setCurrentTheme);
-  }, []);
 
   useEffect(() => {
     toggleSidebar(false);
@@ -47,10 +40,6 @@ export function DashboardSidebar() {
 
       <aside className={`${styles.wrapper} ${isSidebarOpen ? styles.wrapperOpen : ''}`}>
         <div className={styles.mobileHeader}>
-          <div className={styles.mobileUser}>
-            <span className={styles.mobileUserLabel}>{t('shared.user')}</span>
-            <strong className={styles.mobileUserName}>{username}</strong>
-          </div>
           <Button
             type="button"
             variant="ghost"
@@ -64,13 +53,6 @@ export function DashboardSidebar() {
         </div>
 
         <div className={styles.desktopOnly}>
-          <Card padding="medium" className={styles.accountCard}>
-            <div className={styles.accountInfo}>
-              <strong className={styles.accountName}>{username}</strong>
-              <span className={styles.accountMeta}>{t('dashboard.title')}</span>
-            </div>
-          </Card>
-
           <Card padding="small" className={styles.navCard}>
             <nav className={styles.nav}>
               <NavLink
@@ -134,7 +116,7 @@ export function DashboardSidebar() {
           <div className={styles.divider} />
 
           <div className={styles.themeRow}>
-            <ThemeToggle label={currentTheme === 'dark' ? t('shared.light') : t('shared.dark')} />
+            <ThemeToggle label={t('shared.theme_toggle')} />
           </div>
 
           <Button

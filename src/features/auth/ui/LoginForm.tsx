@@ -10,7 +10,7 @@ import {
   type TurnstileWidgetRef,
 } from '@/shared/ui';
 import { Loader2 } from 'lucide-react';
-import { getApiErrorMessage } from '@/shared/lib';
+import { getApiErrorMessage, isValidUsername } from '@/shared/lib';
 import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
 import { useAuth } from '@/stores/authStore';
@@ -28,6 +28,7 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
   const { showToast } = useUIStore();
 
   const [error, setError] = useState<string | null>(null);
+  const [usernameError, setUsernameError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
@@ -47,10 +48,13 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       return;
     }
 
+    if (!isValidUsername(username)) {
+      setUsernameError(t('auth.username_policy'));
+      return;
+    }
+
     if (!captchaToken) {
-      setError(
-        t('auth.captcha_required', 'Пожалуйста, подождите завершения проверки безопасности'),
-      );
+      setError(t('auth.captcha_required'));
       return;
     }
 
@@ -105,6 +109,9 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           required
           autoComplete="username"
           disabled={isLoading}
+          hint={t('auth.username_policy')}
+          error={usernameError ?? undefined}
+          onChange={() => setUsernameError(null)}
         />
         <FormField
           name="password"

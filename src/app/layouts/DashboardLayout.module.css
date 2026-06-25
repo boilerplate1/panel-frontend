@@ -7,7 +7,7 @@
 
 .layoutContainer {
   display: grid;
-  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr) minmax(280px, 320px);
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
   flex: 1;
   padding: 16px 24px 24px;
   gap: 20px;
@@ -16,7 +16,7 @@
 
 .layoutStandalone {
   display: block;
-  max-width: 1080px;
+  max-width: 1040px;
 }
 
 .wrapper {
@@ -38,7 +38,7 @@
 
 .fullWidth {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1040px;
   margin: 0 auto;
   flex: none;
 }
@@ -58,63 +58,6 @@
   width: 100%;
 }
 
-.rail {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.railLink {
-  display: block;
-  text-decoration: none;
-}
-
-.railCard {
-  display: flex;
-  min-height: 160px;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  border: none;
-  background: var(--surface-card);
-  color: var(--text-primary);
-  box-shadow: none;
-  overflow: hidden;
-}
-
-.railText {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.railText strong {
-  color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.2;
-}
-
-.railText span {
-  color: var(--text-secondary);
-  max-width: 220px;
-  font-size: var(--font-size-sm);
-  line-height: 1.4;
-}
-
-.railMeta {
-  align-self: flex-start;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: hsla(218, 100%, 62%, 0.16);
-  color: hsl(var(--v1-colors-omegaBlue400));
-  font-size: 12px;
-  font-weight: var(--font-weight-semibold);
-}
-
 @media (max-width: 992px) {
   .layoutContainer {
     display: flex;
@@ -128,9 +71,5 @@
 
   .content {
     padding-bottom: 0;
-  }
-
-  .rail {
-    display: none;
   }
 }

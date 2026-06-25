@@ -1,4 +1,4 @@
 .root {
-  width: min(100%, 1280px);
+  width: min(100%, var(--container-max-width));
   margin: 0 auto;
 }
