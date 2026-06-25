@@ -45,7 +45,6 @@ export default function QuickConnectPage() {
       </Card>
 
       <SetupGuide
-        subscriptionLink={page.subscriptionLink}
         deeplinkHref={page.deeplinkHref}
         onCopyLink={page.copyLink}
         onOpenApp={page.openApp}

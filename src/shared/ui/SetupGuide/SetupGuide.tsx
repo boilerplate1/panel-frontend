@@ -35,13 +35,12 @@ const PLATFORM_ICONS: Record<Platform, typeof Smartphone> = {
 };
 
 interface SetupGuideProps {
-  subscriptionLink: string;
   deeplinkHref: string;
   onCopyLink: () => void;
   onOpenApp: () => void;
 }
 
-export function SetupGuide({ subscriptionLink, deeplinkHref, onCopyLink, onOpenApp }: SetupGuideProps) {
+export function SetupGuide({ deeplinkHref, onCopyLink, onOpenApp }: SetupGuideProps) {
   const [activePlatform, setActivePlatform] = useState<Platform>('android');
 
   const clients = CLIENTS[activePlatform];

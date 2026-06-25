@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
-import { useClipboard } from '@/shared/hooks';
+import { copyToClipboard } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import { useAuth } from '@/stores/authStore';
 import { getSubscriptionDaysLeft, getSubscriptionState } from '../lib/profileSummary';
@@ -13,7 +12,6 @@ export function useProfilePage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showToast } = useUIStore();
-  const { copy, copied } = useClipboard();
   const {
     data: devices,
     isLoading: devicesLoading,
@@ -35,11 +33,19 @@ export function useProfilePage() {
   const subscriptionState = getSubscriptionState(activeSubscription);
   const subscriptionDaysLeft = getSubscriptionDaysLeft(activeSubscription);
 
-  useEffect(() => {
-    if (copied) showToast(t('profile.copied'), 'success');
-  }, [copied, showToast, t]);
-
-  const copySubscriptionLink = () => copy(activeSubscription?.remnaSubLink);
+  const copySubscriptionLink = () => {
+    if (!activeSubscription?.remnaSubLink) {
+      showToast(t('profile.link_unavailable'), 'error');
+      return;
+    }
+    copyToClipboard(activeSubscription.remnaSubLink).then((success) => {
+      if (success) {
+        showToast(t('profile.copied'), 'success');
+      } else {
+        showToast(t('profile.copy_failed'), 'error');
+      }
+    });
+  };
 
   return {
     user,
