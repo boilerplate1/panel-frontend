@@ -38,14 +38,16 @@ export default function QuickConnectPage() {
         />
         <div className={styles.expiresRow}>
           <span className={styles.expiresLabel}>Активна до</span>
-          <strong className={styles.expiresValue}>{formatDate(page.activeSubscription.expiresAt)}</strong>
+          <strong className={styles.expiresValue}>
+            {formatDate(page.activeSubscription.expiresAt)}
+          </strong>
         </div>
       </Card>
 
       <Card padding="medium" className={styles.card}>
         <p className={styles.intro}>
-          Скопируйте ссылку подписки, откройте приложение на вашем устройстве — 
-          всё настроится автоматически.
+          Скопируйте ссылку подписки, откройте приложение на вашем устройстве — всё настроится
+          автоматически.
         </p>
         <div className={styles.actions}>
           <button type="button" className={styles.copyBtn} onClick={page.copyLink}>

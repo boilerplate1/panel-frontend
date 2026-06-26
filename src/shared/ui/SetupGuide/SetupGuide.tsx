@@ -6,18 +6,26 @@ type Platform = 'android' | 'ios' | 'windows' | 'macos';
 
 const CLIENTS: Record<Platform, { name: string; url: string; store?: string }[]> = {
   android: [
-    { name: 'Happ Proxy', url: 'https://play.google.com/store/apps/details?id=com.happproxy', store: 'Google Play' },
+    {
+      name: 'Happ Proxy',
+      url: 'https://play.google.com/store/apps/details?id=com.happproxy',
+      store: 'Google Play',
+    },
   ],
   ios: [
-    { name: 'Happ Proxy', url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215', store: 'App Store' },
-    { name: 'v2rayTun', url: 'https://apps.apple.com/tr/app/v2raytun/id6476628951', store: 'App Store' },
+    {
+      name: 'Happ Proxy',
+      url: 'https://apps.apple.com/us/app/happ-proxy-utility/id6504287215',
+      store: 'App Store',
+    },
+    {
+      name: 'v2rayTun',
+      url: 'https://apps.apple.com/tr/app/v2raytun/id6476628951',
+      store: 'App Store',
+    },
   ],
-  windows: [
-    { name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' },
-  ],
-  macos: [
-    { name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' },
-  ],
+  windows: [{ name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' }],
+  macos: [{ name: 'Happ Proxy', url: 'https://happ.info/', store: 'happ.info' }],
 };
 
 const PLATFORM_LABELS: Record<Platform, string> = {
@@ -95,7 +103,9 @@ export function SetupGuide() {
           <li className={styles.step}>
             <span className={styles.stepNumber}>3</span>
             <div className={styles.stepBody}>
-              <span className={styles.stepLabel}>Откройте приложение — подписка импортируется автоматически</span>
+              <span className={styles.stepLabel}>
+                Откройте приложение — подписка импортируется автоматически
+              </span>
             </div>
           </li>
         </ol>

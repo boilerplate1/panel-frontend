@@ -7,7 +7,7 @@ import {
   getStoredUser,
   queryClient,
 } from '@/shared/lib';
-import { usePaymentStore } from '@/stores/paymentStore';
+import { usePaymentStore } from '@/features/payment-flow/model/paymentStore';
 
 interface AuthState {
   user: User | null;

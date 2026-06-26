@@ -14,8 +14,8 @@ import {
   getMonthLabels,
 } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
-import { usePaymentStore } from '@/stores/paymentStore';
-import { useUIStore } from '@/stores/uiStore';
+import { usePaymentStore } from '@/features/payment-flow';
+import { useUIStore } from '@/shared/lib';
 
 export function usePaymentStatusPage() {
   const { i18n, t } = useTranslation();

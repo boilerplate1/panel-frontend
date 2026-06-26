@@ -2,8 +2,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User, MonitorSmartphone, History, X, LogOut } from 'lucide-react';
-import { useAuth } from '@/stores/authStore';
-import { useUIStore } from '@/stores/uiStore';
+import { useAuth } from '@/features/auth';
+import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import { ThemeToggle, Card, Button } from '@/shared/ui';
 import styles from './DashboardSidebar.module.css';
@@ -113,7 +113,6 @@ export function DashboardSidebar() {
         </div>
 
         <div className={styles.mobileBottom}>
-
           <div className={styles.themeRow}>
             <ThemeToggle label={t('shared.theme_toggle')} />
           </div>

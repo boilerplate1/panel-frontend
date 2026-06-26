@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSubscriptionsQuery } from '@/shared/api';
 import { copyToClipboard } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
-import { useAuth } from '@/stores/authStore';
-import { useUIStore } from '@/stores/uiStore';
+import { useAuth } from '@/features/auth';
+import { useUIStore } from '@/shared/lib';
 
 const APP_SCHEME = 'happ://import?url=';
 

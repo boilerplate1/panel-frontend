@@ -13,10 +13,10 @@ import {
   buildCheckoutProviderRoute,
   buildCheckoutStatusRoute,
   ROUTES,
-} from '@/constants';
-import { useAuth } from '@/stores/authStore';
-import { usePaymentStore } from '@/stores/paymentStore';
-import { useUIStore } from '@/stores/uiStore';
+} from '@/shared/config';
+import { useAuth } from '@/features/auth';
+import { usePaymentStore } from '@/features/payment-flow';
+import { useUIStore } from '@/shared/lib';
 import {
   getActiveSubscription,
   getBestValuePlanId,

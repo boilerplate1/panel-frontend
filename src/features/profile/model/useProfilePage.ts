@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
 import { copyToClipboard } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
-import { useAuth } from '@/stores/authStore';
+import { useAuth } from '@/features/auth';
 import { getSubscriptionDaysLeft, getSubscriptionState } from '../lib/profileSummary';
-import { useUIStore } from '@/stores/uiStore';
+import { useUIStore } from '@/shared/lib';
 
 export function useProfilePage() {
   const { user } = useAuth();

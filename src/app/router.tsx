@@ -1,14 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, Navigate, useParams, useSearchParams } from 'react-router-dom';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
+import { Loader } from '@/shared/ui';
 import { RequireAuth } from '@/app/guards/RequireAuth';
 import { GuestOnly } from '@/app/guards/GuestOnly';
 import { GlobalLayout } from '@/app/layouts/GlobalLayout';
 import { DashboardLayout } from '@/app/layouts/DashboardLayout';
 import { AuthLayout } from '@/app/layouts/AuthLayout';
-import { LazyLoad } from '@/shared/ui/LazyLoad/LazyLoad';
 import { ROUTE_PATTERNS, ROUTES } from '@/shared/config';
-import { buildLegacyPayRedirect } from '@/constants';
+import { buildLegacyPayRedirect } from '@/shared/config';
 
 const LoginPage = lazy(() => import('@/pages/login/ui/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/register/ui/RegisterPage'));
@@ -18,10 +18,23 @@ const DevicesPage = lazy(() => import('@/pages/devices/DevicesPage'));
 const TransactionPage = lazy(() => import('@/pages/transactions/TransactionPage'));
 const TransactionDetailPage = lazy(() => import('@/pages/transactions/TransactionDetailPage'));
 const QuickConnectPage = lazy(() => import('@/pages/connect/QuickConnectPage'));
-
 const SubscriptionBuyPage = lazy(() => import('@/pages/payment/SubscriptionBuyPage'));
 const PaymentStatusPage = lazy(() => import('@/pages/payment/PaymentStatusPage'));
 const PaymentResultPage = lazy(() => import('@/pages/payment/PaymentResultPage'));
+
+function Lazy({ children }: { children: React.ReactNode }) {
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
+}
+
+const withSidebar = (title: string, description?: string) => ({
+  title,
+  ...(description && { description }),
+});
+const withoutSidebar = (title: string, description?: string) => ({
+  title,
+  ...(description && { description }),
+  hideSidebar: true,
+});
 
 export const router = createBrowserRouter(
   [
@@ -30,24 +43,21 @@ export const router = createBrowserRouter(
       element: <GlobalLayout />,
       errorElement: <NotFoundPage />,
       children: [
-        {
-          index: true,
-          element: <Navigate to={ROUTES.DASHBOARD} replace />,
-        },
+        { index: true, element: <Navigate to={ROUTES.DASHBOARD} replace /> },
         {
           path: ROUTES.PAYMENT_SUCCESS,
           element: (
-            <LazyLoad>
+            <Lazy>
               <PaymentResultPage />
-            </LazyLoad>
+            </Lazy>
           ),
         },
         {
           path: ROUTES.PAYMENT_FAILED,
           element: (
-            <LazyLoad>
+            <Lazy>
               <PaymentResultPage />
-            </LazyLoad>
+            </Lazy>
           ),
         },
         {
@@ -60,157 +70,74 @@ export const router = createBrowserRouter(
             {
               path: ROUTES.DASHBOARD,
               element: <ProfilePage />,
-              handle: {
-                title: 'dashboard.sidebar_profile',
-                description: 'dashboard.profile_description',
-              },
+              handle: withSidebar('dashboard.sidebar_profile', 'dashboard.profile_description'),
             },
             {
               path: ROUTES.DEVICES,
               element: <DevicesPage />,
-              handle: {
-                title: 'dashboard.sidebar_devices',
-                description: 'dashboard.devices_description',
-              },
+              handle: withSidebar('dashboard.sidebar_devices', 'dashboard.devices_description'),
             },
             {
               path: ROUTES.HISTORY,
               element: <TransactionPage />,
-              handle: {
-                title: 'dashboard.sidebar_history',
-                description: 'dashboard.history_subtitle',
-              },
-            },
-            {
-              path: ROUTES.QUICK_CONNECT,
-              element: (
-                <LazyLoad>
-                  <QuickConnectPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'Быстрое подключение',
-                description: 'Happ Plus и v2rayTun в один клик',
-                hideSidebar: true,
-              },
+              handle: withSidebar('dashboard.sidebar_history', 'dashboard.history_subtitle'),
             },
             {
               path: ROUTE_PATTERNS.HISTORY_DETAIL,
-              element: (
-                <LazyLoad>
-                  <TransactionDetailPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.history_title',
-                description: 'dashboard.history_subtitle',
-              },
+              element: <TransactionDetailPage />,
+              handle: withSidebar('dashboard.history_title', 'dashboard.history_subtitle'),
+            },
+            {
+              path: ROUTES.QUICK_CONNECT,
+              element: <QuickConnectPage />,
+              handle: withoutSidebar('Быстрое подключение', 'Happ Plus и v2rayTun в один клик'),
             },
             {
               path: ROUTES.CHECKOUT,
-              element: (
-                <LazyLoad>
-                  <SubscriptionBuyPage />
-                </LazyLoad>
+              element: <SubscriptionBuyPage />,
+              handle: withoutSidebar(
+                'dashboard.buy_subscription_select',
+                'dashboard.buy_subscription_menu',
               ),
-              handle: {
-                title: 'dashboard.buy_subscription_select',
-                description: 'dashboard.buy_subscription_menu',
-                hideSidebar: true,
-              },
             },
             {
               path: ROUTE_PATTERNS.CHECKOUT_PROVIDER,
-              element: (
-                <LazyLoad>
-                  <SubscriptionBuyPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.buy_subscription_method_title',
-                hideSidebar: true,
-              },
+              element: <SubscriptionBuyPage />,
+              handle: withoutSidebar('dashboard.buy_subscription_method_title'),
             },
             {
               path: ROUTE_PATTERNS.CHECKOUT_PROVIDER_METHODS,
-              element: (
-                <LazyLoad>
-                  <SubscriptionBuyPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.buy_subscription_method_title',
-                hideSidebar: true,
-              },
+              element: <SubscriptionBuyPage />,
+              handle: withoutSidebar('dashboard.buy_subscription_method_title'),
             },
             {
               path: ROUTES.CHECKOUT_STATUS,
-              element: (
-                <LazyLoad>
-                  <PaymentStatusPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.buy_subscription_waiting',
-                hideSidebar: true,
-              },
+              element: <PaymentStatusPage />,
+              handle: withoutSidebar('dashboard.buy_subscription_waiting'),
             },
             {
               path: ROUTE_PATTERNS.CHECKOUT_STATUS_INTENT,
-              element: (
-                <LazyLoad>
-                  <PaymentStatusPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.buy_subscription_waiting',
-                hideSidebar: true,
-              },
+              element: <PaymentStatusPage />,
+              handle: withoutSidebar('dashboard.buy_subscription_waiting'),
             },
             {
-              path: ROUTE_PATTERNS.LEGACY_PAY,
-              element: <Navigate to={ROUTES.CHECKOUT} replace />,
+              path: ROUTES.DASHBOARD_PAYMENT_SUCCESS,
+              element: <PaymentResultPage />,
+              handle: withoutSidebar('dashboard.payment_result_success_title'),
             },
             {
-              path: ROUTE_PATTERNS.LEGACY_PAY_PROVIDER,
-              element: <LegacyPayRedirect />,
+              path: ROUTES.DASHBOARD_PAYMENT_FAILED,
+              element: <PaymentResultPage />,
+              handle: withoutSidebar('dashboard.payment_result_failed_title'),
             },
-            {
-              path: ROUTE_PATTERNS.LEGACY_PAY_METHOD,
-              element: <LegacyPayRedirect />,
-            },
+            { path: ROUTE_PATTERNS.LEGACY_PAY, element: <Navigate to={ROUTES.CHECKOUT} replace /> },
+            { path: ROUTE_PATTERNS.LEGACY_PAY_PROVIDER, element: <LegacyPayRedirect /> },
+            { path: ROUTE_PATTERNS.LEGACY_PAY_METHOD, element: <LegacyPayRedirect /> },
             {
               path: ROUTE_PATTERNS.LEGACY_PAY_STATUS,
               element: <Navigate to={ROUTES.CHECKOUT_STATUS} replace />,
             },
-            {
-              path: ROUTE_PATTERNS.LEGACY_PAY_STATUS_INTENT,
-              element: <LegacyPayRedirect />,
-            },
-            {
-              path: ROUTES.DASHBOARD_PAYMENT_SUCCESS,
-              element: (
-                <LazyLoad>
-                  <PaymentResultPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.payment_result_success_title',
-                hideSidebar: true,
-              },
-            },
-            {
-              path: ROUTES.DASHBOARD_PAYMENT_FAILED,
-              element: (
-                <LazyLoad>
-                  <PaymentResultPage />
-                </LazyLoad>
-              ),
-              handle: {
-                title: 'dashboard.payment_result_failed_title',
-                hideSidebar: true,
-              },
-            },
+            { path: ROUTE_PATTERNS.LEGACY_PAY_STATUS_INTENT, element: <LegacyPayRedirect /> },
           ],
         },
         {
@@ -227,18 +154,18 @@ export const router = createBrowserRouter(
             {
               path: ROUTES.LOGIN,
               element: (
-                <LazyLoad>
+                <Lazy>
                   <LoginPage />
-                </LazyLoad>
+                </Lazy>
               ),
               handle: { title: 'auth.login' },
             },
             {
               path: ROUTES.REGISTER,
               element: (
-                <LazyLoad>
+                <Lazy>
                   <RegisterPage />
-                </LazyLoad>
+                </Lazy>
               ),
               handle: { title: 'auth.register' },
             },
@@ -247,9 +174,9 @@ export const router = createBrowserRouter(
         {
           path: '*',
           element: (
-            <LazyLoad>
+            <Lazy>
               <NotFoundPage />
-            </LazyLoad>
+            </Lazy>
           ),
         },
       ],

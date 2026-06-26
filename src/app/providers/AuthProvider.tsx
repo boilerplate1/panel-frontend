@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
-import { useAuthStore, useAuthActions } from '@/stores/authStore';
+import { useAuthStore, useAuthActions } from '@/features/auth';
 import { useAuthMeQuery } from '@/shared/api';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

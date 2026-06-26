@@ -13,8 +13,8 @@ import {
 } from '@/shared/lib';
 import { Button, Card, Logo } from '@/shared/ui';
 import { ROUTES } from '@/shared/config';
-import { usePaymentStore } from '@/stores/paymentStore';
-import { useAuth } from '@/stores/authStore';
+import { usePaymentStore } from '@/features/payment-flow';
+import { useAuth } from '@/features/auth';
 import styles from './PaymentResultPage.module.css';
 
 type ResultState = 'success' | 'pending' | 'failed';
@@ -198,8 +198,8 @@ function PaymentResultPage() {
               Что дальше?
             </h2>
             <p className={styles.onboardingText}>
-              Подписка активна! Теперь нужно подключить устройства. 
-              Скопируйте ссылку подписки и откройте в приложении.
+              Подписка активна! Теперь нужно подключить устройства. Скопируйте ссылку подписки и
+              откройте в приложении.
             </p>
             <ol className={styles.onboardingSteps}>
               <li>

@@ -1,6 +1,18 @@
 import { env } from './env';
 export { getRuntimeEnv } from './runtimeEnv';
-export { ROUTE_PATTERNS, ROUTES, APP, SOCIAL_LINKS, SEO } from '@/constants';
+export {
+  ROUTES,
+  ROUTE_PATTERNS,
+  buildCheckoutProviderMethodsRoute,
+  buildCheckoutProviderRoute,
+  buildCheckoutStatusRoute,
+  buildLegacyPayRedirect,
+} from './routes';
+export { APP } from './app';
+export { SOCIAL_LINKS } from './social';
+export { SEO } from './seo';
+export { PAYMENT_METHOD_ICONS, YOOKASSA_PAYMENT_METHODS } from './payment-icons';
+export type { YookassaPaymentMethod } from './payment-icons';
 
 export const EXTERNAL_CONFIG = {
   FLAG_CDN: 'https://flagcdn.com/w40',

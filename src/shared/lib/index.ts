@@ -22,3 +22,4 @@ export * from './authSession';
 export * from './i18n';
 export { queryClient } from './queryClient';
 export * from './theme';
+export { useUIStore } from './uiStore';

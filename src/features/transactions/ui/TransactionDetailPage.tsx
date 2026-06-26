@@ -8,7 +8,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { SOCIAL_LINKS } from '@/constants';
+import { SOCIAL_LINKS } from '@/shared/config';
 import styles from './modals/TransactionDetailModal.module.css';
 import { useTransactionDetailPage } from '../model/useTransactionDetailPage';
 

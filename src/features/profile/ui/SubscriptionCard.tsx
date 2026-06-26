@@ -70,10 +70,7 @@ export function SubscriptionCard({
                 <strong>{trafficPercent.toFixed(0)}%</strong>
               </div>
               <div className={styles.trafficTrack}>
-                <div
-                  className={styles.trafficBar}
-                  style={{ width: `${trafficPercent}%` }}
-                />
+                <div className={styles.trafficBar} style={{ width: `${trafficPercent}%` }} />
               </div>
               <span className={styles.trafficLabel}>
                 {formatBytes(trafficUsed)} / {formatBytes(trafficTotal)}

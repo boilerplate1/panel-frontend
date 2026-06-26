@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePaymentHistoryPageQuery } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
-import { useAuth } from '@/stores/authStore';
+import { useAuth } from '@/features/auth';
 
 export function useTransactionPage() {
   const { user } = useAuth();

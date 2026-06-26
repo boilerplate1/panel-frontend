@@ -12,8 +12,8 @@ import { Loader2 } from 'lucide-react';
 import { getApiErrorMessage, isValidUsername } from '@/shared/lib';
 import { authService } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
-import { useAuth } from '@/stores/authStore';
-import { useUIStore } from '@/stores/uiStore';
+import { useAuth } from '@/features/auth';
+import { useUIStore } from '@/shared/lib';
 import styles from './AuthForm.module.css';
 
 export function RegisterForm() {

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Menu, ChevronLeft, LogOut, Sun, Moon } from 'lucide-react';
 import { Logo, Container, Dropdown, Button } from '@/shared/ui';
 import { getCurrentTheme, applyTheme } from '@/shared/lib';
-import { useAuth } from '@/stores/authStore';
-import { useUIStore } from '@/stores/uiStore';
+import { useAuth } from '@/features/auth';
+import { useUIStore } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import styles from './MobileHeader.module.css';
 

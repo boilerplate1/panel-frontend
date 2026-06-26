@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDevicesQuery, useRemoveDeviceMutation, useUpdateDeviceMutation } from '@/shared/api';
-import { useAuth } from '@/stores/authStore';
+import { useAuth } from '@/features/auth';
 
 export function useDevicesPage() {
   const { user } = useAuth();

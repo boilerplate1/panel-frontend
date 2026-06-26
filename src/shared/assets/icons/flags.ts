@@ -1,4 +1,4 @@
-import { APP } from '@/constants';
+import { APP } from '@/shared/config';
 
 const RU_FLAG = `${APP.FLAG_CDN}/ru.png`;
 const EN_FLAG = `${APP.FLAG_CDN}/gb.png`;

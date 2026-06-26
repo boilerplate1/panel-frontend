@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { usePaymentHistoryPageQuery } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
-import { useAuth } from '@/stores/authStore';
+import { useAuth } from '@/features/auth';
 
 export function useTransactionDetailPage() {
   const { user } = useAuth();

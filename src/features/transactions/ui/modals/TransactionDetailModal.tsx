@@ -7,7 +7,7 @@ import {
   getPaymentProviderLabel,
   getPaymentStatusLabel,
 } from '@/shared/lib';
-import { SOCIAL_LINKS } from '@/constants';
+import { SOCIAL_LINKS } from '@/shared/config';
 import type { PaymentHistoryItem } from '@/shared/api/generated';
 import styles from './TransactionDetailModal.module.css';
 

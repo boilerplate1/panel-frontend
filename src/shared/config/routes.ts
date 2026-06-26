@@ -1,7 +1,3 @@
-/**
- * Absolute application routes.
- * Keep router paths and navigation builders in one place.
- */
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',

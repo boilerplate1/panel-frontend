@@ -1,6 +1,6 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { PAYMENT_METHOD_ICONS } from '@/constants';
+import { PAYMENT_METHOD_ICONS } from '@/shared/config';
 import { YookassaIcon } from '@/shared/assets/icons';
 import { Button, Card, SectionHeader, Skeleton } from '@/shared/ui';
 import styles from './PaymentProviderStep.module.css';
@@ -64,14 +64,14 @@ export function PaymentProviderStep({
                     : '';
 
                 return (
-                <Button
-                  key={provider}
-                  type="button"
-                  variant="ghost"
-                  size="large"
-                  className={styles.providerBtn}
-                  onClick={() => onSelectProvider(provider)}
-                >
+                  <Button
+                    key={provider}
+                    type="button"
+                    variant="ghost"
+                    size="large"
+                    className={styles.providerBtn}
+                    onClick={() => onSelectProvider(provider)}
+                  >
                     <div className={styles.providerContent}>
                       <div className={styles.providerIcon}>
                         {isYookassa ? (
@@ -86,9 +86,9 @@ export function PaymentProviderStep({
                       </div>
                     </div>
                     <ChevronRight size={20} className={styles.providerChevron} />
-                </Button>
-              );
-            })}
+                  </Button>
+                );
+              })}
         </div>
       </Card>
     </div>
