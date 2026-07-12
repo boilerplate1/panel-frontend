@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useSuspenseQuery, useQueryClient } from '@tanstack/react-query';
 import { devicesService } from '../services';
 import type { PaginatedDeviceResponse } from '../generated';
 
@@ -12,6 +12,14 @@ export function useDevicesQuery(enabled: boolean, page = 1) {
     queryKey: deviceKeys.page(page),
     queryFn: () => devicesService.getAll(page),
     enabled,
+    staleTime: 30_000,
+  });
+}
+
+export function useDevicesSuspenseQuery(page = 1) {
+  return useSuspenseQuery<PaginatedDeviceResponse>({
+    queryKey: deviceKeys.page(page),
+    queryFn: () => devicesService.getAll(page),
     staleTime: 30_000,
   });
 }

@@ -2,6 +2,7 @@ import { getRuntimeEnv } from './runtimeEnv';
 
 export const env = {
   API_URL: getRuntimeEnv('VITE_API_URL', import.meta.env.VITE_API_URL),
+  TURNSTILE_ENABLED: getRuntimeEnv('VITE_TURNSTILE_ENABLED', import.meta.env.VITE_TURNSTILE_ENABLED) !== 'false',
   TURNSTILE_SITE_KEY: getRuntimeEnv(
     'VITE_TURNSTILE_SITE_KEY',
     import.meta.env.VITE_TURNSTILE_SITE_KEY,

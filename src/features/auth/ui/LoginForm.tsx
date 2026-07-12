@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -12,7 +12,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import { getApiErrorMessage, isValidUsername } from '@/shared/lib';
 import { authService } from '@/shared/api';
-import { ROUTES } from '@/shared/config';
+import { ROUTES, APP_CONFIG } from '@/shared/config';
 import { useAuth } from '@/features/auth';
 import { useUIStore } from '@/shared/lib';
 import styles from './AuthForm.module.css';
@@ -31,8 +31,23 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
   const [usernameError, setUsernameError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaRequired, setCaptchaRequired] = useState(false);
   const turnstileRef = useRef<TurnstileWidgetRef>(null);
   const isSubmitting = useRef(false);
+
+  const isCaptchaRequired = APP_CONFIG.RECAPTCHA_ENABLED && captchaRequired;
+
+  useEffect(() => {
+    if (APP_CONFIG.RECAPTCHA_ENABLED) {
+      authService.getCaptchaStatus()
+        .then((status) => {
+          setCaptchaRequired(status.loginRequired);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch captcha status', err);
+        });
+    }
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,12 +68,12 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       return;
     }
 
-    if (!captchaToken) {
+    if (isCaptchaRequired && !captchaToken) {
       setError(t('auth.captcha_required'));
       return;
     }
 
-    const currentToken = captchaToken;
+    const currentToken = isCaptchaRequired ? (captchaToken ?? undefined) : undefined;
     setCaptchaToken(null);
     setIsLoading(true);
     isSubmitting.current = true;
@@ -76,6 +91,12 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
       navigate(ROUTES.DASHBOARD);
     } catch (err: unknown) {
       let msg = getApiErrorMessage(err, t('auth.login_error'), t);
+
+      if (APP_CONFIG.RECAPTCHA_ENABLED) {
+        authService.getCaptchaStatus()
+          .then((status) => setCaptchaRequired(status.loginRequired))
+          .catch(() => {});
+      }
 
       const errorMsg = axios.isAxiosError(err) ? err.response?.data?.message || '' : '';
       if (typeof errorMsg === 'string' && errorMsg.startsWith('LOCKOUT_ACTIVE:')) {
@@ -123,13 +144,15 @@ export function LoginForm({ registrationEnabled = true }: LoginFormProps) {
           disabled={isLoading}
         />
 
-        <TurnstileWidget
-          ref={turnstileRef}
-          onSuccess={setCaptchaToken}
-          onExpire={() => setCaptchaToken(null)}
-          onError={() => setCaptchaToken(null)}
-          action="login"
-        />
+        {isCaptchaRequired && (
+          <TurnstileWidget
+            ref={turnstileRef}
+            onSuccess={setCaptchaToken}
+            onExpire={() => setCaptchaToken(null)}
+            onError={() => setCaptchaToken(null)}
+            action="login"
+          />
+        )}
 
         <Button type="submit" className={styles.submitBtn} disabled={isLoading}>
           {isLoading ? <Loader2 className={styles.spinner} size={22} /> : t('auth.login')}

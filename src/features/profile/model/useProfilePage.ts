@@ -1,6 +1,7 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDevicesQuery, useSubscriptionsQuery } from '@/shared/api';
+import { useDevicesSuspenseQuery, useSubscriptionsSuspenseQuery } from '@/shared/api';
 import { copyToClipboard } from '@/shared/lib';
 import { ROUTES } from '@/shared/config';
 import { useAuth } from '@/features/auth';
@@ -12,18 +13,16 @@ export function useProfilePage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { showToast } = useUIStore();
+  
   const {
     data: devices,
-    isLoading: devicesLoading,
-    isError: devicesError,
     refetch: refetchDevices,
-  } = useDevicesQuery(!!user);
+  } = useDevicesSuspenseQuery();
+  
   const {
     data: subscriptions,
-    isLoading: subscriptionsLoading,
-    isError: subscriptionsError,
     refetch: refetchSubscriptions,
-  } = useSubscriptionsQuery(!!user);
+  } = useSubscriptionsSuspenseQuery();
 
   const devicePreview = devices?.items?.slice(0, 3) ?? [];
   const devicesCount = devices?.total ?? devicePreview.length ?? 0;
@@ -33,7 +32,7 @@ export function useProfilePage() {
   const subscriptionState = getSubscriptionState(activeSubscription);
   const subscriptionDaysLeft = getSubscriptionDaysLeft(activeSubscription);
 
-  const copySubscriptionLink = () => {
+  const copySubscriptionLink = useCallback(() => {
     if (!activeSubscription?.remnaSubLink) {
       showToast(t('profile.link_unavailable'), 'error');
       return;
@@ -45,24 +44,24 @@ export function useProfilePage() {
         showToast(t('profile.copy_failed'), 'error');
       }
     });
-  };
+  }, [activeSubscription, showToast, t]);
+
+  const goToDevices = useCallback(() => navigate(ROUTES.DEVICES), [navigate]);
+  const goToPayment = useCallback(() => navigate(ROUTES.CHECKOUT), [navigate]);
+  const goToQuickConnect = useCallback(() => navigate(ROUTES.QUICK_CONNECT), [navigate]);
 
   return {
     user,
     devicePreview,
     devicesCount,
-    devicesLoading,
-    devicesError,
-    subscriptionsLoading,
-    subscriptionsError,
     activeSubscription,
     deviceAvailability,
     subscriptionState,
     subscriptionDaysLeft,
     copySubscriptionLink,
-    goToDevices: () => navigate(ROUTES.DEVICES),
-    goToPayment: () => navigate(ROUTES.CHECKOUT),
-    goToQuickConnect: () => navigate(ROUTES.QUICK_CONNECT),
+    goToDevices,
+    goToPayment,
+    goToQuickConnect,
     refetchDevices,
     refetchSubscriptions,
   };

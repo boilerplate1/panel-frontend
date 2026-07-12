@@ -2,13 +2,16 @@ export { authKeys, useAuthMeQuery } from './useAuth';
 export {
   deviceKeys,
   useDevicesQuery,
+  useDevicesSuspenseQuery,
   useUpdateDeviceMutation,
   useRemoveDeviceMutation,
 } from './useDevices';
 export {
   subscriptionKeys,
   useSubscriptionsQuery,
+  useSubscriptionsSuspenseQuery,
   useSubscriptionPlansQuery,
+  useSubscriptionPlansSuspenseQuery,
 } from './useSubscriptions';
 export {
   paymentKeys,
@@ -17,4 +20,5 @@ export {
   useCheckPaymentIntentQuery,
   useCancelPaymentIntentMutation,
   usePaymentHistoryPageQuery,
+  usePaymentHistoryPageSuspenseQuery,
 } from './usePayments';

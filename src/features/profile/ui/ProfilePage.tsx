@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, MonitorSmartphone, RefreshCw } from 'lucide-react';
 import { getDeviceIcon, getDeviceTypeLabel } from '@/shared/lib';
@@ -7,7 +8,61 @@ import { useProfilePage } from '../model/useProfilePage';
 import { SubscriptionCard } from './SubscriptionCard';
 import styles from './ProfilePage.module.css';
 
-function ProfilePage() {
+// Simple, reusable ErrorBoundary component
+interface ErrorBoundaryProps {
+  fallback: (reset: () => void) => React.ReactNode;
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('ProfileErrorBoundary caught an error', error, errorInfo);
+  }
+
+  reset = () => {
+    this.setState({ hasError: false });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback(this.reset);
+    }
+    return this.props.children;
+  }
+}
+
+function ProfilePageSkeleton() {
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.desktopGrid}>
+        <div className={styles.mainColumn}>
+          <Card padding="medium" className={styles.subscriptionCard}>
+            <SubscriptionCardSkeleton />
+          </Card>
+          <Card padding="medium" className={styles.card}>
+            <DeviceCardSkeleton />
+            <DeviceCardSkeleton />
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProfilePageContent() {
   const { t } = useTranslation();
   const profile = useProfilePage();
   const showHelpBanner = !!profile.activeSubscription;
@@ -29,47 +84,18 @@ function ProfilePage() {
 
   if (!profile.user) return null;
 
-  const hasError = profile.devicesError || profile.subscriptionsError;
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.desktopGrid}>
         <div className={styles.mainColumn}>
-          {hasError ? (
-            <Card padding="medium" className={styles.errorCard}>
-              <SectionHeader
-                title={t('shared.server_error')}
-                subtitle={t('errors.page_error_subtitle')}
-                className={styles.header}
-              />
-              <Button
-                type="button"
-                variant="outline"
-                size="small"
-                onClick={() => {
-                  profile.refetchSubscriptions();
-                  profile.refetchDevices();
-                }}
-                className={styles.errorBtn}
-              >
-                <RefreshCw size={18} />
-                {t('shared.retry')}
-              </Button>
-            </Card>
-          ) : null}
-
           <Card padding="medium" className={styles.subscriptionCard}>
-            {profile.subscriptionsLoading ? (
-              <SubscriptionCardSkeleton />
-            ) : (
-              <SubscriptionCard
-                subscription={profile.activeSubscription}
-                daysLeft={profile.subscriptionDaysLeft}
-                state={profile.subscriptionState}
-                onCopyLink={profile.copySubscriptionLink}
-                onRenew={profile.goToPayment}
-              />
-            )}
+            <SubscriptionCard
+              subscription={profile.activeSubscription}
+              daysLeft={profile.subscriptionDaysLeft}
+              state={profile.subscriptionState}
+              onCopyLink={profile.copySubscriptionLink}
+              onRenew={profile.goToPayment}
+            />
           </Card>
 
           {showHelpBanner ? (
@@ -105,12 +131,7 @@ function ProfilePage() {
             />
 
             <div className={styles.container}>
-              {profile.devicesLoading ? (
-                <>
-                  <DeviceCardSkeleton />
-                  <DeviceCardSkeleton />
-                </>
-              ) : profile.devicePreview.length > 0 ? (
+              {profile.devicePreview.length > 0 ? (
                 profile.devicePreview.map((device) => (
                   <div
                     key={device.id}
@@ -148,6 +169,46 @@ function ProfilePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ProfilePage() {
+  const { t } = useTranslation();
+  return (
+    <ErrorBoundary
+      fallback={(reset) => (
+        <div className={styles.wrapper}>
+          <div className={styles.desktopGrid}>
+            <div className={styles.mainColumn}>
+              <Card padding="medium" className={styles.errorCard}>
+                <SectionHeader
+                  title={t('shared.server_error')}
+                  subtitle={t('errors.page_error_subtitle')}
+                  className={styles.header}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="small"
+                  onClick={() => {
+                    window.location.reload();
+                    reset();
+                  }}
+                  className={styles.errorBtn}
+                >
+                  <RefreshCw size={18} />
+                  {t('shared.retry')}
+                </Button>
+              </Card>
+            </div>
+          </div>
+        </div>
+      )}
+    >
+      <Suspense fallback={<ProfilePageSkeleton />}>
+        <ProfilePageContent />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 

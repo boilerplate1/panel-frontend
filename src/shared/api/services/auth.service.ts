@@ -18,4 +18,8 @@ export class AuthService {
   getMe(): Promise<User> {
     return apiClient.get('/auth/me').then((r) => r.data);
   }
+
+  getCaptchaStatus(): Promise<{ loginRequired: boolean; registerRequired: boolean }> {
+    return apiClient.get('/auth/captcha-status').then((r) => r.data);
+  }
 }

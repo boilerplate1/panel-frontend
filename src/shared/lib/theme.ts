@@ -18,7 +18,7 @@ export function getCurrentTheme(): Theme {
 }
 
 const THEME_COLORS: Record<Theme, string> = {
-  dark: '#0f0f0f',
+  dark: '#232323',
   light: '#f5f5f7',
 };
 

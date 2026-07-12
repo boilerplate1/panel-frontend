@@ -1,7 +1,6 @@
 :root {
   --text-font-family:
-    Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI',
-    sans-serif;
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -84,45 +83,61 @@
   --color-warning: #ffcc00;
   --status-error: rgb(248 113 113);
 
-  --overscroll-bg: #101113;
-  --bg-app: #101113;
-  --bg-page: #101113;
-  --surface-app: #101113;
-  --surface-card: #191b1f;
-  --surface-primary: #1b1d22;
-  --surface-secondary: #22252b;
-  --surface-tertiary: #2b3138;
-  --surface-input: #17191d;
-  --surface-input-hover: #20242a;
-  --surface-navbar: rgba(16, 17, 19, 0.9);
-  --surface-overlay: rgba(6, 7, 9, 0.9);
+  /* Core Dark Theme Colors */
+  --bg: #232323;
+  --surface: #2b2b2b;
+  --surface-2: #343434;
+  --border: #3a3a3a;
+  --gray-2: #dbdbdb;
+  --gray-3: #b8b8b8;
+  --gray-4: #b8b8b8;
+  --gray-5: #b8b8b8;
+  --gray-instr: var(--gray-3);
+  --black-instr: var(--gray-3);
+  --referral-bg: linear-gradient(180deg, #0f60b9 0%, #063364 100%);
+
+  /* Layout Mapping */
+  --overscroll-bg: var(--bg);
+  --bg-app: var(--bg);
+  --bg-page: var(--bg);
+  --surface-app: var(--surface);
+  --surface-card: var(--surface);
+  --surface-primary: var(--surface);
+  --surface-secondary: var(--surface-2);
+  --surface-tertiary: var(--surface-2);
+  --surface-input: var(--surface-2);
+  --surface-input-hover: var(--surface-2);
+  --surface-navbar: rgba(35, 35, 35, 0.9);
+  --surface-overlay: rgba(35, 35, 35, 0.9);
   --surface-hover: rgba(255, 255, 255, 0.04);
   --surface-top-border: rgba(255, 255, 255, 0.06);
   --selection-bg: rgba(6, 99, 239, 0.2);
-  --tertiary-fill: #2b3138;
-  --apple-surface-2: #22252b;
+  --tertiary-fill: var(--surface-2);
+  --apple-surface-2: var(--surface-2);
 
   --bg-card: var(--surface-card);
-  --bg-card-hover: #20242a;
+  --bg-card-hover: var(--surface-2);
   --bg-input: var(--surface-input);
 
-  --glass-fill: rgba(25, 27, 31, 0.82);
+  --glass-fill: rgba(43, 43, 43, 0.82);
   --glass-border: rgba(255, 255, 255, 0.08);
 
-  --divider-color: #252a31;
-  --border-color: #2e343d;
-  --border-subtle: var(--divider-color);
+  --divider-color: var(--border);
+  --border-color: var(--border);
+  --border-subtle: var(--border);
   --shadow-dropdown: 0 18px 48px rgba(0, 0, 0, 0.44);
 
+  /* Typography */
   --text-on-accent: #ffffff;
   --avatar-bg: #1f2937;
   --avatar-foreground: #ffffff;
-  --text-primary: #f5f7fb;
-  --text-main: #f5f7fb;
-  --text-secondary: rgba(230, 236, 247, 0.72);
-  --text-dimmed: rgba(230, 236, 247, 0.56);
-  --text-muted: rgba(230, 236, 247, 0.45);
-  --text-placeholder: rgba(230, 236, 247, 0.36);
+  --text-primary: #fff;
+  --text-main: #fff;
+  --text-secondary: #cfcfcf;
+  --text-dimmed: rgba(255, 255, 255, 0.72);
+  --text-muted: rgba(255, 255, 255, 0.56);
+  --text-placeholder: rgba(255, 255, 255, 0.45);
+  --modal-subtitle: var(--gray-4);
 
   --page-bg: var(--bg-page);
   --page-surface: var(--surface-card);
@@ -130,9 +145,15 @@
   --page-text: var(--text-primary);
   --page-text-muted: var(--text-secondary);
   --header-bg: var(--surface-navbar);
+  --dock-bg: linear-gradient(135deg, rgba(45, 45, 45, 0.65), rgba(25, 25, 25, 0.45));
+  --dock-border: rgba(255, 255, 255, 0.08);
+  --dock-active-bg: rgba(255, 255, 255, 0.1);
+  --dock-active-color: var(--text-primary);
+  --dock-active-glow: rgba(255, 255, 255, 0.05);
 }
 
 html[data-theme='dark'] {
+  /* Inherits dark theme tokens from :root */
 }
 
 html[data-theme='light'] {
@@ -204,4 +225,21 @@ html[data-theme='light'] {
   --page-text: var(--text-primary);
   --page-text-muted: var(--text-secondary);
   --header-bg: var(--surface-navbar);
+
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #f0f0f2;
+  --border: #e5e5ea;
+  --gray-2: #8e8e93;
+  --gray-3: #c7c7cc;
+  --gray-5: #e5e5ea;
+  --gray-instr: var(--gray-3);
+  --black-instr: var(--gray-3);
+  --button-active-bg: var(--black);
+  --button-active-text: var(--white);
+  --dock-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(240, 240, 240, 0.55));
+  --dock-border: rgba(0, 0, 0, 0.06);
+  --dock-active-bg: rgba(0, 0, 0, 0.08);
+  --dock-active-color: var(--text-primary);
+  --dock-active-glow: rgba(0, 0, 0, 0.02);
 }

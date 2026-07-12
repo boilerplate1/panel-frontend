@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { billingService } from '../services';
 import type {
   CreatePaymentIntentRequest,
@@ -49,6 +49,14 @@ export function usePaymentHistoryPageQuery(enabled: boolean, page: number) {
     queryKey: paymentKeys.historyPage(page),
     queryFn: () => billingService.getHistoryPage(page),
     enabled,
+    staleTime: 30_000,
+  });
+}
+
+export function usePaymentHistoryPageSuspenseQuery(page: number) {
+  return useSuspenseQuery<PaymentHistoryResponse>({
+    queryKey: paymentKeys.historyPage(page),
+    queryFn: () => billingService.getHistoryPage(page),
     staleTime: 30_000,
   });
 }

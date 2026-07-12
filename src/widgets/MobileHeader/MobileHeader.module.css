@@ -1,12 +1,11 @@
 .wrapper {
   display: flex;
   justify-content: center;
-  height: 68px;
+  height: 64px;
   align-items: center;
   padding: 0;
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: none;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -15,34 +14,29 @@
 .inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: var(--container-max-width);
-  padding: 0 20px;
+  max-width: 800px;
+  padding: 0 16px;
+  margin: 0 auto;
 }
 
 .leftSlot {
-  flex: 1;
   display: flex;
   align-items: center;
-}
-
-.centerSlot {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 8px;
 }
 
 .rightSlot {
-  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
 }
 
 .logo {
   height: 20px;
+  display: block;
 }
 
 .logoButton {
@@ -54,42 +48,6 @@
   border: none;
   color: inherit;
   cursor: pointer;
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-.logoDesktop {
-  display: none;
-}
-
-.logoMobile {
-  display: block;
-  height: 20px;
-}
-
-.pageTitle {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pageDescription {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.titleBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  min-width: 0;
 }
 
 .backButton,
@@ -97,33 +55,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   color: var(--text-primary);
   background: transparent;
   border: none;
   border-radius: var(--radius-full);
   padding: 0;
-  transition:
-    background-color 0.2s ease,
-    opacity 0.2s ease;
+  transition: background-color var(--transition-fast);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
 .backButton {
-  margin-left: -6px;
-  color: var(--text-primary);
-}
-
-.backButton:active,
-.menuButton:active {
-  background-color: var(--surface-hover);
-  opacity: 0.7;
+  margin-left: -8px;
 }
 
 .menuButton {
-  margin-right: -6px;
+  margin-right: -8px;
+}
+
+.backButton:hover,
+.menuButton:hover,
+.userCard:hover {
+  background: var(--surface-hover);
 }
 
 .userDesktop {
@@ -181,60 +136,57 @@
   text-overflow: ellipsis;
 }
 
-.backButton:hover,
-.menuButton:hover,
-.userCard:hover {
-  background: var(--surface-hover);
+@media (max-width: 992px) {
+  .logoHideOnMobile {
+    display: none !important;
+  }
+
+  .userInfo {
+    display: none;
+  }
+
+  .userCard {
+    background: transparent;
+    padding: 0;
+  }
+
+  .userCard:hover {
+    background: transparent;
+  }
 }
 
-.backButton:hover {
+.centerSlot {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.pageTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 993px) {
   .wrapper {
-    height: 74px;
+    height: 72px;
   }
 
   .inner {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 16px;
-    max-width: var(--container-max-width);
     padding: 0 24px;
-  }
-
-  .leftSlot,
-  .centerSlot,
-  .rightSlot {
-    min-width: 0;
-  }
-
-  .leftSlot {
-    justify-content: flex-start;
-  }
-
-  .centerSlot {
-    justify-content: center;
-  }
-
-  .rightSlot {
-    justify-content: flex-end;
-  }
-
-  .centerSlot {
-    display: none;
-  }
-
-  .userDesktop {
-    display: block;
-  }
-  .logoDesktop {
-    display: block;
-  }
-
-  .logoMobile {
-    display: none;
   }
 
   .backButton {
@@ -244,14 +196,8 @@
   .menuButton {
     display: none;
   }
-}
 
-@media (max-width: 992px) {
-  .wrapper {
-    margin: 0 0 12px;
-    width: 100%;
-    border-bottom-left-radius: 22px;
-    border-bottom-right-radius: 22px;
-    overflow: hidden;
+  .centerSlot {
+    display: none !important;
   }
 }

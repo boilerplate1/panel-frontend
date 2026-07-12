@@ -174,7 +174,7 @@ const en = {
     account_key: 'Account key',
     sidebar_profile: 'Profile',
     sidebar_devices: 'Devices',
-    sidebar_history: 'Top-up history',
+    sidebar_history: 'History',
     sidebar_settings: 'Settings',
     sidebar_logout: 'Logout',
     profile_description: 'Manage your profile and subscriptions',

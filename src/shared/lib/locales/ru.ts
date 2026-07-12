@@ -173,7 +173,7 @@ const ru = {
     account_key: 'Ключ аккаунта',
     sidebar_profile: 'Профиль',
     sidebar_devices: 'Устройства',
-    sidebar_history: 'История пополнений',
+    sidebar_history: 'История',
     sidebar_settings: 'Настройки',
     sidebar_logout: 'Выйти',
     profile_description: 'Управляйте своим профилем и подписками',

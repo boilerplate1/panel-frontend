@@ -95,10 +95,7 @@ export const router = createBrowserRouter(
             {
               path: ROUTES.CHECKOUT,
               element: <SubscriptionBuyPage />,
-              handle: withoutSidebar(
-                'dashboard.buy_subscription_select',
-                'dashboard.buy_subscription_menu',
-              ),
+              handle: withoutSidebar('dashboard.buy_subscription_select'),
             },
             {
               path: ROUTE_PATTERNS.CHECKOUT_PROVIDER,

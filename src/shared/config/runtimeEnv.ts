@@ -1,5 +1,6 @@
 type RuntimeConfig = Partial<{
   VITE_API_URL: string;
+  VITE_TURNSTILE_ENABLED: string;
   VITE_TURNSTILE_SITE_KEY: string;
   VITE_ANDROID_APK_URL: string;
   VITE_BASE_URL: string;

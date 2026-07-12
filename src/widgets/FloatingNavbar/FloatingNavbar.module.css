@@ -1,0 +1,119 @@
+.dockContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 24px;
+  will-change: transform;
+}
+
+.dock {
+  pointer-events: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  background: var(--dock-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.dockItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 6px;
+  border-radius: 0;
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
+  flex: 1;
+  min-width: 60px;
+}
+
+.dockItem:hover {
+  color: var(--text-primary);
+}
+
+.dockItem:first-child {
+  border-radius: var(--radius-full) 0 0 var(--radius-full);
+}
+
+.dockItem:last-child {
+  border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.icon {
+  transition: transform var(--transition-fast);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: opacity var(--transition-fast);
+  white-space: nowrap;
+}
+
+/* Active State */
+.dockItemActive {
+  color: var(--dock-active-color);
+  background: var(--surface-hover);
+  border-radius: var(--radius-full);
+  margin: 4px;
+}
+
+.dockItemActive:first-child,
+.dockItemActive:last-child {
+  border-radius: var(--radius-full);
+}
+
+.dockItemActive .iconWrapper {
+  background: transparent;
+  color: var(--dock-active-color);
+  transform: scale(1.06);
+  box-shadow: none;
+}
+
+.dockItemActive .icon {
+  transform: translateY(-1px);
+}
+
+.dockItemActive .label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+@media (max-width: 992px) {
+  .dockContainer {
+    bottom: 16px;
+    padding: 0 16px;
+  }
+
+  .hideOnMobile {
+    display: none !important;
+  }
+}

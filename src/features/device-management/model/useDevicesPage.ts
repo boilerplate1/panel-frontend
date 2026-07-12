@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDevicesQuery, useRemoveDeviceMutation, useUpdateDeviceMutation } from '@/shared/api';
+import { useState, useCallback } from 'react';
+import { useDevicesSuspenseQuery, useRemoveDeviceMutation, useUpdateDeviceMutation } from '@/shared/api';
 import { useAuth } from '@/features/auth';
 
 export function useDevicesPage() {
@@ -10,15 +10,13 @@ export function useDevicesPage() {
 
   const {
     data: paginated,
-    isLoading,
-    isError,
     refetch,
     dataUpdatedAt,
-  } = useDevicesQuery(!!user, page);
+  } = useDevicesSuspenseQuery(page);
   const updateDeviceMutation = useUpdateDeviceMutation();
   const removeDeviceMutation = useRemoveDeviceMutation();
 
-  const saveDeviceName = async (newName: string) => {
+  const saveDeviceName = useCallback(async (newName: string) => {
     if (!editingDevice) return;
 
     try {
@@ -27,9 +25,9 @@ export function useDevicesPage() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [editingDevice, updateDeviceMutation]);
 
-  const confirmDelete = async () => {
+  const confirmDelete = useCallback(async () => {
     if (!deleteTargetId) return;
 
     try {
@@ -38,24 +36,27 @@ export function useDevicesPage() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [deleteTargetId, removeDeviceMutation]);
+
+  const editDevice = useCallback((id: string, name: string) => setEditingDevice({ id, name }), []);
+  const closeEditModal = useCallback(() => setEditingDevice(null), []);
+  const requestDelete = useCallback((id: string | null) => setDeleteTargetId(id), []);
+  const closeDeleteModal = useCallback(() => setDeleteTargetId(null), []);
 
   return {
     user,
     page,
     setPage,
-    isLoading,
-    isError,
     refetch,
     dataUpdatedAt,
     devices: paginated?.items ?? [],
     totalPages: paginated?.totalPages ?? 0,
     editingDevice,
     deleteTargetId,
-    editDevice: (id: string, name: string) => setEditingDevice({ id, name }),
-    closeEditModal: () => setEditingDevice(null),
-    requestDelete: setDeleteTargetId,
-    closeDeleteModal: () => setDeleteTargetId(null),
+    editDevice,
+    closeEditModal,
+    requestDelete,
+    closeDeleteModal,
     saveDeviceName,
     confirmDelete,
     isUpdatingDevice: updateDeviceMutation.isPending,

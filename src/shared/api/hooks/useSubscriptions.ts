@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { billingService } from '../services';
 import type { SubscriptionResponse, SubscriptionPlanResponse } from '../generated';
 
@@ -16,11 +16,27 @@ export function useSubscriptionsQuery(enabled: boolean) {
   });
 }
 
+export function useSubscriptionsSuspenseQuery() {
+  return useSuspenseQuery<SubscriptionResponse[]>({
+    queryKey: subscriptionKeys.all,
+    queryFn: billingService.getSubscriptions,
+    staleTime: 30_000,
+  });
+}
+
 export function useSubscriptionPlansQuery(enabled = true) {
   return useQuery<SubscriptionPlanResponse[]>({
     queryKey: subscriptionKeys.plans,
     queryFn: billingService.getPlans,
     enabled,
+    staleTime: 60_000,
+  });
+}
+
+export function useSubscriptionPlansSuspenseQuery() {
+  return useSuspenseQuery<SubscriptionPlanResponse[]>({
+    queryKey: subscriptionKeys.plans,
+    queryFn: billingService.getPlans,
     staleTime: 60_000,
   });
 }
